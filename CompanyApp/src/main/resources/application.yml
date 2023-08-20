@@ -1,0 +1,24 @@
+spring:
+  main:
+    #Turn off the logo
+    banner-mode: off
+  #Set database connection properties
+  datasource:
+    url: jdbc:mysql://localhost:3306/company
+    username: root
+    password: Kenan@sql#16
+
+#Add actuators
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+#Data used throughout the application
+application:
+  security:
+    #Data needed for the JWT
+    jwt:
+      secret-key: XfHU8rFEfmFAs8gxZyAfm2ddKokNHaM7T4ND83HTF8W9HEF79SB1RS7CN0IS7cop0OD3SF83N6SAX50KR4
+      expiration: 86400000 # a day (represented in milliseconds)
