@@ -14,8 +14,8 @@ public class Department {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "employer_count")
-    private int employerCount;
+    @Column(name = "employee_count")
+    private int employeeCount;
 
     @Column(name = "min_budget")
     private int minBudget;
@@ -25,11 +25,11 @@ public class Department {
                 referencedColumnName = "id",
                 insertable = false,
                 updatable = false)
-    private List<Employer> employers;
+    private List<Employee> employees;
 
     @OneToOne
-    @JoinColumn(name = "manager_id",
-            referencedColumnName = "id",
+    @JoinColumn(name = "id",
+            referencedColumnName = "department_id",
             insertable = false,
             updatable = false)
     private Manager manager;
@@ -56,12 +56,12 @@ public class Department {
         this.name = name;
     }
 
-    public int getEmployerCount() {
-        return employerCount;
+    public int getEmployeeCount() {
+        return employeeCount;
     }
 
-    public void setEmployerCount(int employerCount) {
-        this.employerCount = employerCount;
+    public void setEmployeeCount(int employeeCount) {
+        this.employeeCount = employeeCount;
     }
 
     public int getMinBudget() {
@@ -72,12 +72,12 @@ public class Department {
         this.minBudget = minBudget;
     }
 
-    public List<Employer> getEmployers() {
-        return employers;
+    public List<Employee> getEmployees() {
+        return employees;
     }
 
-    public void setEmployers(List<Employer> employers) {
-        this.employers = employers;
+    public void setEmployees(List<Employee> employees) {
+        this.employees = employees;
     }
 
     public Manager getManager() {

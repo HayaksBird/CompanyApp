@@ -1,16 +1,18 @@
 package com.company.CompanyApp.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "manager")
 public class Manager {
     @Id
-    @Column(name = "id")
-    private int id;
+    @Column(name = "department_id")
+    private int departmentId;
 
     @Column(name = "first_name")
     private String firstName;
@@ -21,17 +23,18 @@ public class Manager {
     @Column(name = "employed_since")
     private Date employedSince;
 
-    @Column(name = "employed_since")
+    @Column(name = "vacation")
     private Date vacation;
 
     @Column(name = "salary")
     private BigDecimal salary;
 
     @OneToOne
-    @JoinColumn(name = "manager_id",
-                referencedColumnName = "id",
-                insertable = false,
-                updatable = false)
+    @JsonIgnore
+    @JoinColumn(name = "department_id",
+            referencedColumnName = "id",
+            insertable = false,
+            updatable = false)
     private Department department;
 
 
@@ -40,12 +43,12 @@ public class Manager {
 
 
     //Setters & Getters
-    public int getId() {
-        return id;
+    public int getDepartmentId() {
+        return departmentId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setDepartmentId(int departmentId) {
+        this.departmentId = departmentId;
     }
 
     public String getFirstName() {

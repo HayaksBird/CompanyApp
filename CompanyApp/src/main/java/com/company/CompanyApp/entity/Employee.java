@@ -1,13 +1,14 @@
 package com.company.CompanyApp.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
-@Table(name = "employer")
-public class Employer {
+@Table(name = "employee")
+public class Employee {
     @Id
     @Column(name = "id")
     private int id;
@@ -16,6 +17,7 @@ public class Employer {
     private int departmentId;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "department_id",
                 referencedColumnName = "id",
                 insertable = false,
@@ -34,7 +36,7 @@ public class Employer {
     @Column(name = "employed_since")
     private Date employedSince;
 
-    @Column(name = "employed_since")
+    @Column(name = "vacation")
     private Date vacation;
 
     @Column(name = "salary")
@@ -42,7 +44,7 @@ public class Employer {
 
 
     //CONSTRUCTORS
-    public Employer() {}
+    public Employee() {}
 
 
     //Setters & Getters

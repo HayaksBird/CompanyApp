@@ -2,23 +2,23 @@ USE company;
 
 
 
-INSERT INTO manager (first_name, last_name, employed_since, vacation, salary)
-VALUES 
-    ('John', 'Doe', '2020-01-15', '2023-08-15', 75000.00),
-    ('Alice', 'Smith', '2018-05-10', '2023-07-20', 82000.00),
-    ('Michael', 'Johnson', '2016-03-01', '2023-09-30', 95000.00),
-    ('Emily', 'Williams', '2019-09-20', '2023-08-10', 78000.00),
-    ('David', 'Brown', '2017-11-08', '2023-10-05', 90000.00);
-    
-INSERT INTO department (name, manager_id)
+INSERT INTO department (name)
 VALUES
-    ('Sales', 1),
-    ('Marketing', 2),
-    ('IT', 3),
-    ('Finance', 4),
-    ('HR', 5);
+    ('Sales'),
+    ('Marketing'),
+    ('IT'),
+    ('Finance'),
+    ('HR');
+
+INSERT INTO manager (department_id, first_name, last_name, employed_since, vacation, salary)
+VALUES 
+    (1, 'John', 'Doe', '2020-01-15', '2023-08-15', 75000.00),
+    (2, 'Alice', 'Smith', '2018-05-10', '2023-07-20', 82000.00),
+    (3, 'Michael', 'Johnson', '2016-03-01', '2023-09-30', 95000.00),
+    (4, 'Emily', 'Williams', '2019-09-20', '2023-08-10', 78000.00),
+    (5, 'David', 'Brown', '2017-11-08', '2023-10-05', 90000.00);
     
-INSERT INTO employer (first_name, last_name, department_id, position, employed_since, vacation, salary)
+INSERT INTO employee (first_name, last_name, department_id, position, employed_since, vacation, salary)
 VALUES
     ('Sarah', 'Johnson', 1, 'Sales Representative', '2019-05-15', '2023-07-15', 55000.00),
     ('Michael', 'Smith', 1, 'Sales Manager', '2018-03-10', '2023-08-20', 70000.00),
