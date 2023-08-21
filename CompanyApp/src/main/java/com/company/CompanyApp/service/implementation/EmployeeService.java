@@ -19,9 +19,9 @@ public class EmployeeService implements IEmployeeService {
 
     @Override
     public Employee getEmployee(int id) {
-        var employer = employeeRepository.findById(id);
+        var employee = employeeRepository.findById(id);
 
-        if (employer.isPresent()) return employer.get();
+        if (employee.isPresent()) return employee.get();
         else return null;
     }
 
@@ -48,9 +48,9 @@ public class EmployeeService implements IEmployeeService {
 
     @Override
     public void deleteEmployee(int id) {
-        var employer = employeeRepository.findById(id);
+        var employee = employeeRepository.findById(id);
 
-        if (employer.isPresent()) employeeRepository.delete(employer.get());
+        if (employee.isPresent()) employeeRepository.delete(employee.get());
     }
 
 

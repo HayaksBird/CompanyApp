@@ -1,5 +1,6 @@
 package com.company.CompanyApp.entity;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
@@ -46,6 +47,23 @@ public class Employee {
     //CONSTRUCTORS
     public Employee() {}
 
+
+    public Employee(int departmentId,
+                    String firstName,
+                    String lastName,
+                    String position,
+                    Date employedSince,
+                    Date vacation,
+                    BigDecimal salary) {
+
+        this.departmentId = departmentId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.position = position;
+        this.employedSince = employedSince;
+        this.vacation = vacation;
+        this.salary = salary;
+    }
 
     //Setters & Getters
     public int getId() {

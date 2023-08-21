@@ -42,6 +42,21 @@ public class Manager {
     public Manager() {}
 
 
+    public Manager(int departmentId,
+                   String firstName,
+                   String lastName,
+                   Date employedSince,
+                   Date vacation,
+                   BigDecimal salary) {
+
+        this.departmentId = departmentId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.employedSince = employedSince;
+        this.vacation = vacation;
+        this.salary = salary;
+    }
+
     //Setters & Getters
     public int getDepartmentId() {
         return departmentId;

@@ -39,6 +39,17 @@ public class Department {
     public Department() {}
 
 
+    public Department(int id,
+                      String name,
+                      int employeeCount,
+                      int minBudget) {
+
+        this.id = id;
+        this.name = name;
+        this.employeeCount = employeeCount;
+        this.minBudget = minBudget;
+    }
+
     //Setters & Getters
     public int getId() {
         return id;
