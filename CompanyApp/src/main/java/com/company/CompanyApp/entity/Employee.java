@@ -2,6 +2,7 @@ package com.company.CompanyApp.entity;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -48,14 +49,17 @@ public class Employee {
     public Employee() {}
 
 
-    public Employee(int departmentId,
-                    String firstName,
-                    String lastName,
-                    String position,
-                    Date employedSince,
-                    Date vacation,
-                    BigDecimal salary) {
+    @JsonCreator
+    public Employee(@JsonProperty("id") int id,
+                    @JsonProperty("department_id") int departmentId,
+                    @JsonProperty("first_name") String firstName,
+                    @JsonProperty("last_name") String lastName,
+                    @JsonProperty("position") String position,
+                    @JsonProperty("employed_since") Date employedSince,
+                    @JsonProperty("vacation") Date vacation,
+                    @JsonProperty("salary") BigDecimal salary) {
 
+        this.id = id;
         this.departmentId = departmentId;
         this.firstName = firstName;
         this.lastName = lastName;
