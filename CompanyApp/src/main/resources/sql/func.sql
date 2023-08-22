@@ -1,13 +1,17 @@
 USE company;
 
-
+/*
+This query script adds a layer of management over the department table.
+Primarly it focuses on updating the fields that are dependent on external factors.
+*/
 
 DROP PROCEDURE IF EXISTS update_min_budget;
 DROP PROCEDURE IF EXISTS update_employee_count;
 DELIMITER //
 
 /*
-
+These procedures depending on the input parameters update the dependent fields of 
+the department table: min_budget, employee_count
 */
 CREATE PROCEDURE update_min_budget(old_salary INT, new_salary INT, department_id INT) 
 BEGIN
@@ -36,7 +40,7 @@ END;
 
 
 /*
-
+This trigger initializes the dependent fields of the department table to 0.
 */
 CREATE TRIGGER set_new_department
 BEFORE INSERT ON department
@@ -50,7 +54,8 @@ END;
 
 
 /*
-
+These triggers focus on updating the department table based on what changes were
+done on the employee table.
 */
 CREATE TRIGGER update_department_info_EC
 AFTER INSERT ON employee
@@ -81,7 +86,8 @@ END;
 
 
 /*
-
+These triggers focus on updating the department table based on what changes were
+done on the manager table.
 */
 CREATE TRIGGER update_department_info_MC
 AFTER INSERT ON manager
