@@ -3,6 +3,7 @@ USE company;
 /*
 This query script adds a layer of management over the department table.
 Primarly it focuses on updating the fields that are dependent on external factors.
+In addition to that, it validates the user.
 */
 
 DROP PROCEDURE IF EXISTS update_min_budget;
@@ -110,6 +111,31 @@ AFTER UPDATE ON manager
 FOR EACH ROW
 BEGIN
     CALL update_min_budget(OLD.salary, NEW.salary, NEW.department_id);
+END;
+//
+
+
+
+/*
+Make sure that the person already exists in the database, so that the 
+user could be inserted.
+A person with id 0 is the admin.
+*/
+CREATE TRIGGER is_user_valid
+BEFORE INSERT ON user
+FOR EACH ROW
+BEGIN
+	DECLARE user_id INT;
+    
+    SELECT id INTO user_id FROM employee WHERE new.id = employee.id;
+    
+    IF user_id IS NULL THEN
+		SELECT department_id INTO user_id FROM manager WHERE new.id = manager.department_id;
+    END IF;
+    
+    IF user_id IS NULL AND user_id != 0 THEN
+		SIGNAL SQLSTATE '45000';
+    END IF;
 END;
 //
 

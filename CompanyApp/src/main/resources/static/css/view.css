@@ -1,0 +1,19 @@
+.title {
+    position: absolute;
+    /*
+    Set's the offset, so that the first character of the text is right
+    at the middle of the web page.
+    */
+    left: 50%;
+    /*
+    Now that the left character is exactly at the center, in order to place
+    the text exactly at the center of the web page, we need to move it
+    by the half of its width to the left. In addition, we move it a bit
+    closer to the top
+    */
+    transform: translate(-50%, -50%);
+
+    font-style: arial;
+    color: black;
+    font-size: 30px;
+}

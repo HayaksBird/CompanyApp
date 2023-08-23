@@ -3,44 +3,6 @@ USE company;
 /*
 Initialize sample data for the test
 */
-
-DROP PROCEDURE IF EXISTS create_users;
-DELIMITER //
-
-CREATE PROCEDURE create_users() 
-BEGIN
-	SET @user_id = 1;
-
-	WHILE @user_id <= 109 DO
-		IF @user_id = 6 THEN
-			SET @user_id = 100;
-        END IF;
-		
-        -- Password is '123'
-		INSERT INTO user (id, password)
-        VALUES (@user_id, '$2a$12$/xbS17qSTXILo1CZ5MpnBOSLjD/oEk.3CvUDT0IDvXGs.sV9JakvK');
-        
-        IF @user_id < 100 THEN
-			INSERT INTO role (user_id, role)
-            VALUES 
-				(@user_id, "ROLE_EMPLOYEE"),
-				(@user_id, "ROLE_MANAGER");
-		ELSE
-			INSERT INTO role (user_id, role)
-            VALUES (@user_id, "ROLE_EMPLOYEE");
-        END IF;
-        
-        SET @user_id = @user_id + 1;
-	END WHILE;
-END;
-//
-
-DELIMITER ;
-
-CALL create_users();
-
-
-
 INSERT INTO department (name)
 VALUES
     ('Sales'),
@@ -72,10 +34,10 @@ VALUES
     
 -- Password is '123'
 INSERT INTO user (id, password)
-VALUES (0, '$2a$12$/xbS17qSTXILo1CZ5MpnBOSLjD/oEk.3CvUDT0IDvXGs.sV9JakvK');
-   
+VALUES (101, '$2a$12$/xbS17qSTXILo1CZ5MpnBOSLjD/oEk.3CvUDT0IDvXGs.sV9JakvK');
+    
 INSERT INTO role (user_id, role)
 VALUES 
-	(0, 'ROLE_EMPLOYEE'),
-	(0, 'ROLE_MANAGER'),
-    (0, 'ROLE_ADMIN');
+	(101, 'ROLE_EMPLOYEE'),
+	(101, 'ROLE_MANAGER'),
+    (101, 'ROLE_ADMIN');
