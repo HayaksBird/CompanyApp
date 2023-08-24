@@ -10,7 +10,7 @@ public interface IUserService {
     /**
      * Add a user to the database.
      */
-    String addUser(User user);
+    void addUser(User user);
 
 
     /**

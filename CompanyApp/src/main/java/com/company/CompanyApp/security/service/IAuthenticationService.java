@@ -14,4 +14,10 @@ public interface IAuthenticationService {
      * After the successful authentication it generates and returns a JWT.
      */
     void authenticate(AuthenticationRequest request);
+
+
+    String getValidationCode(String id);
+
+
+    void register(AuthenticationRequest request);
 }

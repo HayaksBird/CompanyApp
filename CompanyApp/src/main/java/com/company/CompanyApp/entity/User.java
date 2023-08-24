@@ -19,7 +19,7 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id",
                 referencedColumnName = "id")
     private List<Role> roles;
@@ -48,6 +48,16 @@ public class User implements UserDetails {
 
     public void setRoles(List<Role> roles) {
         this.roles = roles;
+    }
+
+    public void setRoles() {
+        if (id > 0) {
+            roles = new ArrayList<>();
+
+            roles.add(new Role("ROLE_EMPLOYEE", id));
+
+            if (id < 100) roles.add(new Role("ROLE_MANAGER", id));
+        }
     }
 
     @Override

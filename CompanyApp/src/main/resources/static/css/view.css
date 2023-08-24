@@ -12,8 +12,11 @@
     closer to the top
     */
     transform: translate(-50%, -50%);
-
     font-style: arial;
     color: black;
     font-size: 30px;
+}
+.error {
+    color: red;
+    font-weight: bold;
 }

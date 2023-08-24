@@ -2,6 +2,7 @@ package com.company.CompanyApp.service.implementation;
 
 import com.company.CompanyApp.dao.ManagerRepository;
 import com.company.CompanyApp.entity.Manager;
+import com.company.CompanyApp.exception.WorkerkNotFoundException;
 import com.company.CompanyApp.service.IManagerService;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,7 @@ public class ManagerService implements IManagerService {
         var manager = managerRepository.findById(id);
 
         if (manager.isPresent()) return manager.get();
-        else return null;
+        else throw new WorkerkNotFoundException(id);
     }
 
 
@@ -51,6 +52,7 @@ public class ManagerService implements IManagerService {
         var manager = managerRepository.findById(id);
 
         if (manager.isPresent()) managerRepository.delete(manager.get());
+        else throw new WorkerkNotFoundException(id);
     }
 
 

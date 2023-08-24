@@ -1,9 +1,13 @@
 package com.company.CompanyApp.controller;
 
+import com.company.CompanyApp.exception.BadLoginInputException;
+import com.company.CompanyApp.exception.WorkerkNotFoundException;
 import com.company.CompanyApp.security.dto.AuthenticationRequest;
+import com.company.CompanyApp.security.dto.VerificationRequest;
 import com.company.CompanyApp.security.service.IAuthenticationService;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
@@ -17,6 +21,7 @@ import org.springframework.ui.Model;
 @RequestMapping("/auth")
 public class AuthController {
     private final IAuthenticationService authenticationService;
+    private AuthenticationRequest registerInfo;
 
 
     //CONSTRUCTORS
@@ -44,22 +49,86 @@ public class AuthController {
     /**
      * Show the login page to the user.
      */
-    @GetMapping("")
+    @GetMapping("/login")
     public String showLoginPage(Model model) {
-        model.addAttribute("request", new AuthenticationRequest());
+        model.addAttribute("login", new AuthenticationRequest());
 
-        return "login-page";
+        return "auth/login-page";
+    }
+
+
+    /**
+     * Show the registration page to the user.
+     */
+    @GetMapping("/register")
+    public String showRegistrationPage(Model model) {
+        model.addAttribute("register", new AuthenticationRequest());
+
+        return "auth/register-page";
     }
 
 
     /**
      * Try to authenticate the user based on the retrieved data.
      */
-    @PostMapping("/login")
-    public void login(@Valid
-                      @ModelAttribute("customer")
-                      AuthenticationRequest request) {
+    @PostMapping("/process-login")
+    public String login(@Valid
+                        @ModelAttribute("login")
+                        AuthenticationRequest login,
+                        BindingResult result) {
 
-        authenticationService.authenticate(request);
+        if (result.hasErrors()) return "auth/login-page";
+
+        try {
+            authenticationService.authenticate(login);
+            return "home-page";
+        } catch (BadLoginInputException ex) {
+            login.setError(ex.getMessage());
+            return "auth/login-page";
+        }
+    }
+
+
+    /**
+     * Try to authenticate the user based on the retrieved data.
+     */
+    @PostMapping("/process-register")
+    public String registration(@Valid
+                               @ModelAttribute("register")
+                               AuthenticationRequest register,
+                               BindingResult result,
+                               Model model) {
+
+        if (result.hasErrors()) return "auth/register-page";
+
+        try {
+            registerInfo = register;
+            String code = authenticationService.getValidationCode(register.getId());
+
+            model.addAttribute("verify", new VerificationRequest());
+            VerificationRequest.setCode(code);
+
+            return "auth/verification-page";
+        } catch(WorkerkNotFoundException ex) {
+            register.setError(ex.getMessage());
+            return "auth/register-page";
+        }
+    }
+
+
+    /**
+     *
+     */
+    @PostMapping("/verify")
+    public String verification(@Valid
+                               @ModelAttribute("verify")
+                               VerificationRequest verify,
+                               BindingResult result) {
+
+        if (result.hasErrors()) return "auth/verification-page";
+
+        authenticationService.register(registerInfo);
+
+        return "home-page";
     }
 }

@@ -1,15 +1,25 @@
 package com.company.CompanyApp.security.dto;
 
+import com.company.CompanyApp.security.validation.Numeric;
+import jakarta.validation.constraints.NotNull;
+
 /**
  * This class encapsulates the data from the request body of
  * an authentication request.
  */
 public class AuthenticationRequest {
-    private String id, password;
+    @Numeric(message = "Id must be numeric")
+    @NotNull(message = "Provide an id")
+    private String  id;
+    @NotNull(message = "Provide a password")
+    private String password;
+    private String error;
 
 
     //CONSTRUCTORS
-    public AuthenticationRequest() {}
+    public AuthenticationRequest() {
+        error = "";
+    }
 
 
     //Getters & Setters
@@ -27,5 +37,13 @@ public class AuthenticationRequest {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
     }
 }

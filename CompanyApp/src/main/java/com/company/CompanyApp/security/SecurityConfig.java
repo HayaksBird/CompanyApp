@@ -35,7 +35,8 @@ public class SecurityConfig {
                                 //Regarding authentication
                                 .requestMatchers("/auth").permitAll()
                                 .requestMatchers("/auth/**").permitAll()
-
+                                .requestMatchers("/home").permitAll()
+                                .requestMatchers("/css/**").permitAll()
                                 //Regarding students
         );
 

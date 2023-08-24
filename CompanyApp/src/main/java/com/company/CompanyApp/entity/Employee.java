@@ -30,6 +30,9 @@ public class Employee {
     @Column(name = "last_name")
     private String lastName;
 
+    @Column(name = "email")
+    private String email;
+
     @Column(name = "position")
     private String position;
 
@@ -50,6 +53,7 @@ public class Employee {
     public Employee(int departmentId,
                     String firstName,
                     String lastName,
+                    String email,
                     String position,
                     Date employedSince,
                     Date vacation,
@@ -58,6 +62,7 @@ public class Employee {
         this.departmentId = departmentId;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.email = email;
         this.position = position;
         this.employedSince = employedSince;
         this.vacation = vacation;
@@ -103,6 +108,14 @@ public class Employee {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPosition() {

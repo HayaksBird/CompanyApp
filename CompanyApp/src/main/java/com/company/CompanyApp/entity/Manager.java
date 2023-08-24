@@ -20,6 +20,9 @@ public class Manager {
     @Column(name = "last_name")
     private String lastName;
 
+    @Column(name = "email")
+    private String email;
+
     @Column(name = "employed_since")
     private Date employedSince;
 
@@ -45,6 +48,7 @@ public class Manager {
     public Manager(int departmentId,
                    String firstName,
                    String lastName,
+                   String email,
                    Date employedSince,
                    Date vacation,
                    BigDecimal salary) {
@@ -52,6 +56,7 @@ public class Manager {
         this.departmentId = departmentId;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.email = email;
         this.employedSince = employedSince;
         this.vacation = vacation;
         this.salary = salary;
@@ -80,6 +85,14 @@ public class Manager {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public Date getEmployedSince() {

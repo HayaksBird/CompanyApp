@@ -7,6 +7,17 @@ spring:
     url: jdbc:mysql://localhost:3306/company
     username: root
     password: Kenan@sql#16
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username:
+    password:
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 
 #Add actuators
 management:

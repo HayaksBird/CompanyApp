@@ -8,8 +8,12 @@ import jakarta.persistence.*;
 @Table(name = "role")
 public class Role {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
+
+    @Column(name = "user_id")
+    private int userId;
 
     @Column(name = "role")
     private String role;
@@ -17,6 +21,12 @@ public class Role {
 
     //CONSTRUCTORS
     public Role() {}
+
+
+    public Role(String role, int userId) {
+        this.role = role;
+        this.userId = userId;
+    }
 
 
     //Setters & Getters
@@ -34,5 +44,13 @@ public class Role {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 }

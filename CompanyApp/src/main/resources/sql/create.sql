@@ -30,6 +30,7 @@ CREATE TABLE manager (
     department_id INT PRIMARY KEY,
     first_name VARCHAR(50),
     last_name VARCHAR(50),
+    email VARCHAR(50),
     employed_since DATE,
     vacation DATE,
     salary DECIMAL(10, 2),
@@ -40,6 +41,7 @@ CREATE TABLE employee (
     id INT PRIMARY KEY AUTO_INCREMENT,
     first_name VARCHAR(50),
     last_name VARCHAR(50),
+    email VARCHAR(50),
     department_id INT,
     position VARCHAR(50),
     employed_since DATE,
@@ -54,7 +56,7 @@ CREATE TABLE user (
 );
 
 CREATE TABLE role (
-	id INT AUTO_INCREMENT PRIMARY KEY,
+	id INT PRIMARY KEY AUTO_INCREMENT,
     user_id INT,
     role VARCHAR(50),
     FOREIGN KEY (user_id) REFERENCES user(id)

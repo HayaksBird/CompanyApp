@@ -20,8 +20,8 @@ public class UserService implements IUserService {
 
 
     @Override
-    public String addUser(User user) {
-        return null;
+    public void addUser(User user) {
+        userRepository.save(user);
     }
 
 

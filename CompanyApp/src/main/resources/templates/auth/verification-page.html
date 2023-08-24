@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Verification Page</title>
+
+    <!-- reference CSS file -->
+    <link rel="stylesheet" th:href="@{/css/view.css}">
+</head>
+<body>
+    <p th:text="'Enter the verification code'" class="title"/>
+    <br><br><br><br>
+
+    <form th:action="@{/auth/verify}" th:object="${verify}" method="POST">
+        Code: <input type="text" th:field="*{inputCode}" />
+
+        <span th:if="${#fields.hasErrors('inputCode')}"
+              th:errors="*{inputCode}"
+              class="error"></span>
+        <br><br>
+
+        <input type="submit" value="Submit"/>
+    </form>
+</body>
+</html>
