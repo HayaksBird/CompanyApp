@@ -1,6 +1,6 @@
 package com.company.CompanyApp.security.dto;
 
-import com.company.CompanyApp.security.validation.MatchCode;
+import com.company.CompanyApp.security.validation.annotations.MatchCode;
 import jakarta.validation.constraints.NotNull;
 
 public class VerificationRequest {

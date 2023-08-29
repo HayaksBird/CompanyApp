@@ -1,6 +1,7 @@
 package com.company.CompanyApp.security.service;
 
 import com.company.CompanyApp.security.dto.AuthenticationRequest;
+import jakarta.servlet.http.Cookie;
 
 /**
  * The class implementing this interface is responsible for both registering
@@ -20,4 +21,7 @@ public interface IAuthenticationService {
 
 
     void register(AuthenticationRequest request);
+
+
+    Cookie generateJwtCookie();
 }

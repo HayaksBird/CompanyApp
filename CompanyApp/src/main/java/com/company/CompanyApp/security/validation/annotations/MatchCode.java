@@ -1,5 +1,6 @@
-package com.company.CompanyApp.security.validation;
+package com.company.CompanyApp.security.validation.annotations;
 
+import com.company.CompanyApp.security.validation.MatchCodeValidator;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 
@@ -8,12 +9,12 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Constraint(validatedBy = NumericValidator.class)
+@Constraint(validatedBy = MatchCodeValidator.class)
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Numeric {
+public @interface MatchCode {
     //
-    public String message() default "Must be numeric!";
+    public String message() default "Wrong code!";
 
     //
     public Class<?>[] groups() default {};

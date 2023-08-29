@@ -1,6 +1,6 @@
 package com.company.CompanyApp.security.dto;
 
-import com.company.CompanyApp.security.validation.Numeric;
+import com.company.CompanyApp.security.validation.annotations.Numeric;
 import jakarta.validation.constraints.NotNull;
 
 /**

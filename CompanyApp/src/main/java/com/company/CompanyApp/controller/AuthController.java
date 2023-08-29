@@ -5,7 +5,9 @@ import com.company.CompanyApp.exception.WorkerkNotFoundException;
 import com.company.CompanyApp.security.dto.AuthenticationRequest;
 import com.company.CompanyApp.security.dto.VerificationRequest;
 import com.company.CompanyApp.security.service.IAuthenticationService;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 
 import org.springframework.ui.Model;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * This controller deals with authentication requests.
@@ -72,20 +75,33 @@ public class AuthController {
      * Try to authenticate the user based on the retrieved data.
      */
     @PostMapping("/process-login")
-    public String login(@Valid
-                        @ModelAttribute("login")
-                        AuthenticationRequest login,
-                        BindingResult result) {
+    public ModelAndView login(@Valid
+                              @ModelAttribute("login")
+                              AuthenticationRequest login,
+                              BindingResult result,
+                              HttpServletResponse response) {
 
-        if (result.hasErrors()) return "auth/login-page";
+        ModelAndView modelAndView = new ModelAndView();
 
-        try {
-            authenticationService.authenticate(login);
-            return "home-page";
-        } catch (BadLoginInputException ex) {
-            login.setError(ex.getMessage());
-            return "auth/login-page";
+        if (result.hasErrors()) {
+            modelAndView.setViewName("auth/login-page");
+            modelAndView.setStatus(HttpStatus.BAD_REQUEST);
+        } else {
+            try {
+                authenticationService.authenticate(login);
+
+                modelAndView.setViewName("home-page");
+                modelAndView.setStatus(HttpStatus.OK);
+
+                response.addCookie(authenticationService.generateJwtCookie());
+            } catch (BadLoginInputException ex) {
+                login.setError(ex.getMessage());
+                modelAndView.setViewName("auth/login-page");
+                modelAndView.setStatus(HttpStatus.NOT_FOUND);
+            }
         }
+
+        return modelAndView;
     }
 
 
@@ -93,26 +109,36 @@ public class AuthController {
      * Try to authenticate the user based on the retrieved data.
      */
     @PostMapping("/process-register")
-    public String registration(@Valid
-                               @ModelAttribute("register")
-                               AuthenticationRequest register,
-                               BindingResult result,
-                               Model model) {
+    public ModelAndView registration(@Valid
+                                     @ModelAttribute("register")
+                                     AuthenticationRequest register,
+                                     BindingResult result,
+                                     Model model) {
 
-        if (result.hasErrors()) return "auth/register-page";
+        ModelAndView modelAndView = new ModelAndView();
 
-        try {
-            registerInfo = register;
-            String code = authenticationService.getValidationCode(register.getId());
+        if (result.hasErrors()) {
+            modelAndView.setViewName("auth/register-page");
+            modelAndView.setStatus(HttpStatus.BAD_REQUEST);
+        } else {
+            try {
+                registerInfo = register;
+                String code = authenticationService.getValidationCode(register.getId());
 
-            model.addAttribute("verify", new VerificationRequest());
-            VerificationRequest.setCode(code);
+                model.addAttribute("verify", new VerificationRequest());
+                VerificationRequest.setCode(code);
 
-            return "auth/verification-page";
-        } catch(WorkerkNotFoundException ex) {
-            register.setError(ex.getMessage());
-            return "auth/register-page";
+                modelAndView.setViewName("auth/verification-page");
+                modelAndView.setStatus(HttpStatus.OK);
+            } catch (WorkerkNotFoundException ex) {
+                register.setError(ex.getMessage());
+
+                modelAndView.setViewName("auth/register-page");
+                modelAndView.setStatus(HttpStatus.NOT_FOUND);
+            }
         }
+
+        return modelAndView;
     }
 
 
@@ -120,15 +146,26 @@ public class AuthController {
      *
      */
     @PostMapping("/verify")
-    public String verification(@Valid
-                               @ModelAttribute("verify")
-                               VerificationRequest verify,
-                               BindingResult result) {
+    public ModelAndView verification(@Valid
+                                     @ModelAttribute("verify")
+                                     VerificationRequest verify,
+                                     BindingResult result,
+                                     HttpServletResponse response) {
 
-        if (result.hasErrors()) return "auth/verification-page";
+        ModelAndView modelAndView = new ModelAndView();
 
-        authenticationService.register(registerInfo);
+        if (result.hasErrors()) {
+            modelAndView.setViewName("auth/verification-page");
+            modelAndView.setStatus(HttpStatus.BAD_REQUEST);
+        } else {
+            authenticationService.register(registerInfo);
 
-        return "home-page";
+            modelAndView.setViewName("home-page");
+            modelAndView.setStatus(HttpStatus.CREATED);
+
+            response.addCookie(authenticationService.generateJwtCookie());
+        }
+
+        return modelAndView;
     }
 }
