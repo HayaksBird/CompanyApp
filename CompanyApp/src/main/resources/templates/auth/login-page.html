@@ -8,11 +8,12 @@
     <link rel="stylesheet" th:href="@{/css/view.css}">
 </head>
 <body>
-    <p th:text="'Login'" class="title"/>
     <br><br><br><br>
 
-    <form th:action="@{/auth/process-login}" th:object="${login}" method="POST">
+    <h1 class="center">Login </h1>
+    <form class="center" th:action="@{/auth/process-login}" th:object="${login}" method="POST">
         ID: <input type="text" th:field="*{id}" />
+        <br>
 
         <span th:if="${#fields.hasErrors('id')}"
               th:errors="*{id}"
@@ -23,6 +24,7 @@
         <br><br>
 
         Password: <input type="text" th:field="*{password}" />
+        <br>
 
         <span th:if="${#fields.hasErrors('password')}"
               th:errors="*{password}"
@@ -30,6 +32,13 @@
         <br><br>
 
         <input type="submit" value="Submit"/>
+    </form>
+    <br><br><br><br>
+
+    <form class="center" th:action="@{/auth/register}" method="GET">
+        <span>Don't have an account?</span>
+
+        <input type="submit" value="Register"/>
     </form>
 </body>
 </html>

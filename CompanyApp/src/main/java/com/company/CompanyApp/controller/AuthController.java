@@ -17,6 +17,8 @@ import jakarta.validation.Valid;
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.IOException;
+
 /**
  * This controller deals with authentication requests.
  */
@@ -79,7 +81,7 @@ public class AuthController {
                               @ModelAttribute("login")
                               AuthenticationRequest login,
                               BindingResult result,
-                              HttpServletResponse response) {
+                              HttpServletResponse response) throws IOException {
 
         ModelAndView modelAndView = new ModelAndView();
 
@@ -90,10 +92,9 @@ public class AuthController {
             try {
                 authenticationService.authenticate(login);
 
-                modelAndView.setViewName("home-page");
-                modelAndView.setStatus(HttpStatus.OK);
-
                 response.addCookie(authenticationService.generateJwtCookie());
+                response.sendRedirect("/home");
+                return null;
             } catch (BadLoginInputException ex) {
                 login.setError(ex.getMessage());
                 modelAndView.setViewName("auth/login-page");
@@ -150,7 +151,7 @@ public class AuthController {
                                      @ModelAttribute("verify")
                                      VerificationRequest verify,
                                      BindingResult result,
-                                     HttpServletResponse response) {
+                                     HttpServletResponse response) throws IOException {
 
         ModelAndView modelAndView = new ModelAndView();
 
@@ -160,10 +161,9 @@ public class AuthController {
         } else {
             authenticationService.register(registerInfo);
 
-            modelAndView.setViewName("home-page");
-            modelAndView.setStatus(HttpStatus.CREATED);
-
             response.addCookie(authenticationService.generateJwtCookie());
+            response.sendRedirect("/home");
+            return null;
         }
 
         return modelAndView;
