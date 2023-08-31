@@ -20,37 +20,17 @@ public class Department {
     @Column(name = "min_budget")
     private int minBudget;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "department_id",
-                referencedColumnName = "id",
-                insertable = false,
-                updatable = false)
-    private List<Employee> employees;
-
-    @OneToOne
-    @JoinColumn(name = "id",
-            referencedColumnName = "department_id",
-            insertable = false,
-            updatable = false)
-    private Manager manager;
+                referencedColumnName = "id")
+    private List<Worker> workers;
 
 
     //CONSTRUCTORS
     public Department() {}
 
 
-    public Department(int id,
-                      String name,
-                      int employeeCount,
-                      int minBudget) {
-
-        this.id = id;
-        this.name = name;
-        this.employeeCount = employeeCount;
-        this.minBudget = minBudget;
-    }
-
-    //Setters & Getters
+    //Getters & Setters
     public int getId() {
         return id;
     }
@@ -83,19 +63,11 @@ public class Department {
         this.minBudget = minBudget;
     }
 
-    public List<Employee> getEmployees() {
-        return employees;
+    public List<Worker> getWorkers() {
+        return workers;
     }
 
-    public void setEmployees(List<Employee> employees) {
-        this.employees = employees;
-    }
-
-    public Manager getManager() {
-        return manager;
-    }
-
-    public void setManager(Manager manager) {
-        this.manager = manager;
+    public void setWorkers(List<Worker> workers) {
+        this.workers = workers;
     }
 }

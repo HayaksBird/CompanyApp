@@ -2,10 +2,12 @@ package com.company.CompanyApp.service.implementation;
 
 import com.company.CompanyApp.dao.ManagerRepository;
 import com.company.CompanyApp.entity.Manager;
+import com.company.CompanyApp.entity.Worker;
 import com.company.CompanyApp.exception.WorkerkNotFoundException;
 import com.company.CompanyApp.service.IManagerService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -22,14 +24,14 @@ public class ManagerService implements IManagerService {
     public Manager getManager(int id) {
         var manager = managerRepository.findById(id);
 
-        if (manager.isPresent()) return manager.get();
+        if (manager.isPresent()) return (Manager)manager.get();
         else throw new WorkerkNotFoundException(id);
     }
 
 
     @Override
     public List<Manager> getAllManagers() {
-        return managerRepository.findAll();
+        return listToManager(managerRepository.findAll());
     }
 
 
@@ -59,5 +61,19 @@ public class ManagerService implements IManagerService {
     @Override
     public void deleteAllManagers() {
         managerRepository.deleteAll();
+    }
+
+
+    /**
+     *
+     */
+    private List<Manager> listToManager(List<Worker> workers) {
+        List<Manager> managers = new ArrayList<Manager>();
+
+        for (Worker worker : workers) {
+            managers.add((Manager)worker);
+        }
+
+        return managers;
     }
 }

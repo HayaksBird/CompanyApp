@@ -10,34 +10,53 @@ VALUES
     ('IT'),
     ('Finance'),
     ('HR');
-
-INSERT INTO manager (department_id, first_name, last_name, email, employed_since, vacation, salary)
-VALUES 
-    (1, 'Esmiralda', 'Nurieva', 'enurieva71@gmail.com', '2020-01-15', '2023-08-15', 75000.00),
-    (2, 'Alice', 'Smith', 'alice.smith@gmail.com', '2018-05-10', '2023-07-20', 82000.00),
-    (3, 'Michael', 'Johnson', 'michael.johnson@gmail.com', '2016-03-01', '2023-09-30', 95000.00),
-    (4, 'Emily', 'Williams', 'emily.williams@gmail.com', '2019-09-20', '2023-08-10', 78000.00),
-    (5, 'David', 'Brown', 'david.brown@gmail.com', '2017-11-08', '2023-10-05', 90000.00);
     
-INSERT INTO employee (first_name, last_name, department_id, position, email, employed_since, vacation, salary)
+-- Insert 5 managers
+INSERT INTO worker (first_name, last_name, department_id, email, employed_since, vacation, salary, type)
 VALUES
-    ('Sarah', 'Johnson', 1, 'Sales Representative', 'sarah.johnson@gmail.com', '2019-05-15', '2023-07-15', 55000.00),
-    ('Michael', 'Smith', 1, 'Sales Manager', 'michael.smith@gmail.com', '2018-03-10', '2023-08-20', 70000.00),
-    ('Emily', 'Williams', 2, 'Marketing Specialist', 'emily.williams@gmail.com', '2020-02-01', '2023-09-10', 60000.00),
-    ('David', 'Brown', 3, 'Software Engineer', 'david.brown@gmail.com', '2017-09-20', '2023-08-05', 80000.00),
-    ('Jessica', 'Miller', 4, 'Financial Analyst', 'jessica.miller@gmail.com', '2019-12-08', '2023-10-15', 65000.00),
-    ('John', 'Wilson', 1, 'Sales Representative', 'john.wilson@gmail.com', '2021-01-18', '2023-09-30', 58000.00),
-    ('Alex', 'Martinez', 2, 'Marketing Coordinator', 'alex.martinez@gmail.com', '2019-06-05', '2023-07-10', 54000.00),
-    ('Daniel', 'Taylor', 3, 'Software Developer', 'daniel.taylor@gmail.com', '2018-07-10', '2023-08-25', 72000.00),
-    ('Rachel', 'Jackson', 1, 'Sales Associate', 'rachel.jackson@gmail.com', '2020-03-15', '2023-06-15', 52000.00),
-    ('Sophia', 'Anderson', 5, 'HR Manager', 'sophia.anderson@gmail.com', '2017-11-20', '2023-10-05', 75000.00);
+    ('John', 'Doe', 1, 'john.doe@gmail.com', '2022-01-01', '2022-07-01', 75000.00, 'manager'),
+    ('Jane', 'Smith', 2, 'jane.smith@gmail.com', '2021-02-15', '2022-08-15', 82000.00, 'manager'),
+    ('Michael', 'Johnson', 3, 'michael.johnson@gmail.com', '2020-03-20', '2022-09-30', 90000.00, 'manager'),
+    ('Emily', 'Williams', 4, 'emily.williams@gmail.com', '2019-04-10', '2022-10-10', 98000.00, 'manager'),
+    ('Daniel', 'Brown', 5, 'daniel.brown@gmail.com', '2018-05-05', '2022-11-20', 105000.00, 'manager');
     
--- Password is '123'
-INSERT INTO user (id, password)
-VALUES (0, '$2a$12$/xbS17qSTXILo1CZ5MpnBOSLjD/oEk.3CvUDT0IDvXGs.sV9JakvK');
-    
-INSERT INTO role (user_id, role)
-VALUES 
-	(0, 'ROLE_EMPLOYEE'),
-	(0, 'ROLE_MANAGER'),
-    (0, 'ROLE_ADMIN');
+-- Insert 15 employees
+INSERT INTO worker (first_name, last_name, department_id, email, employed_since, vacation, salary, type)
+VALUES
+    ('Sarah', 'Clark', 1, 'sarah.clark@gmail.com', '2020-06-15', '2022-06-15', 55000.00, 'employee'),
+    ('Matthew', 'Lee', 2, 'matthew.lee@gmail.com', '2021-01-10', '2022-09-10', 62000.00, 'employee'),
+    ('Olivia', 'Garcia', 3, 'olivia.garcia@gmail.com', '2019-03-25', '2022-08-05', 68000.00, 'employee'),
+    ('William', 'Martinez', 4, 'william.martinez@gmail.com', '2018-07-20', '2022-10-20', 72000.00, 'employee'),
+    ('Ava', 'Rodriguez', 5, 'ava.rodriguez@gmail.com', '2022-02-01', '2022-12-01', 60000.00, 'employee'),
+    ('James', 'Hernandez', 1, 'james.hernandez@gmail.com', '2022-01-15', '2022-08-15', 54000.00, 'employee'),
+    ('Sophia', 'Lopez', 2, 'sophia.lopez@gmail.com', '2021-03-20', '2022-09-30', 61000.00, 'employee'),
+    ('Benjamin', 'Perez', 3, 'benjamin.perez@gmail.com', '2020-05-10', '2022-10-10', 67000.00, 'employee'),
+    ('Emma', 'Gonzalez', 4, 'emma.gonzalez@gmail.com', '2019-08-05', '2022-11-20', 71000.00, 'employee'),
+    ('Alexander', 'Rivera', 5, 'alexander.rivera@gmail.com', '2018-10-15', '2022-06-15', 59000.00, 'employee'),
+    ('Liam', 'Diaz', 1, 'liam.diaz@gmail.com', '2020-02-10', '2022-09-10', 56000.00, 'employee'),
+    ('Mia', 'Wright', 2, 'mia.wright@gmail.com', '2021-04-25', '2022-08-05', 63000.00, 'employee'),
+    ('Ethan', 'Reyes', 3, 'ethan.reyes@gmail.com', '2019-06-20', '2022-10-20', 69000.00, 'employee'),
+    ('Isabella', 'Martin', 4, 'isabella.martin@gmail.com', '2018-09-15', '2022-12-01', 73000.00, 'employee'),
+    ('Noah', 'Jackson', 5, 'noah.jackson@gmail.com', '2022-03-01', '2022-08-15', 57000.00, 'employee');
+
+-- Update positions for existing employees with IDs between 5 and 20
+UPDATE employee
+SET position =
+    CASE
+        WHEN id = 6 THEN 'Sales Associate'
+        WHEN id = 7 THEN 'Marketing Specialist'
+        WHEN id = 8 THEN 'Software Engineer'
+        WHEN id = 9 THEN 'Financial Analyst'
+        WHEN id = 10 THEN 'HR Coordinator'
+        WHEN id = 11 THEN 'Sales Representative'
+        WHEN id = 12 THEN 'Software Developer'
+        WHEN id = 13 THEN 'Marketing Coordinator'
+        WHEN id = 14 THEN 'Financial Planner'
+        WHEN id = 15 THEN 'HR Assistant'
+        WHEN id = 16 THEN 'Sales Manager'
+        WHEN id = 17 THEN 'Software Engineer'
+        WHEN id = 18 THEN 'Marketing Manager'
+        WHEN id = 19 THEN 'Financial Analyst'
+        WHEN id = 20 THEN 'HR Friendly Guy'
+    END
+WHERE id BETWEEN 6 AND 20;

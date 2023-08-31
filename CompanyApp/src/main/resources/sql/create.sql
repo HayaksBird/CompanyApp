@@ -15,6 +15,7 @@ DROP TABLE IF EXISTS role;
 DROP TABLE IF EXISTS user;
 DROP TABLE IF EXISTS employee;
 DROP TABLE IF EXISTS manager;
+DROP TABLE IF EXISTS worker;
 DROP TABLE IF EXISTS department;
 
 
@@ -22,42 +23,44 @@ DROP TABLE IF EXISTS department;
 CREATE TABLE department (
 	id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(50),
-    employee_count INT,
-    min_budget INT
-);
+    employee_count INT DEFAULT 0,
+    min_budget INT DEFAULT 0
+) AUTO_INCREMENT = 1;
 
-CREATE TABLE manager (
-    department_id INT PRIMARY KEY,
+CREATE TABLE worker (
+	id INT PRIMARY KEY AUTO_INCREMENT,
     first_name VARCHAR(50),
     last_name VARCHAR(50),
-    email VARCHAR(50),
+    department_id INT,
+    email VARCHAR(50) CHECK (email LIKE '%@gmail.com'),
     employed_since DATE,
     vacation DATE,
     salary DECIMAL(10, 2),
-    FOREIGN KEY (department_id) REFERENCES department(id)
+    type ENUM('MANAGER', 'EMPLOYEE'),
+    FOREIGN KEY (department_id) REFERENCES department(id) -- Many-to-one relationship
+) AUTO_INCREMENT = 1;
+
+CREATE TABLE manager (
+    id INT PRIMARY KEY,
+    progress_report VARCHAR(100),
+    FOREIGN KEY (id) REFERENCES worker(id)	-- One-to-one relationship
 );
 
 CREATE TABLE employee (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    first_name VARCHAR(50),
-    last_name VARCHAR(50),
-    email VARCHAR(50),
-    department_id INT,
-    position VARCHAR(50),
-    employed_since DATE,
-    vacation DATE,
-    salary DECIMAL(10, 2),
-    FOREIGN KEY (department_id) REFERENCES department(id)
-) AUTO_INCREMENT = 100;
+	id INT PRIMARY KEY,
+	position VARCHAR(50),
+    FOREIGN KEY (id) REFERENCES worker(id)	-- One-to-one relationship
+);
 
 CREATE TABLE user (
 	id INT PRIMARY KEY,
-    password VARCHAR(68)
+    password VARCHAR(68),
+    FOREIGN KEY (id) REFERENCES worker(id)	-- One-to-one relationship
 );
 
 CREATE TABLE role (
 	id INT PRIMARY KEY AUTO_INCREMENT,
     user_id INT,
     role VARCHAR(50),
-    FOREIGN KEY (user_id) REFERENCES user(id)
+    FOREIGN KEY (user_id) REFERENCES user(id) -- Many-to-one relationship
 );
