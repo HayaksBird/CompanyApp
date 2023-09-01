@@ -39,24 +39,25 @@ VALUES
     ('Isabella', 'Martin', 4, 'isabella.martin@gmail.com', '2018-09-15', '2022-12-01', 73000.00, 'employee'),
     ('Noah', 'Jackson', 5, 'noah.jackson@gmail.com', '2022-03-01', '2022-08-15', 57000.00, 'employee');
 
--- Update positions for existing employees with IDs between 5 and 20
-UPDATE employee
-SET position =
-    CASE
-        WHEN id = 6 THEN 'Sales Associate'
-        WHEN id = 7 THEN 'Marketing Specialist'
-        WHEN id = 8 THEN 'Software Engineer'
-        WHEN id = 9 THEN 'Financial Analyst'
-        WHEN id = 10 THEN 'HR Coordinator'
-        WHEN id = 11 THEN 'Sales Representative'
-        WHEN id = 12 THEN 'Software Developer'
-        WHEN id = 13 THEN 'Marketing Coordinator'
-        WHEN id = 14 THEN 'Financial Planner'
-        WHEN id = 15 THEN 'HR Assistant'
-        WHEN id = 16 THEN 'Sales Manager'
-        WHEN id = 17 THEN 'Software Engineer'
-        WHEN id = 18 THEN 'Marketing Manager'
-        WHEN id = 19 THEN 'Financial Analyst'
-        WHEN id = 20 THEN 'HR Friendly Guy'
-    END
-WHERE id BETWEEN 6 AND 20;
+-- Insert new managers with IDs between 1 and 5
+INSERT INTO manager (id)
+VALUES (1), (2), (3), (4), (5);
+
+-- Insert new employees with IDs between 6 and 20
+INSERT INTO employee (id, position)
+VALUES
+    (6, 'Sales Associate'),
+    (7, 'Marketing Specialist'),
+    (8, 'Software Engineer'),
+    (9, 'Financial Analyst'),
+    (10, 'HR Coordinator'),
+    (11, 'Sales Representative'),
+    (12, 'Software Developer'),
+    (13, 'Marketing Coordinator'),
+    (14, 'Financial Planner'),
+    (15, 'HR Assistant'),
+    (16, 'Sales Manager'),
+    (17, 'Software Engineer'),
+    (18, 'Marketing Manager'),
+    (19, 'Financial Analyst'),
+    (20, 'HR Friendly Guy');

@@ -15,15 +15,16 @@ public class Role {
     @Column(name = "user_id")
     private int userId;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "role")
-    private String role;
+    private WorkerType role;
 
 
     //CONSTRUCTORS
     public Role() {}
 
 
-    public Role(String role, int userId) {
+    public Role(WorkerType role, int userId) {
         this.role = role;
         this.userId = userId;
     }
@@ -38,19 +39,19 @@ public class Role {
         this.id = id;
     }
 
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
     public int getUserId() {
         return userId;
     }
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public WorkerType getRole() {
+        return role;
+    }
+
+    public void setRole(WorkerType role) {
+        this.role = role;
     }
 }

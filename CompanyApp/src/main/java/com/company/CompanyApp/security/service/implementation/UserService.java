@@ -32,7 +32,6 @@ public class UserService implements IUserService {
     public User getUser(int id) {
         var user = userRepository.findById(id);
 
-        if (user.isPresent()) return user.get();
-        else return null;
+        return user.orElse(null);
     }
 }

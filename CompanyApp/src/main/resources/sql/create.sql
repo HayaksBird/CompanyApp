@@ -61,6 +61,6 @@ CREATE TABLE user (
 CREATE TABLE role (
 	id INT PRIMARY KEY AUTO_INCREMENT,
     user_id INT,
-    role VARCHAR(50),
+    role ENUM('MANAGER', 'EMPLOYEE'),
     FOREIGN KEY (user_id) REFERENCES user(id) -- Many-to-one relationship
 );
