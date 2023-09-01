@@ -1,8 +1,10 @@
 package com.company.CompanyApp.security;
 
+import com.company.CompanyApp.enums.WorkerType;
 import com.company.CompanyApp.security.filter.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -46,7 +48,10 @@ public class SecurityConfig {
                                 .requestMatchers("/auth/**").permitAll()
                                 .requestMatchers("/css/**").permitAll()
                                 //Regarding home page
-                                .requestMatchers("/home").hasRole("EMPLOYEE")
+                                .requestMatchers(HttpMethod.GET,"/home")
+                                    .hasRole(WorkerType.EMPLOYEE.name())
+                                .requestMatchers(HttpMethod.GET,"/home/**")
+                                    .hasRole(WorkerType.EMPLOYEE.name())
         );
 
         http.csrf(csrf -> csrf.disable());
@@ -54,8 +59,8 @@ public class SecurityConfig {
                     .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                     //Specify the auth entry point to use, when an auth exception is met
                     .exceptionHandling(
-                            exceptionHandling -> exceptionHandling
-                                    .authenticationEntryPoint(authEntryPoint)
+                        exceptionHandling -> exceptionHandling
+                            .authenticationEntryPoint(authEntryPoint)
                     )
                     .build();
     }

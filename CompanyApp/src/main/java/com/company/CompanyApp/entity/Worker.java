@@ -1,5 +1,6 @@
 package com.company.CompanyApp.entity;
 
+import com.company.CompanyApp.enums.WorkerType;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;

@@ -14,7 +14,7 @@ VALUES
 -- Insert 5 managers
 INSERT INTO worker (first_name, last_name, department_id, email, employed_since, vacation, salary, type)
 VALUES
-    ('John', 'Doe', 1, 'john.doe@gmail.com', '2022-01-01', '2022-07-01', 75000.00, 'manager'),
+    ('Esmiralda', 'Nurieva', 1, 'enurieva71@gmail.com', '2022-01-01', '2022-07-01', 75000.00, 'manager'),
     ('Jane', 'Smith', 2, 'jane.smith@gmail.com', '2021-02-15', '2022-08-15', 82000.00, 'manager'),
     ('Michael', 'Johnson', 3, 'michael.johnson@gmail.com', '2020-03-20', '2022-09-30', 90000.00, 'manager'),
     ('Emily', 'Williams', 4, 'emily.williams@gmail.com', '2019-04-10', '2022-10-10', 98000.00, 'manager'),

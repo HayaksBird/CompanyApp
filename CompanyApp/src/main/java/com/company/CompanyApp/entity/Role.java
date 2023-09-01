@@ -1,5 +1,6 @@
 package com.company.CompanyApp.entity;
 
+import com.company.CompanyApp.enums.RoleType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.*;
@@ -17,14 +18,14 @@ public class Role {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
-    private WorkerType role;
+    private RoleType role;
 
 
     //CONSTRUCTORS
     public Role() {}
 
 
-    public Role(WorkerType role, int userId) {
+    public Role(RoleType role, int userId) {
         this.role = role;
         this.userId = userId;
     }
@@ -47,11 +48,11 @@ public class Role {
         this.userId = userId;
     }
 
-    public WorkerType getRole() {
+    public RoleType getRole() {
         return role;
     }
 
-    public void setRole(WorkerType role) {
+    public void setRole(RoleType role) {
         this.role = role;
     }
 }

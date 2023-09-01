@@ -1,6 +1,7 @@
 package com.company.CompanyApp.security.service.implementation;
 
 import com.company.CompanyApp.entity.User;
+import com.company.CompanyApp.entity.Worker;
 import com.company.CompanyApp.exception.BadLoginInputException;
 import com.company.CompanyApp.exception.WorkerkNotFoundException;
 import com.company.CompanyApp.security.dto.AuthenticationRequest;
@@ -29,29 +30,27 @@ import java.util.UUID;
 public class AuthenticationService implements IAuthenticationService {
     private final IUserService userService;
     private final PasswordEncoder passwordEncoder;
-    private final IEmployeeService employeeService;
-    private final IManagerService managerService;
+    private final IWorkerService workerService;
     private final IJwtService jwtService;
     private final IGmailService gmailService;
     private final AuthenticationManager authenticationManager;
+    private Worker worker = null;
 
 
     //CONSTRUCTORS
     public AuthenticationService(IUserService userService,
                                  PasswordEncoder passwordEncoder,
                                  AuthenticationManager authenticationManager,
-                                 IEmployeeService employeeService,
-                                 IManagerService managerService,
+                                 IWorkerService workerService,
                                  IGmailService gmailService,
                                  IJwtService jwtService) {
 
         this.authenticationManager = authenticationManager;
         this.passwordEncoder = passwordEncoder;
         this.userService = userService;
-        this.employeeService = employeeService;
-        this.managerService = managerService;
         this.gmailService = gmailService;
         this.jwtService = jwtService;
+        this.workerService = workerService;
     }
 
 
@@ -66,10 +65,10 @@ public class AuthenticationService implements IAuthenticationService {
 
         try {
             authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(
-                            request.getId(),
-                            request.getPassword()
-                    )
+                new UsernamePasswordAuthenticationToken(
+                    request.getId(),
+                    request.getPassword()
+                )
             );
         } catch (AuthenticationException ex) {
             throw new BadLoginInputException();
@@ -88,7 +87,7 @@ public class AuthenticationService implements IAuthenticationService {
 
         user.setId(Integer.parseInt(request.getId()));
         user.setPassword(passwordEncoder.encode(request.getPassword()));
-        user.setRoles();
+        user.setRoles(worker.getType());
 
         userService.addUser(user);
 
@@ -133,11 +132,8 @@ public class AuthenticationService implements IAuthenticationService {
         String gmail;
         String validCode;
 
-        if (userId < 100) {
-            gmail = managerService.getManager(userId).getEmail();
-        } else {
-            gmail = employeeService.getEmployee(userId).getEmail();
-        }
+        worker = workerService.getWorker(userId);
+        gmail = worker.getEmail();
 
         validCode = UUID.randomUUID().toString().substring(0, 11);
 

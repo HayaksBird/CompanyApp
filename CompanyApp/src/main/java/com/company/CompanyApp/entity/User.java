@@ -1,5 +1,7 @@
 package com.company.CompanyApp.entity;
 
+import com.company.CompanyApp.enums.WorkerType;
+import com.company.CompanyApp.enums.RoleType;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -23,11 +25,6 @@ public class User implements UserDetails {
     @JoinColumn(name = "user_id",
                 referencedColumnName = "id")
     private List<Role> roles;
-
-    @OneToOne
-    @JoinColumn(name = "id",
-            referencedColumnName = "id")
-    private Worker worker;
 
 
     //CONSTRUCTORS
@@ -84,26 +81,18 @@ public class User implements UserDetails {
         this.id = id;
     }
 
-    public Worker getWorker() {
-        return worker;
-    }
-
-    public void setWorker(Worker worker) {
-        this.worker = worker;
-    }
-
     public void setPassword(String password) {
         this.password = password;
     }
 
-    public void setRoles() {
-        roles = new ArrayList<Role>();
+    public void setRoles(WorkerType type) {
+        roles = new ArrayList<>();
 
-        switch (worker.getType()) {
-            case EMPLOYEE -> roles.add(new Role(WorkerType.EMPLOYEE, id));
+        switch (type) {
+            case EMPLOYEE -> roles.add(new Role(RoleType.ROLE_EMPLOYEE, id));
             case MANAGER -> {
-                roles.add(new Role(WorkerType.EMPLOYEE, id));
-                roles.add(new Role(WorkerType.MANAGER, id));
+                roles.add(new Role(RoleType.ROLE_EMPLOYEE, id));
+                roles.add(new Role(RoleType.ROLE_MANAGER, id));
             }
         }
     }

@@ -8,6 +8,8 @@
     <link rel="stylesheet" th:href="@{/css/view.css}">
 </head>
 <body>
-    <p th:text="'Welcome to your home page!'" class="title"/>
+    <p th:text="'Welcome, ' +
+                ${user.getFirstName()} + ' ' +
+                ${user.getLastName()}" class="center">
 </body>
 </html>
