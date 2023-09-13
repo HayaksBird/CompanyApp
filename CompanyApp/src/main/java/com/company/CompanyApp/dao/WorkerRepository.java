@@ -1,6 +1,6 @@
 package com.company.CompanyApp.dao;
 
-import com.company.CompanyApp.entity.Worker;
+import com.company.CompanyApp.entity.worker.Worker;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

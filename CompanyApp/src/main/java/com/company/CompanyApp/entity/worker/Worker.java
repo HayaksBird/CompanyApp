@@ -1,4 +1,4 @@
-package com.company.CompanyApp.entity;
+package com.company.CompanyApp.entity.worker;
 
 import com.company.CompanyApp.enums.WorkerType;
 import jakarta.persistence.*;
@@ -37,13 +37,44 @@ public class Worker {
     private BigDecimal salary;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "type")
-    private WorkerType type;
+    @Column(name = "worker_type")
+    private WorkerType workerType;
+
+    @Column(name = "position")
+    private String position;
 
 
     //CONSTRUCTORS
     public Worker() {}
 
+
+    public Worker(int id,
+                  String firstName,
+                  String lastName,
+                  int departmentId,
+                  String email,
+                  Date employedSince,
+                  Date vacation,
+                  BigDecimal salary,
+                  WorkerType workerType,
+                  String position) {
+
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.departmentId = departmentId;
+        this.email = email;
+        this.employedSince = employedSince;
+        this.vacation = vacation;
+        this.salary = salary;
+        this.workerType = workerType;
+        this.position = position;
+    }
+
+    @Override
+    public String toString() {
+        return null;
+    }
 
     //Getters & Setters
     public int getId() {
@@ -110,11 +141,19 @@ public class Worker {
         this.salary = salary;
     }
 
-    public WorkerType getType() {
-        return type;
+    public WorkerType getWorkerType() {
+        return workerType;
     }
 
-    public void setType(WorkerType type) {
-        this.type = type;
+    public void setWorkerType(WorkerType workerType) {
+        this.workerType = workerType;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
     }
 }

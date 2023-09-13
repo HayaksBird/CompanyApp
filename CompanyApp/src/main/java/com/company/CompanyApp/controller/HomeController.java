@@ -1,8 +1,9 @@
 package com.company.CompanyApp.controller;
 
-import com.company.CompanyApp.entity.Worker;
-import com.company.CompanyApp.service.IWorkerService;
-import org.springframework.security.core.context.SecurityContextHolder;
+import com.company.CompanyApp.entity.Department;
+import com.company.CompanyApp.entity.worker.Worker;
+import com.company.CompanyApp.enums.WorkerType;
+import com.company.CompanyApp.service.IDepartmentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,21 +14,44 @@ import org.springframework.context.annotation.Lazy;
 @Controller
 @RequestMapping("/home")
 public class HomeController {
+    private final WorkerType type;
+    private Department usersDepartment;
     private final Worker loggedUser;
-    private final IWorkerService workerService;
+    private final IDepartmentService departmentService;
 
 
-    public HomeController(IWorkerService workerService) {
-        String id = SecurityContextHolder.getContext().getAuthentication().getName();
-        this.workerService = workerService;
+    public HomeController(Worker loggedUser,
+                          IDepartmentService departmentService) {
 
-        loggedUser = workerService.getWorker(Integer.parseInt(id));
+        this.loggedUser = loggedUser;
+        this.departmentService = departmentService;
+
+        type = loggedUser.getWorkerType();
     }
 
 
     @GetMapping("")
     public String showHomePage(Model model) {
         model.addAttribute("user", loggedUser);
-        return "home-page";
+        return "app/home-page";
+    }
+
+
+    @GetMapping("/personal")
+    public String viewUserInfo() {
+        return "Shit";
+    }
+
+
+    @GetMapping("/department")
+    public String viewDepartmentInfo(Model model) {
+        if (usersDepartment == null) {
+            usersDepartment = departmentService.getDepartment(loggedUser.getDepartmentId());
+        }
+
+        model.addAttribute("type", type);
+        model.addAttribute("department", usersDepartment);
+
+        return "app/department-page";
     }
 }

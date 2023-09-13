@@ -4,16 +4,16 @@ USE company;
 This query script creates all the necessary for the company tables.
 
 NOTE:
-Every department must have one manager. For this reason, there is a one-to-one relation
-between the manager table and the department table.
-The username of both the managers and the employees
-is tied to their id. Thus, in order not to have their ids overlaped it was decided
-to start the employee id at 100.
+It is foreseen that the company might have different types of workers with different requiered fields. 
+For this exact reason there will be a generic table 'worker' which the tables with specific worker types 
+will "extendt". Meaning, there will be a one-to-one relationship between theese tables. 
 */
 
 DROP TABLE IF EXISTS role;
 DROP TABLE IF EXISTS user;
-DROP TABLE IF EXISTS employee;
+DROP TABLE IF EXISTS software_developer;
+DROP TABLE IF EXISTS data_analyst;
+DROP TABLE IF EXISTS intern;
 DROP TABLE IF EXISTS manager;
 DROP TABLE IF EXISTS worker;
 DROP TABLE IF EXISTS department;
@@ -36,7 +36,11 @@ CREATE TABLE worker (
     employed_since DATE,
     vacation DATE,
     salary DECIMAL(10, 2),
-    type ENUM('MANAGER', 'EMPLOYEE'),
+    worker_type ENUM('MANAGER', 
+					 'SOFTWARE_DEVELOPER', 
+					 'DATA_ANALYST', 
+					 'INTERN'),
+    position VARCHAR(50),
     FOREIGN KEY (department_id) REFERENCES department(id) -- Many-to-one relationship
 ) AUTO_INCREMENT = 1;
 
@@ -46,14 +50,36 @@ CREATE TABLE manager (
     FOREIGN KEY (id) REFERENCES worker(id)	-- One-to-one relationship
 );
 
-CREATE TABLE employee (
+CREATE TABLE software_developer (
 	id INT PRIMARY KEY,
-	position VARCHAR(50),
+    position_type ENUM('SENIOR', 'JUNIOR'),
+    field VARCHAR(50),
+	project VARCHAR(100),
+    programming_language VARCHAR(100),
+    FOREIGN KEY (id) REFERENCES worker(id)	-- One-to-one relationship
+);
+
+CREATE TABLE data_analyst (
+	id INT PRIMARY KEY,
+    position_type ENUM('SENIOR', 'JUNIOR'),
+	database_ VARCHAR(50),
+    FOREIGN KEY (id) REFERENCES worker(id)	-- One-to-one relationship
+);
+
+CREATE TABLE intern (
+	id INT PRIMARY KEY,
+	university VARCHAR(50),
+    employed_until DATE,
+    has_university_insurance BOOLEAN,
     FOREIGN KEY (id) REFERENCES worker(id)	-- One-to-one relationship
 );
 
 CREATE TABLE user (
 	id INT PRIMARY KEY,
+    type ENUM('MANAGER', 
+			  'SOFTWARE_DEVELOPER', 
+			  'DATA_ANALYST', 
+			  'INTERN'),
     password VARCHAR(68),
     FOREIGN KEY (id) REFERENCES worker(id)	-- One-to-one relationship
 );
@@ -61,6 +87,6 @@ CREATE TABLE user (
 CREATE TABLE role (
 	id INT PRIMARY KEY AUTO_INCREMENT,
     user_id INT,
-    role ENUM('ROLE_MANAGER', 'ROLE_EMPLOYEE'),
+    role ENUM('ROLE_A', 'ROLE_B', 'ROLE_C', 'ROLE_D'),
     FOREIGN KEY (user_id) REFERENCES user(id) -- Many-to-one relationship
 );

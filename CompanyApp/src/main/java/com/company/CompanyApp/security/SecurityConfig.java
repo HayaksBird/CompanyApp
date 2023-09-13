@@ -1,6 +1,6 @@
 package com.company.CompanyApp.security;
 
-import com.company.CompanyApp.enums.WorkerType;
+import com.company.CompanyApp.enums.RoleType;
 import com.company.CompanyApp.security.filter.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -49,19 +49,25 @@ public class SecurityConfig {
                                 .requestMatchers("/css/**").permitAll()
                                 //Regarding home page
                                 .requestMatchers(HttpMethod.GET,"/home")
-                                    .hasRole(WorkerType.EMPLOYEE.name())
+                                    .hasRole(getRole(RoleType.ROLE_D))
                                 .requestMatchers(HttpMethod.GET,"/home/**")
-                                    .hasRole(WorkerType.EMPLOYEE.name())
+                                    .hasRole(getRole(RoleType.ROLE_D))
         );
 
         http.csrf(csrf -> csrf.disable());
         return  http.authenticationProvider(authenticationProvider)
-                    .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-                    //Specify the auth entry point to use, when an auth exception is met
-                    .exceptionHandling(
-                        exceptionHandling -> exceptionHandling
-                            .authenticationEntryPoint(authEntryPoint)
-                    )
-                    .build();
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+                //Specify the auth entry point to use, when an auth exception is met
+                .exceptionHandling(
+                    exceptionHandling -> exceptionHandling
+                        .authenticationEntryPoint(authEntryPoint)
+                )
+                .build();
+    }
+
+
+    private String getRole(RoleType role) {
+        String strRole = role.name();
+        return strRole.substring(5);
     }
 }

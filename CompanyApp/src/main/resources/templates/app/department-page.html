@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Department Info Page</title>
+
+    <!-- reference CSS file -->
+    <link rel="stylesheet" th:href="@{/css/view.css}">
+</head>
+<body>
+    <!-- If an employee views their department-->
+    <div th:if="${#strings.startsWith(type.toString(), 'EMPLOYEE')}">
+        <div th:replace="repository.html :: DepartmentTitle(${department.getName()})"></div>
+        <br><br>
+
+        <div th:replace="repository.html :: DepartmentWorkers(${department.getWorkers()})"></div>
+    </div>
+
+    <!-- If a manager views their department-->
+    <div th:if="${#strings.startsWith(type.toString(), 'MANAGER')}">
+        <div th:replace="repository.html :: DepartmentTitle(${department.getName()})"></div>
+        <br><br>
+
+        <div th:replace="repository.html :: DepartmentStats(${department.getMinBudget()},
+                                                            ${department.getEmployeeCount()})"></div>
+        <div th:replace="repository.html :: DepartmentWorkers(${department.getWorkers()})"></div>
+    </div>
+
+
+</body>
+</html>

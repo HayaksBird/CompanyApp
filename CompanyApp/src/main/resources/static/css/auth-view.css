@@ -1,0 +1,128 @@
+* {
+    /* CLEAR ANY OFFSET */
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: sans-serif;
+    color: #383838;
+    background-color: #383838;
+
+    display: flex;
+    justify-content: center;
+}
+
+h1 {
+    text-align: center;
+    font-size: max(2.3vw, 1.3rem); /* font is 2.5% of the view port */
+}
+
+p {
+    font-size: max(1.2vw, 0.7rem);
+}
+
+span {
+    font-size: max(1.2vw, 0.7rem);
+}
+
+
+/* CLASSES */
+.container {
+    width: max(38%, 400px);
+    margin-top: 5%;
+
+    background-color: #f7f7f7;
+    border: 3px solid black;
+}
+
+.main-header {
+    margin-top: 8%;
+    margin-bottom: 12%;
+}
+
+.input-field {
+    display: flex;
+    justify-content: center;
+    margin-bottom: max(0.5vw, 5px);
+}
+
+.input-field input {
+    width: max(12.5vw, 8rem);
+    height: max(1.5vw, 1rem);
+}
+
+/* ERROR */
+.error-block {
+    margin: max(1vw, 10px) 0;
+}
+
+.error-item {
+    height: max(1.25vw, 0.6rem);
+    display: flex;
+    justify-content: center;
+}
+
+.error {
+    color: red;
+    font-weight: bold;
+}
+
+.submit-button {
+    display: flex;
+    justify-content: center;
+}
+
+.submit-button button {
+    margin: max(1vw, 10px) 0;
+    padding: max(0.8vw, 5px) max(6vw, 15px);
+    font-size: max(1.2vw, 0.7rem);
+
+    background-color: #383838;
+    color: #f7f7f7;
+    text-transform: uppercase;
+    font-weight: bold;
+    border: 2px solid #383838;
+}
+
+.submit-button button:hover {
+    cursor: pointer;
+    background-color: #f7f7f7;
+    color: #383838;
+}
+
+.to-register {
+    margin-top: max(4vw, 40px);
+    margin-bottom: max(1vw, 10px);
+
+    display: flex;
+    justify-content: center;
+    gap: max(1vw, 10px);
+}
+
+.to-register span {
+    font-style: italic;
+    font-weight: bold;
+}
+
+.to-register button {
+    background-color: #383838;
+    color: #f7f7f7;
+
+    padding: max(0.1vw, 1.5px) max(1vw, 2px);
+    font-size: max(1vw, 0.7rem);
+    border: 1px solid #383838;
+}
+
+.to-register button:hover {
+    cursor: pointer;
+    background-color: #f7f7f7;
+    color: #383838;
+}
+
+.email-note {
+    display: flex;
+    justify-content: center;
+    margin-top: max(1vw, 10px);
+}

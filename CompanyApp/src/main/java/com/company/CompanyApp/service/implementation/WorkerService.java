@@ -1,7 +1,7 @@
 package com.company.CompanyApp.service.implementation;
 
 import com.company.CompanyApp.dao.WorkerRepository;
-import com.company.CompanyApp.entity.Worker;
+import com.company.CompanyApp.entity.worker.Worker;
 import com.company.CompanyApp.exception.WorkerkNotFoundException;
 import com.company.CompanyApp.service.IWorkerService;
 import org.springframework.stereotype.Service;

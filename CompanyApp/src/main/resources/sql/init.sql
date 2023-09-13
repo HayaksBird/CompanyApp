@@ -5,59 +5,51 @@ Initialize sample data for the test
 */
 INSERT INTO department (name)
 VALUES
-    ('Sales'),
-    ('Marketing'),
-    ('IT'),
-    ('Finance'),
-    ('HR');
+    ('Analytics'),
+    ('IT');
     
--- Insert 5 managers
-INSERT INTO worker (first_name, last_name, department_id, email, employed_since, vacation, salary, type)
+-- Insert data for the 'Analytics' department
+INSERT INTO worker (first_name, last_name, department_id, email, employed_since, vacation, salary, worker_type, position)
 VALUES
-    ('Esmiralda', 'Nurieva', 1, 'enurieva71@gmail.com', '2022-01-01', '2022-07-01', 75000.00, 'manager'),
-    ('Jane', 'Smith', 2, 'jane.smith@gmail.com', '2021-02-15', '2022-08-15', 82000.00, 'manager'),
-    ('Michael', 'Johnson', 3, 'michael.johnson@gmail.com', '2020-03-20', '2022-09-30', 90000.00, 'manager'),
-    ('Emily', 'Williams', 4, 'emily.williams@gmail.com', '2019-04-10', '2022-10-10', 98000.00, 'manager'),
-    ('Daniel', 'Brown', 5, 'daniel.brown@gmail.com', '2018-05-05', '2022-11-20', 105000.00, 'manager');
-    
--- Insert 15 employees
-INSERT INTO worker (first_name, last_name, department_id, email, employed_since, vacation, salary, type)
-VALUES
-    ('Sarah', 'Clark', 1, 'sarah.clark@gmail.com', '2020-06-15', '2022-06-15', 55000.00, 'employee'),
-    ('Matthew', 'Lee', 2, 'matthew.lee@gmail.com', '2021-01-10', '2022-09-10', 62000.00, 'employee'),
-    ('Olivia', 'Garcia', 3, 'olivia.garcia@gmail.com', '2019-03-25', '2022-08-05', 68000.00, 'employee'),
-    ('William', 'Martinez', 4, 'william.martinez@gmail.com', '2018-07-20', '2022-10-20', 72000.00, 'employee'),
-    ('Ava', 'Rodriguez', 5, 'ava.rodriguez@gmail.com', '2022-02-01', '2022-12-01', 60000.00, 'employee'),
-    ('James', 'Hernandez', 1, 'james.hernandez@gmail.com', '2022-01-15', '2022-08-15', 54000.00, 'employee'),
-    ('Sophia', 'Lopez', 2, 'sophia.lopez@gmail.com', '2021-03-20', '2022-09-30', 61000.00, 'employee'),
-    ('Benjamin', 'Perez', 3, 'benjamin.perez@gmail.com', '2020-05-10', '2022-10-10', 67000.00, 'employee'),
-    ('Emma', 'Gonzalez', 4, 'emma.gonzalez@gmail.com', '2019-08-05', '2022-11-20', 71000.00, 'employee'),
-    ('Alexander', 'Rivera', 5, 'alexander.rivera@gmail.com', '2018-10-15', '2022-06-15', 59000.00, 'employee'),
-    ('Liam', 'Diaz', 1, 'liam.diaz@gmail.com', '2020-02-10', '2022-09-10', 56000.00, 'employee'),
-    ('Mia', 'Wright', 2, 'mia.wright@gmail.com', '2021-04-25', '2022-08-05', 63000.00, 'employee'),
-    ('Ethan', 'Reyes', 3, 'ethan.reyes@gmail.com', '2019-06-20', '2022-10-20', 69000.00, 'employee'),
-    ('Isabella', 'Martin', 4, 'isabella.martin@gmail.com', '2018-09-15', '2022-12-01', 73000.00, 'employee'),
-    ('Noah', 'Jackson', 5, 'noah.jackson@gmail.com', '2022-03-01', '2022-08-15', 57000.00, 'employee');
+    ('Esmiralda', 'Nurieva', 1, 'enurieva71@gmail.com', '2022-01-01', '2023-01-01', 80000.00, 'MANAGER', 'Manager'),
+    ('Jane', 'Smith', 1, 'senior1@gmail.com', '2022-01-15', '2023-01-15', 60000.00, 'DATA_ANALYST', 'Senior Business Analyst'),
+    ('Michael', 'Brown', 1, 'senior2@gmail.com', '2022-02-01', '2023-02-01', 60000.00, 'DATA_ANALYST', 'Principal Data Analyst'),
+    ('Sarah', 'Johnson', 1, 'junior1@gmail.com', '2022-02-15', '2023-02-15', 45000.00, 'DATA_ANALYST', 'Data Coordinator'),
+    ('Robert', 'Wilson', 1, 'junior2@gmail.com', '2022-03-01', '2023-03-01', 45000.00, 'DATA_ANALYST', 'Research Assistant'),
+    ('Emily', 'Davis', 1, 'intern1@gmail.com', '2023-06-01', '2023-08-01', 30000.00, 'INTERN', 'Data Technician');
 
--- Insert new managers with IDs between 1 and 5
+-- Insert data for the 'IT' department
+INSERT INTO worker (first_name, last_name, department_id, email, employed_since, vacation, salary, worker_type, position)
+VALUES
+    ('David', 'Miller', 2, 'manager2@gmail.com', '2022-01-01', '2023-01-01', 80000.00, 'MANAGER', 'Manager'),
+    ('Olivia', 'Anderson', 2, 'seniordev1@gmail.com', '2022-01-15', '2023-01-15', 70000.00, 'SOFTWARE_DEVELOPER', 'Lead Developer'),
+    ('William', 'Jones', 2, 'seniordev2@gmail.com', '2022-02-01', '2023-02-01', 70000.00, 'SOFTWARE_DEVELOPER', 'Senior Frontend Developer'),
+    ('Elizabeth', 'Taylor', 2, 'juniord1@gmail.com', '2022-02-15', '2023-02-15', 55000.00, 'SOFTWARE_DEVELOPER', 'Entry-Level Software Developer'),
+    ('Matthew', 'Clark', 2, 'juniord2@gmail.com', '2022-03-01', '2023-03-01', 55000.00, 'SOFTWARE_DEVELOPER', 'Trainee Software Developer'),
+    ('Sophia', 'Brown', 2, 'intern2@gmail.com', '2023-06-01', '2023-08-01', 30000.00, 'INTERN', 'Apprentice Developer');
+
+-- Insert Managers
 INSERT INTO manager (id)
-VALUES (1), (2), (3), (4), (5);
+VALUES (1), (7);
 
--- Insert new employees with IDs between 6 and 20
-INSERT INTO employee (id, position)
+-- Insert Data Analysts
+INSERT INTO data_analyst (id, position_type, database_)
 VALUES
-    (6, 'Sales Associate'),
-    (7, 'Marketing Specialist'),
-    (8, 'Software Engineer'),
-    (9, 'Financial Analyst'),
-    (10, 'HR Coordinator'),
-    (11, 'Sales Representative'),
-    (12, 'Software Developer'),
-    (13, 'Marketing Coordinator'),
-    (14, 'Financial Planner'),
-    (15, 'HR Assistant'),
-    (16, 'Sales Manager'),
-    (17, 'Software Engineer'),
-    (18, 'Marketing Manager'),
-    (19, 'Financial Analyst'),
-    (20, 'HR Friendly Guy');
+    (2, 'SENIOR', 'MySQL'),
+    (3, 'SENIOR', 'SQL Server'),
+    (4, 'JUNIOR', 'MySQL'),
+    (5, 'JUNIOR', 'MySQL');
+
+-- Insert Software Developers
+INSERT INTO software_developer (id, position_type, field, project, programming_language)
+VALUES
+    (8, 'SENIOR', 'Security', 'Project A', 'Java'),
+    (9, 'SENIOR', 'Front end', 'Project B', 'CSS'),
+    (10, 'JUNIOR', 'Front end', 'Project C', 'JavaScript'),
+    (11, 'JUNIOR', 'Back end', 'Project D', 'C#');
+    
+-- For Interns in the 'Analytics' department Insert Interns
+INSERT INTO intern (id, university, employed_until, has_university_insurance)
+VALUES
+	(6, 'ABC University', '2023-08-01', TRUE),
+    (12, 'XYZ University', '2023-08-01', FALSE);

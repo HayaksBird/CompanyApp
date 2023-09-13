@@ -1,6 +1,11 @@
 package com.company.CompanyApp.enums;
 
+/**
+ * Types of roles a user can have
+ */
 public enum RoleType {
-    ROLE_MANAGER,
-    ROLE_EMPLOYEE
+    ROLE_D,
+    ROLE_C,
+    ROLE_B,
+    ROLE_A
 }

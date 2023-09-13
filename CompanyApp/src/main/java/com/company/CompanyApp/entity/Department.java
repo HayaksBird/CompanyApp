@@ -1,5 +1,6 @@
 package com.company.CompanyApp.entity;
 
+import com.company.CompanyApp.entity.worker.Worker;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -20,7 +21,8 @@ public class Department {
     @Column(name = "min_budget")
     private int minBudget;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL,
+                fetch = FetchType.LAZY)
     @JoinColumn(name = "department_id",
                 referencedColumnName = "id")
     private List<Worker> workers;

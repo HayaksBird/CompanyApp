@@ -1,25 +1,44 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Verification Page</title>
+    <head>
+        <meta charset="UTF-8">
+        <title>Verification Page</title>
 
-    <!-- reference CSS file -->
-    <link rel="stylesheet" th:href="@{/css/view.css}">
-</head>
-<body>
-    <p th:text="'Enter the verification code'" class="title"/>
-    <br><br><br><br>
+        <!-- reference CSS file -->
+        <link rel="stylesheet" th:href="@{/css/auth-view.css}">
+    </head>
 
-    <form th:action="@{/auth/verify}" th:object="${verify}" method="POST">
-        Code: <input type="text" th:field="*{inputCode}" />
+    <body>
+        <div class="container">
+            <header class="main-header">
+                <h1>Enter the verification code</h1>
 
-        <span th:if="${#fields.hasErrors('inputCode')}"
-              th:errors="*{inputCode}"
-              class="error"></span>
-        <br><br>
+                <div class="email-note">
+                    <span>We have sent a verification code to your email account</span>
+                </div>
+            </header>
 
-        <input type="submit" value="Submit"/>
-    </form>
-</body>
+            <!-- VERIFICATION FORM -->
+            <form th:action="@{/auth/verify}" th:object="${verify}" method="POST">
+                <!-- CODE REQUEST -->
+                <div class="input-field">
+                    <input type="text" th:field="*{inputCode}" placeholder="Code"/>
+                </div>
+
+                <!-- ERRORS -->
+                <div class="error-block">
+                    <div class="error-item">
+                        <p th:if="${#fields.hasErrors('inputCode')}"
+                            th:errors="*{inputCode}"
+                            class="error"></p>
+                    </div>
+                </div>
+
+                <!-- SUBMIT BUTTON -->
+                <div class="submit-button">
+                    <button type="submit">Submit</button>
+                </div>
+            </form>
+        </div>
+    </body>
 </html>

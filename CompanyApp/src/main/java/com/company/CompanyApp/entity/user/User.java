@@ -1,7 +1,6 @@
-package com.company.CompanyApp.entity;
+package com.company.CompanyApp.entity.user;
 
 import com.company.CompanyApp.enums.WorkerType;
-import com.company.CompanyApp.enums.RoleType;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -20,6 +19,10 @@ public class User implements UserDetails {
 
     @Column(name = "password")
     private String password;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "type")
+    private WorkerType type;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id",
@@ -73,6 +76,10 @@ public class User implements UserDetails {
         return true;
     }
 
+    public WorkerType getType() { return type; }
+
+    public void setType(WorkerType type) { this.type = type; }
+
     public int getId() {
         return id;
     }
@@ -85,15 +92,7 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    public void setRoles(WorkerType type) {
-        roles = new ArrayList<>();
-
-        switch (type) {
-            case EMPLOYEE -> roles.add(new Role(RoleType.ROLE_EMPLOYEE, id));
-            case MANAGER -> {
-                roles.add(new Role(RoleType.ROLE_EMPLOYEE, id));
-                roles.add(new Role(RoleType.ROLE_MANAGER, id));
-            }
-        }
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 }

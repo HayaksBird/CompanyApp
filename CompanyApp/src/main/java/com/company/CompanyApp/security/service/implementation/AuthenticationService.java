@@ -1,7 +1,7 @@
 package com.company.CompanyApp.security.service.implementation;
 
-import com.company.CompanyApp.entity.User;
-import com.company.CompanyApp.entity.Worker;
+import com.company.CompanyApp.entity.user.User;
+import com.company.CompanyApp.entity.worker.Worker;
 import com.company.CompanyApp.exception.BadLoginInputException;
 import com.company.CompanyApp.exception.WorkerkNotFoundException;
 import com.company.CompanyApp.security.dto.AuthenticationRequest;
@@ -83,11 +83,10 @@ public class AuthenticationService implements IAuthenticationService {
      */
     @Override
     public void register(AuthenticationRequest request) {
-        User user = new User();
+        User user;
 
-        user.setId(Integer.parseInt(request.getId()));
+        user = userService.createUser(worker);
         user.setPassword(passwordEncoder.encode(request.getPassword()));
-        user.setRoles(worker.getType());
 
         userService.addUser(user);
 

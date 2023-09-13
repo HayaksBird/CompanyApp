@@ -1,44 +1,65 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Login page</title>
+    <head>
+        <meta charset="UTF-8">
+        <title>Login page</title>
 
-    <!-- reference CSS file -->
-    <link rel="stylesheet" th:href="@{/css/view.css}">
-</head>
-<body>
-    <br><br><br><br>
+        <!-- reference CSS file -->
+        <link rel="stylesheet" th:href="@{/css/auth-view.css}">
+    </head>
 
-    <h1 class="center">Login </h1>
-    <form class="center" th:action="@{/auth/process-login}" th:object="${login}" method="POST">
-        ID: <input type="text" th:field="*{id}" />
-        <br>
+    <body>
+        <div class="container">
+            <header class="main-header">
+                <h1>Login</h1>
+            </header>
 
-        <span th:if="${#fields.hasErrors('id')}"
-              th:errors="*{id}"
-              class="error"></span>
+            <!-- LOGIN FORM -->
+            <form th:action="@{/auth/process_login}" th:object="${login}" method="POST">
+                <!-- ID REQUEST -->
+                <div class="input-field">
+                    <input type="text" th:field="*{id}" placeholder="ID"/>
+                </div>
 
-        <span th:if="${not #strings.isEmpty(login.error)}"
-              th:text="${login.error}" class="error"></span>
-        <br><br>
+                <!-- PASSWORD REQUEST -->
+                <div class="input-field">
+                    <input type="text" th:field="*{password}" placeholder="Password"/>
+                </div>
 
-        Password: <input type="text" th:field="*{password}" />
-        <br>
+                <!-- ERRORS -->
+                <div class="error-block">
+                    <div class="error-item">
+                        <p th:if="${#fields.hasErrors('id')}"
+                            th:errors="*{id}"
+                            class="error"></p>
+                    </div>
 
-        <span th:if="${#fields.hasErrors('password')}"
-              th:errors="*{password}"
-              class="error"></span>
-        <br><br>
+                    <div class="error-item">
+                        <p th:if="${not #strings.isEmpty(login.error)}"
+                            th:text="${login.error}" class="error"></p>
+                    </div>
 
-        <input type="submit" value="Submit"/>
-    </form>
-    <br><br><br><br>
+                    <div class="error-item">
+                        <p th:if="${#fields.hasErrors('password')}"
+                            th:errors="*{password}"
+                            class="error"></p>
+                    </div>
+                </div>
 
-    <form class="center" th:action="@{/auth/register}" method="GET">
-        <span>Don't have an account?</span>
+                <!-- LOGIN BUTTON -->
+                <div class="submit-button">
+                    <button type="submit">Login</button>
+                </div>
+            </form>
 
-        <input type="submit" value="Register"/>
-    </form>
-</body>
+            <!-- REDIRECT TO REGISTRATION FORM -->
+            <form th:action="@{/auth/register}" method="GET">
+                <div class="to-register">
+                    <span>Don't have an account?</span>
+
+                    <button type="submit">Register</button>
+                </div>
+            </form>
+        </div>
+    </body>
 </html>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="ad147021-b5c2-4e3c-a292-458fe6c30c9c" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/CompanyApp/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/CompanyApp/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CompanyApp/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/CompanyApp/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CompanyApp/mvnw" beforeDir="false" afterPath="$PROJECT_DIR$/CompanyApp/mvnw" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CompanyApp/mvnw.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/CompanyApp/mvnw.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CompanyApp/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/CompanyApp/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CompanyApp/src/main/java/com/company/CompanyApp/controller/HomeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/CompanyApp/src/main/java/com/company/CompanyApp/controller/HomeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CompanyApp/src/main/java/com/company/CompanyApp/dao/DepartmentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/CompanyApp/src/main/java/com/company/CompanyApp/dao/DepartmentRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CompanyApp/src/main/java/com/company/CompanyApp/entity/Department.java" beforeDir="false" afterPath="$PROJECT_DIR$/CompanyApp/src/main/java/com/company/CompanyApp/entity/Department.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CompanyApp/src/main/java/com/company/CompanyApp/entity/Worker.java" beforeDir="false" afterPath="$PROJECT_DIR$/CompanyApp/src/main/java/com/company/CompanyApp/entity/Worker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CompanyApp/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/CompanyApp/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CompanyApp/src/main/resources/sql/create.sql" beforeDir="false" afterPath="$PROJECT_DIR$/CompanyApp/src/main/resources/sql/create.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CompanyApp/src/main/resources/sql/func.sql" beforeDir="false" afterPath="$PROJECT_DIR$/CompanyApp/src/main/resources/sql/func.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CompanyApp/src/main/resources/sql/init.sql" beforeDir="false" afterPath="$PROJECT_DIR$/CompanyApp/src/main/resources/sql/init.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CompanyApp/src/main/resources/static/css/view.css" beforeDir="false" afterPath="$PROJECT_DIR$/CompanyApp/src/main/resources/static/css/view.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CompanyApp/src/main/resources/templates/auth/login-page.html" beforeDir="false" afterPath="$PROJECT_DIR$/CompanyApp/src/main/resources/templates/auth/login-page.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CompanyApp/src/main/resources/templates/auth/register-page.html" beforeDir="false" afterPath="$PROJECT_DIR$/CompanyApp/src/main/resources/templates/auth/register-page.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CompanyApp/src/main/resources/templates/auth/verification-page.html" beforeDir="false" afterPath="$PROJECT_DIR$/CompanyApp/src/main/resources/templates/auth/verification-page.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CompanyApp/src/main/resources/templates/home-page.html" beforeDir="false" afterPath="$PROJECT_DIR$/CompanyApp/src/main/resources/templates/home-page.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CompanyApp/src/test/java/com/company/CompanyApp/CompanyAppApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/CompanyApp/src/test/java/com/company/CompanyApp/CompanyAppApplicationTests.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="Use Maven wrapper" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
+  <component name="ProjectId" id="2VFWC0ZEN8BbHZEElKD7LXj2F65" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "C:/Users/Kenan/Documents/Intellij/Projects/in/CompanyApp/CompanyApp"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ad147021-b5c2-4e3c-a292-458fe6c30c9c" name="Changes" comment="" />
+      <created>1694432192372</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1694432192372</updated>
+    </task>
+    <servers />
+  </component>
+</project>

@@ -1,6 +1,6 @@
 package com.company.CompanyApp.security.filter;
 
-import com.company.CompanyApp.entity.User;
+import com.company.CompanyApp.entity.user.User;
 import com.company.CompanyApp.security.service.IJwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

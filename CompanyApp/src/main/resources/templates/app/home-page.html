@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Home Page</title>
+
+        <!-- reference CSS file -->
+        <link rel="stylesheet" th:href="@{/css/view.css}">
+    </head>
+
+    <body>
+        <header class="main-header">
+            <h1 th:text="'Welcome, ' +
+                    ${user.getFirstName()} + ' ' +
+                    ${user.getLastName()}" class="center"></h1>
+        </header>
+
+        <!-- CONTENT -->
+        <div class="container">
+            <!-- NAVIGATION PANEL -->
+            <div class="nav-panel">
+                <!-- VIEW ACCOUNT INFO -->
+                <form th:action="@{/home/personal}" method="GET">
+                    <div class="nav-item">
+                        <button type="submit">Personal</button>
+                    </div>
+                </form>
+
+                <!-- VIEW DEPARTMENT INFO -->
+                <form th:action="@{/home/department}" method="GET">
+                    <div class="nav-item">
+                        <button type="submit">Department</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </body>
+</html>

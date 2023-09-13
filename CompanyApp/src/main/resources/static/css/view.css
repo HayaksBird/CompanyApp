@@ -1,25 +1,60 @@
-.title {
-    position: absolute;
-    /*
-    Set's the offset, so that the first character of the text is right
-    at the middle of the web page.
-    */
-    left: 50%;
-    /*
-    Now that the left character is exactly at the center, in order to place
-    the text exactly at the center of the web page, we need to move it
-    by the half of its width to the left. In addition, we move it a bit
-    closer to the top
-    */
-    transform: translate(-50%, -50%);
-    font-style: arial;
-    color: black;
+* {
+    /* CLEAR ANY OFFSET */
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+h1 {
+    text-align: center;
     font-size: 30px;
 }
-.error {
-    color: red;
+
+body {
+    font-family: sans-serif;
+    color: #383838;
+    background-color: #f7f7f7;
+}
+
+.main-header {
+    margin-top: 40px;
+    margin-bottom: 60px;
+}
+
+.container {
+    width: 90%;
+    margin: 0 auto;
+
+    display: flex;
+    justify-content: flex-start;
+}
+
+.nav-panel {
+    background-color: #787276;
+    border: 2px solid #594D5B;
+    width: 20%; /* the whole nav panel will take 20% of the screen */
+}
+
+.nav-item {
+    display: flex;
+    justify-content: center;
+    margin: 15px 0;
+}
+
+.nav-item button {
+    background-color: #383838;
+    color: #f7f7f7;
+    border: 2px solid #383838;
+
+    width: 60%; /* the button will take 60% of the nav panel */
+    padding: 10px 0;
+    font-size: 12px;
+    text-transform: uppercase;
     font-weight: bold;
 }
-.center {
-    text-align: center;
+
+.nav-item button:hover {
+    cursor: pointer;
+    background-color: #f7f7f7;
+    color: #383838;
 }

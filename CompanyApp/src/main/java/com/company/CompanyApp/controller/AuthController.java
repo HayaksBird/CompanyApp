@@ -8,6 +8,8 @@ import com.company.CompanyApp.security.service.IAuthenticationService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -76,7 +78,7 @@ public class AuthController {
     /**
      * Try to authenticate the user based on the retrieved data.
      */
-    @PostMapping("/process-login")
+    @PostMapping("/process_login")
     public ModelAndView login(@Valid
                               @ModelAttribute("login")
                               AuthenticationRequest login,
@@ -109,7 +111,7 @@ public class AuthController {
     /**
      * Try to authenticate the user based on the retrieved data.
      */
-    @PostMapping("/process-register")
+    @PostMapping("/process_register")
     public ModelAndView registration(@Valid
                                      @ModelAttribute("register")
                                      AuthenticationRequest register,
@@ -124,6 +126,7 @@ public class AuthController {
         } else {
             try {
                 registerInfo = register;
+
                 String code = authenticationService.getValidationCode(register.getId());
 
                 model.addAttribute("verify", new VerificationRequest());

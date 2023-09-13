@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Repository</title>
+
+        <!-- reference CSS file -->
+        <link rel="stylesheet" th:href="@{/css/view.css}">
+    </head>
+
+    <body>
+        <!-- DEPARTMENT TITLE BLOCK-->
+        <div th:fragment="DepartmentTitle(name)">
+            <h2>
+                <p th:text="${name} + ' Department'" class="center"></p>
+            </h2>
+        </div>
+
+        <!-- DEPARTMENT'S WORKERS LIST BLOCK -->
+        <div th:fragment="DepartmentWorkers(workers)">
+            <li th:each="worker : ${workers}"
+                th:text="${worker}" class="center"></li>
+        </div>
+
+        <!-- DEPARTMENT'S STATS BLOCK -->
+        <div th:fragment="DepartmentStats(minBudget, workerCount)" class="border">
+            <h4 class="center">Stats</h4>
+            <p th:text="'minimum budget: ' + ${minBudget}"> </p>
+            <p th:text="'worker count: ' + ${workerCount}"> </p>
+        </div>
+    </body>
+</html>

@@ -1,4 +1,4 @@
-package com.company.CompanyApp.entity;
+package com.company.CompanyApp.entity.user;
 
 import com.company.CompanyApp.enums.RoleType;
 import jakarta.persistence.Entity;
