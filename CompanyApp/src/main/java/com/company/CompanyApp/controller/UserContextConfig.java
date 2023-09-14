@@ -1,28 +1,36 @@
 package com.company.CompanyApp.controller;
 
 import com.company.CompanyApp.entity.worker.Worker;
-import com.company.CompanyApp.service.IDepartmentService;
 import com.company.CompanyApp.service.IWorkerService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import java.util.HashSet;
+
+/**
+ * Made this bean lazy, because it requires user's data from the SecurityContextHolder.
+ * Thus, this bean must be created after the jwt filter is ran.
+ */
+@Lazy
 @Configuration
 public class UserContextConfig {
     private final IWorkerService workerService;
-    private final IDepartmentService departmentService;
+    private static HashSet<String> roles;
 
 
-    public UserContextConfig(IWorkerService workerService,
-                             IDepartmentService departmentService) {
-
-        this.departmentService = departmentService;
+    public UserContextConfig(IWorkerService workerService) {
         this.workerService = workerService;
+
+        roles = new HashSet<>();
+        addUserRoles();
     }
 
 
-    @Lazy
+    /**
+     *
+     */
     @Bean
     public Worker userContext() {
         Worker loggedUser;
@@ -33,11 +41,21 @@ public class UserContextConfig {
         return loggedUser;
     }
 
-    /*
-    @Lazy
-    @Bean
-    public Department departmentContext(Worker loggedUser) {
-        return departmentService.getDepartment(loggedUser.getDepartmentId());
-    }
+
+    /**
+     *
      */
+    private static void addUserRoles() {
+        var roles = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+
+        for (var role : roles) {
+            UserContextConfig.roles.add(role.toString().substring(5));
+        }
+    }
+
+
+    //SETTERS & GETTERS
+    public static HashSet<String> getRoles() {
+        return roles;
+    }
 }

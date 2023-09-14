@@ -71,10 +71,17 @@ public class Worker {
         this.position = position;
     }
 
+
     @Override
     public String toString() {
-        return null;
+        return String.format("ID: <strong>%s</strong>&emsp;" +
+                        "first name: <strong>%s</strong>&emsp;" +
+                        "last name: <strong>%s</strong>&emsp;" +
+                        "worker type: %s&emsp;" +
+                        "position: %s",
+                        id, firstName, lastName, workerType, position);
     }
+
 
     //Getters & Setters
     public int getId() {

@@ -1,31 +1,31 @@
 package com.company.CompanyApp.controller;
 
-import com.company.CompanyApp.entity.Department;
 import com.company.CompanyApp.entity.worker.Worker;
 import com.company.CompanyApp.enums.WorkerType;
-import com.company.CompanyApp.service.IDepartmentService;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.context.annotation.Lazy;
 
+import java.io.IOException;
+
+/**
+ * Made this bean lazy, because it requires user's data from the SecurityContextHolder.
+ * Thus, this bean must be created after the jwt filter is ran.
+ */
 @Lazy
 @Controller
 @RequestMapping("/home")
 public class HomeController {
     private final WorkerType type;
-    private Department usersDepartment;
     private final Worker loggedUser;
-    private final IDepartmentService departmentService;
 
 
-    public HomeController(Worker loggedUser,
-                          IDepartmentService departmentService) {
+    public HomeController(Worker loggedUser) {
 
         this.loggedUser = loggedUser;
-        this.departmentService = departmentService;
-
         type = loggedUser.getWorkerType();
     }
 
@@ -37,21 +37,14 @@ public class HomeController {
     }
 
 
-    @GetMapping("/personal")
-    public String viewUserInfo() {
-        return "Shit";
+    @GetMapping("/department")
+    public void viewDepartmentInfo(HttpServletResponse response) throws IOException {
+        response.sendRedirect(String.format("/%s/department", type.name().toLowerCase()));
     }
 
 
-    @GetMapping("/department")
-    public String viewDepartmentInfo(Model model) {
-        if (usersDepartment == null) {
-            usersDepartment = departmentService.getDepartment(loggedUser.getDepartmentId());
-        }
-
-        model.addAttribute("type", type);
-        model.addAttribute("department", usersDepartment);
-
-        return "app/department-page";
+    @GetMapping("/personal")
+    public void viewPersonalInfo(HttpServletResponse response) throws IOException {
+        response.sendRedirect(String.format("/%s/personal", type.name().toLowerCase()));
     }
 }

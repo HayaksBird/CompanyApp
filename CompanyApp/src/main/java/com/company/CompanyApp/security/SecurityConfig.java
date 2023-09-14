@@ -47,11 +47,18 @@ public class SecurityConfig {
                                 .requestMatchers("/auth").permitAll()
                                 .requestMatchers("/auth/**").permitAll()
                                 .requestMatchers("/css/**").permitAll()
+
                                 //Regarding home page
                                 .requestMatchers(HttpMethod.GET,"/home")
                                     .hasRole(getRole(RoleType.ROLE_D))
                                 .requestMatchers(HttpMethod.GET,"/home/**")
                                     .hasRole(getRole(RoleType.ROLE_D))
+
+                                ///Regarding manager
+                                .requestMatchers(HttpMethod.GET,"/manager")
+                                    .hasRole(getRole(RoleType.ROLE_B))
+                                .requestMatchers(HttpMethod.GET,"/manager/**")
+                                    .hasRole(getRole(RoleType.ROLE_B))
         );
 
         http.csrf(csrf -> csrf.disable());

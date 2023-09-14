@@ -1,0 +1,67 @@
+* {
+    /* CLEAR ANY OFFSET */
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: sans-serif;
+    color: #383838;
+    background-color: #f7f7f7;
+    min-width: 850px;
+}
+
+h1 {
+    text-align: center;
+    font-size: max(2.3vw, 1.3rem); /* font is 2.5% of the view port */
+}
+
+h4 {
+    text-align: center;
+    font-size: max(1.2vw, 0.7rem);
+}
+
+
+/* CLASSES */
+.main-header {
+    margin-top: 3%;
+    margin-bottom: 4%;
+}
+
+.container {
+    width: 90%;
+    margin: 0 auto;
+
+    display: flex;
+    justify-content: space-around;
+}
+
+.worker-list ul {
+    list-style-type: none;
+}
+
+.worker-list li {
+    margin: max(0.8vw, 3px) 0;
+}
+
+.worker-list button {
+    font-size: max(1.2vw, 0.68rem);
+    background: none;
+    border: none;
+}
+
+.worker-list button:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.stats {
+    padding: max(0.3vw, 2px) max(0.4vw, 4px);
+    border: 2px solid #594D5B;
+}
+
+.stats p {
+    font-size: max(1vw, 0.65rem);
+    margin: max(1vw, 5px) 0;
+}

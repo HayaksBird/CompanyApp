@@ -11,22 +11,23 @@
     <body>
         <!-- DEPARTMENT TITLE BLOCK-->
         <div th:fragment="DepartmentTitle(name)">
-            <h2>
-                <p th:text="${name} + ' Department'" class="center"></p>
-            </h2>
+            <h1 th:text="${name} + ' Department'"></h1>
         </div>
+
 
         <!-- DEPARTMENT'S WORKERS LIST BLOCK -->
         <div th:fragment="DepartmentWorkers(workers)">
-            <li th:each="worker : ${workers}"
-                th:text="${worker}" class="center"></li>
+            <ul>
+                <li th:each="worker : ${workers}">${worker}</li>
+            </ul>
         </div>
 
+
         <!-- DEPARTMENT'S STATS BLOCK -->
-        <div th:fragment="DepartmentStats(minBudget, workerCount)" class="border">
-            <h4 class="center">Stats</h4>
-            <p th:text="'minimum budget: ' + ${minBudget}"> </p>
-            <p th:text="'worker count: ' + ${workerCount}"> </p>
+        <div th:fragment="DepartmentStats(minBudget, workerCount)">
+            <h4>Stats</h4>
+            <p th:text="'minimum budget: ' + ${minBudget}"></p>
+            <p th:text="'worker count: ' + ${workerCount}"></p>
         </div>
     </body>
 </html>
