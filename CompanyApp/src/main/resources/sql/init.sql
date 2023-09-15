@@ -12,7 +12,7 @@ VALUES
 INSERT INTO worker (first_name, last_name, department_id, email, employed_since, vacation, salary, worker_type, position)
 VALUES
     ('Esmiralda', 'Nurieva', 1, 'enurieva71@gmail.com', '2022-01-01', '2023-01-01', 80000.00, 'MANAGER', 'Manager'),
-    ('Jane', 'Smith', 1, 'senior1@gmail.com', '2022-01-15', '2023-01-15', 60000.00, 'DATA_ANALYST', 'Senior Business Analyst'),
+    ('Jane', 'Smith', 1, 'enurieva71@gmail.com', '2022-01-15', '2023-01-15', 60000.00, 'DATA_ANALYST', 'Senior Business Analyst'),
     ('Michael', 'Brown', 1, 'senior2@gmail.com', '2022-02-01', '2023-02-01', 60000.00, 'DATA_ANALYST', 'Principal Data Analyst'),
     ('Sarah', 'Johnson', 1, 'junior1@gmail.com', '2022-02-15', '2023-02-15', 45000.00, 'DATA_ANALYST', 'Data Coordinator'),
     ('Robert', 'Wilson', 1, 'junior2@gmail.com', '2022-03-01', '2023-03-01', 45000.00, 'DATA_ANALYST', 'Research Assistant'),

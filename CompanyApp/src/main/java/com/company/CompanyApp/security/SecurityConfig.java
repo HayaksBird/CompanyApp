@@ -59,6 +59,12 @@ public class SecurityConfig {
                                     .hasRole(getRole(RoleType.ROLE_B))
                                 .requestMatchers(HttpMethod.GET,"/manager/**")
                                     .hasRole(getRole(RoleType.ROLE_B))
+
+                                //Regarding data analyst
+                                .requestMatchers(HttpMethod.GET,"/data_analyst")
+                                    .hasRole(getRole(RoleType.ROLE_D))
+                                .requestMatchers(HttpMethod.GET,"/data_analyst/**")
+                                    .hasRole(getRole(RoleType.ROLE_D))
         );
 
         http.csrf(csrf -> csrf.disable());

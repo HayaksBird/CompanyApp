@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
 
@@ -24,7 +25,6 @@ public class HomeController {
 
 
     public HomeController(Worker loggedUser) {
-
         this.loggedUser = loggedUser;
         type = loggedUser.getWorkerType();
     }

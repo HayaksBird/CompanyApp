@@ -1,5 +1,6 @@
 package com.company.CompanyApp.entity.worker;
 
+import com.company.CompanyApp.entity.annotations.ViewName;
 import com.company.CompanyApp.enums.WorkerType;
 import jakarta.persistence.*;
 
@@ -10,6 +11,7 @@ import java.util.Date;
 @Entity
 @Table(name = "manager")
 public class Manager extends Worker {
+    @ViewName(message = "progress report")
     @Column(name = "progress_report")
     private String progressReport;
 

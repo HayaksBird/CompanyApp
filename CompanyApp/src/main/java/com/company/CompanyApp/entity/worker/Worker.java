@@ -1,5 +1,6 @@
 package com.company.CompanyApp.entity.worker;
 
+import com.company.CompanyApp.entity.annotations.ViewName;
 import com.company.CompanyApp.enums.WorkerType;
 import jakarta.persistence.*;
 
@@ -10,36 +11,46 @@ import java.util.Date;
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "worker")
 public class Worker {
+    @ViewName(message = "ID")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
 
+    @ViewName(message = "first name")
     @Column(name = "first_name")
     private String firstName;
 
+    @ViewName(message = "last name")
     @Column(name = "last_name")
     private String lastName;
 
+    @ViewName(message = "department id")
     @Column(name = "department_id")
     private int departmentId;
 
+    @ViewName(message = "email")
     @Column(name = "email")
     private String email;
 
+    @ViewName(message = "employed since")
     @Column(name = "employed_since")
     private Date employedSince;
 
+    @ViewName(message = "next vacation")
     @Column(name = "vacation")
     private Date vacation;
 
+    @ViewName(message = "salary")
     @Column(name = "salary")
     private BigDecimal salary;
 
+    @ViewName(message = "worker type")
     @Enumerated(EnumType.STRING)
     @Column(name = "worker_type")
     private WorkerType workerType;
 
+    @ViewName(message = "official position")
     @Column(name = "position")
     private String position;
 

@@ -22,15 +22,19 @@
                 <ul>
                     <!-- IF CLICKED, THE USER'S PAGE WILL BE DEMONSTRATED -->
                     <li th:each="worker : ${department.getWorkers()}">
-                        <form th:action="@{/auth/process_login}" th:object="${login}" method="POST">
+                        <form th:action="@{/home/personal}" method="POST">
                             <!-- Include worker's ID as a hidden input field -->
                             <input type="hidden" name="id" th:value="${worker.getId()}"/>
 
                             <!-- Include worker's Worker Type as a hidden input field -->
                             <input type="hidden" name="workerType" th:value="${worker.getWorkerType()}"/>
 
-                            <!-- The button that triggers the form submission -->
-                            <button th:utext="${worker}"></button>
+                            <!--
+                            The button that triggers the form submission.
+                            If the user has the lowest accessibility level, then it
+                            will not work
+                            -->
+                            <button th:utext="${worker}" th:disabled="${!roles.contains('C')}"></button>
                         </form>
                     </li>
                 </ul>
@@ -44,8 +48,8 @@
                 <div class="stats">
                     <h4>Statistics</h4>
 
-                    <p>Minimum budget: 320000.00$</p>
-                    <p>Employee count: 3</p>
+                    <p th:text="'Minimum budget: ' + ${department.getMinBudget()} + '$'"></p>
+                    <p th:text="'Employee count: ' + ${department.getEmployeeCount()}"></p>
                 </div>
             </div>
         </div>

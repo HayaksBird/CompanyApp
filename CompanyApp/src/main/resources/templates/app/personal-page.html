@@ -3,9 +3,27 @@
     <head>
         <meta charset="UTF-8">
         <title>Personal Page</title>
+
+        <!-- reference CSS file -->
+        <link rel="stylesheet" th:href="@{/css/personal-view.css}">
     </head>
 
     <body>
+        <header class="main-header">
+            <h1>Personal Data</h1>
+        </header>
 
+        <div class="container">
+            <div class="data-list">
+                <ul>
+                    <li th:each="field : ${fields}">
+                        <div class="data">
+                            <span th:text="${field.getKey()}" class="key"></span>
+                            <span th:text="${field.getValue()}" class="value"></span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </body>
 </html>

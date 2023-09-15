@@ -1,9 +1,8 @@
 package com.company.CompanyApp.controller;
 
-import com.company.CompanyApp.entity.Department;
-import com.company.CompanyApp.entity.worker.Manager;
-import com.company.CompanyApp.entity.worker.Worker;
 import com.company.CompanyApp.dto.WorkerData;
+import com.company.CompanyApp.entity.Department;
+import com.company.CompanyApp.entity.worker.DataAnalyst;
 import com.company.CompanyApp.service.IDepartmentService;
 import com.company.CompanyApp.service.IWorkerService;
 import org.springframework.context.annotation.Lazy;
@@ -16,9 +15,9 @@ import java.util.List;
 
 @Lazy
 @Controller
-@RequestMapping("/manager")
-public class ManagerController {
-    private final Manager manager;
+@RequestMapping("/data_analyst")
+public class DataAnalystController {
+    private final DataAnalyst dataAnalyst;
     private Department usersDepartment;
     private List<WorkerData> workersFields;
     private final IDepartmentService departmentService;
@@ -26,12 +25,11 @@ public class ManagerController {
 
 
     //CONSTRUCTORS
-    public ManagerController(Worker loggedUser,
-                             IDepartmentService departmentService,
-                             IWorkerService workerService) {
+    public DataAnalystController(DataAnalyst dataAnalyst,
+                                 IDepartmentService departmentService,
+                                 IWorkerService workerService) {
 
-        manager = (Manager) loggedUser;
-
+        this.dataAnalyst = dataAnalyst;
         this.departmentService = departmentService;
         this.workerService = workerService;
     }
@@ -40,7 +38,7 @@ public class ManagerController {
     @GetMapping("/department")
     public String viewDepartmentInfo(Model model) {
         if (usersDepartment == null) {
-            usersDepartment = departmentService.getDepartment(manager.getDepartmentId());
+            usersDepartment = departmentService.getDepartment(dataAnalyst.getDepartmentId());
         }
 
         model.addAttribute("roles", UserContextConfig.getRoles());
@@ -53,11 +51,11 @@ public class ManagerController {
     @GetMapping("/personal")
     public String viewPersonalInfo(Model model) throws IllegalAccessException {
         if (workersFields == null) {
-            workersFields = UserContextConfig.getWorkersFields(manager);
+            workersFields = UserContextConfig.getWorkersFields(dataAnalyst);
         }
 
         model.addAttribute("fields", workersFields);
-        model.addAttribute("worker", manager);
+        model.addAttribute("worker", dataAnalyst);
 
         return "app/personal-page";
     }

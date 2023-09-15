@@ -45,6 +45,8 @@ h4 {
     margin: max(0.8vw, 3px) 0;
 }
 
+/* If you can update the workers */
+
 .worker-list button {
     font-size: max(1.2vw, 0.68rem);
     background: none;
@@ -54,6 +56,17 @@ h4 {
 .worker-list button:hover {
     cursor: pointer;
     text-decoration: underline;
+}
+
+/* If you can't update the workers */
+
+.worker-list button[disabled] {
+    color: #383838;
+}
+
+.worker-list button[disabled]:hover {
+    cursor: default;
+    text-decoration: none;
 }
 
 .stats {

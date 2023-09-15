@@ -1,5 +1,6 @@
 package com.company.CompanyApp.entity.worker;
 
+import com.company.CompanyApp.entity.annotations.ViewName;
 import com.company.CompanyApp.enums.PositionType;
 import com.company.CompanyApp.enums.WorkerType;
 import jakarta.persistence.*;
@@ -10,9 +11,11 @@ import java.util.Date;
 @Entity
 @Table(name = "data_analyst")
 public class DataAnalyst extends Worker {
+    @ViewName(message = "database tied to")
     @Column(name = "database_")
     private String database;
 
+    @ViewName(message = "position")
     @Enumerated(EnumType.STRING)
     @Column(name = "position_type")
     private PositionType positionType;
