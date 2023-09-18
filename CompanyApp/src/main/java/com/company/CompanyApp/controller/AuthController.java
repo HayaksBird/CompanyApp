@@ -78,7 +78,7 @@ public class AuthController {
     /**
      * Try to authenticate the user based on the retrieved data.
      */
-    @PostMapping("/process_login")
+    @PostMapping("/process-login")
     public ModelAndView login(@Valid
                               @ModelAttribute("login")
                               AuthenticationRequest login,
@@ -111,7 +111,7 @@ public class AuthController {
     /**
      * Try to authenticate the user based on the retrieved data.
      */
-    @PostMapping("/process_register")
+    @PostMapping("/process-register")
     public ModelAndView registration(@Valid
                                      @ModelAttribute("register")
                                      AuthenticationRequest register,
@@ -154,7 +154,8 @@ public class AuthController {
                                      @ModelAttribute("verify")
                                      VerificationRequest verify,
                                      BindingResult result,
-                                     HttpServletResponse response) throws IOException {
+                                     HttpServletResponse response)
+                                     throws IOException, NoSuchFieldException, ClassNotFoundException, IllegalAccessException {
 
         ModelAndView modelAndView = new ModelAndView();
 

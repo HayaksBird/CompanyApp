@@ -92,7 +92,11 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
+    public void setRoles(String[] roles) {
+        this.roles = new ArrayList<>();
+
+        for (String role : roles) {
+            this.roles.add(new Role(role, id));
+        }
     }
 }

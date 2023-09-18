@@ -1,6 +1,5 @@
 package com.company.CompanyApp.security;
 
-import com.company.CompanyApp.enums.RoleType;
 import com.company.CompanyApp.security.filter.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -49,22 +48,9 @@ public class SecurityConfig {
                                 .requestMatchers("/css/**").permitAll()
 
                                 //Regarding home page
-                                .requestMatchers(HttpMethod.GET,"/home")
-                                    .hasRole(getRole(RoleType.ROLE_D))
-                                .requestMatchers(HttpMethod.GET,"/home/**")
-                                    .hasRole(getRole(RoleType.ROLE_D))
-
-                                ///Regarding manager
-                                .requestMatchers(HttpMethod.GET,"/manager")
-                                    .hasRole(getRole(RoleType.ROLE_B))
-                                .requestMatchers(HttpMethod.GET,"/manager/**")
-                                    .hasRole(getRole(RoleType.ROLE_B))
-
-                                //Regarding data analyst
-                                .requestMatchers(HttpMethod.GET,"/data_analyst")
-                                    .hasRole(getRole(RoleType.ROLE_D))
-                                .requestMatchers(HttpMethod.GET,"/data_analyst/**")
-                                    .hasRole(getRole(RoleType.ROLE_D))
+                                .requestMatchers(HttpMethod.GET,"/home").hasRole("D")
+                                .requestMatchers(HttpMethod.GET,"/home/**").hasRole("D")
+                                .requestMatchers(HttpMethod.POST,"/home/**").hasRole("C")
         );
 
         http.csrf(csrf -> csrf.disable());
@@ -76,11 +62,5 @@ public class SecurityConfig {
                         .authenticationEntryPoint(authEntryPoint)
                 )
                 .build();
-    }
-
-
-    private String getRole(RoleType role) {
-        String strRole = role.name();
-        return strRole.substring(5);
     }
 }

@@ -1,11 +1,11 @@
 package com.company.CompanyApp.entity.worker;
 
-import com.company.CompanyApp.entity.annotations.ViewName;
+import com.company.CompanyApp.annotations.ViewName;
 import com.company.CompanyApp.enums.WorkerType;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -17,40 +17,40 @@ public class Worker {
     @Column(name = "id")
     private int id;
 
-    @ViewName(message = "first name")
+    @ViewName(message = "First Name")
     @Column(name = "first_name")
     private String firstName;
 
-    @ViewName(message = "last name")
+    @ViewName(message = "Last Name")
     @Column(name = "last_name")
     private String lastName;
 
-    @ViewName(message = "department id")
+    @ViewName(message = "Department ID")
     @Column(name = "department_id")
     private int departmentId;
 
-    @ViewName(message = "email")
+    @ViewName(message = "Email")
     @Column(name = "email")
     private String email;
 
-    @ViewName(message = "employed since")
+    @ViewName(message = "Employed Since")
     @Column(name = "employed_since")
-    private Date employedSince;
+    private LocalDate employedSince;
 
-    @ViewName(message = "next vacation")
+    @ViewName(message = "Next Vacation")
     @Column(name = "vacation")
-    private Date vacation;
+    private LocalDate vacation;
 
-    @ViewName(message = "salary")
+    @ViewName(message = "Salary")
     @Column(name = "salary")
     private BigDecimal salary;
 
-    @ViewName(message = "worker type")
+    //Don't want to show this at the GUI app
     @Enumerated(EnumType.STRING)
     @Column(name = "worker_type")
     private WorkerType workerType;
 
-    @ViewName(message = "official position")
+    @ViewName(message = "Official Position")
     @Column(name = "position")
     private String position;
 
@@ -64,8 +64,8 @@ public class Worker {
                   String lastName,
                   int departmentId,
                   String email,
-                  Date employedSince,
-                  Date vacation,
+                  LocalDate employedSince,
+                  LocalDate vacation,
                   BigDecimal salary,
                   WorkerType workerType,
                   String position) {
@@ -88,9 +88,8 @@ public class Worker {
         return String.format("ID: <strong>%s</strong>&emsp;" +
                         "first name: <strong>%s</strong>&emsp;" +
                         "last name: <strong>%s</strong>&emsp;" +
-                        "worker type: %s&emsp;" +
                         "position: %s",
-                        id, firstName, lastName, workerType, position);
+                        id, firstName, lastName, position);
     }
 
 
@@ -135,19 +134,19 @@ public class Worker {
         this.email = email;
     }
 
-    public Date getEmployedSince() {
+    public LocalDate getEmployedSince() {
         return employedSince;
     }
 
-    public void setEmployedSince(Date employedSince) {
+    public void setEmployedSince(LocalDate  employedSince) {
         this.employedSince = employedSince;
     }
 
-    public Date getVacation() {
+    public LocalDate getVacation() {
         return vacation;
     }
 
-    public void setVacation(Date vacation) {
+    public void setVacation(LocalDate vacation) {
         this.vacation = vacation;
     }
 

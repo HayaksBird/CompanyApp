@@ -1,25 +1,28 @@
 package com.company.CompanyApp.entity.worker;
 
-import com.company.CompanyApp.enums.PositionType;
+import com.company.CompanyApp.annotations.ViewName;
 import com.company.CompanyApp.enums.WorkerType;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "software_developer")
 public class SoftwareDeveloper extends Worker {
+    @ViewName(message = "Project")
     @Column(name = "project")
     private String project;
 
-    @Enumerated(EnumType.STRING)
+    //Don't want to show this at the GUI app
     @Column(name = "position_type")
-    private PositionType positionType;
+    private String positionType;
 
+    @ViewName(message = "Programming Language")
     @Column(name = "programming_language")
     private String programmingLanguage;
 
+    @ViewName(message = "Field")
     @Column(name = "field")
     private String field;
 
@@ -33,13 +36,13 @@ public class SoftwareDeveloper extends Worker {
                              String lastName,
                              int departmentId,
                              String email,
-                             Date employedSince,
-                             Date vacation,
+                             LocalDate employedSince,
+                             LocalDate vacation,
                              BigDecimal salary,
                              WorkerType workerType,
                              String position,
                              String project,
-                             PositionType positionType,
+                             String positionType,
                              String programmingLanguage,
                              String field) {
 
@@ -61,11 +64,11 @@ public class SoftwareDeveloper extends Worker {
         this.project = project;
     }
 
-    public PositionType getPositionType() {
+    public String getPositionType() {
         return positionType;
     }
 
-    public void setPositionType(PositionType positionType) {
+    public void setPositionType(String positionType) {
         this.positionType = positionType;
     }
 

@@ -20,7 +20,7 @@ public interface IAuthenticationService {
     String getValidationCode(String id);
 
 
-    void register(AuthenticationRequest request);
+    void register(AuthenticationRequest request) throws NoSuchFieldException, ClassNotFoundException, IllegalAccessException;
 
 
     Cookie generateJwtCookie();

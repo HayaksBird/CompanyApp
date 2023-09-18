@@ -1,7 +1,6 @@
 package com.company.CompanyApp.security.service;
 
 import com.company.CompanyApp.entity.user.User;
-import com.company.CompanyApp.entity.worker.Worker;
 
 /**
  * The class implementing this interface is responsible for providing
@@ -18,7 +17,4 @@ public interface IUserService {
      * Get user by their ID.
      */
     User getUser(int id);
-
-
-    User createUser(Worker worker);
 }

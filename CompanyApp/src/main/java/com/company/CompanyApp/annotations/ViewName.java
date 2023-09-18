@@ -1,4 +1,4 @@
-package com.company.CompanyApp.entity.annotations;
+package com.company.CompanyApp.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

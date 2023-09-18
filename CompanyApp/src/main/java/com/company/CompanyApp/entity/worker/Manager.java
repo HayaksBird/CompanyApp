@@ -1,17 +1,17 @@
 package com.company.CompanyApp.entity.worker;
 
-import com.company.CompanyApp.entity.annotations.ViewName;
+import com.company.CompanyApp.annotations.ViewName;
 import com.company.CompanyApp.enums.WorkerType;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 
 
 @Entity
 @Table(name = "manager")
 public class Manager extends Worker {
-    @ViewName(message = "progress report")
+    @ViewName(message = "Progress Report")
     @Column(name = "progress_report")
     private String progressReport;
 
@@ -25,8 +25,8 @@ public class Manager extends Worker {
                    String lastName,
                    int departmentId,
                    String email,
-                   Date employedSince,
-                   Date vacation,
+                   LocalDate employedSince,
+                   LocalDate vacation,
                    BigDecimal salary,
                    WorkerType workerType,
                    String position,

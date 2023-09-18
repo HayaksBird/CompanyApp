@@ -18,7 +18,7 @@
                 <ul>
                     <li th:each="field : ${fields}">
                         <div class="data">
-                            <span th:text="${field.getKey()}" class="key"></span>
+                            <span th:text="${field.getKey()} + ':'" class="key"></span>
                             <span th:text="${field.getValue()}" class="value"></span>
                         </div>
                     </li>

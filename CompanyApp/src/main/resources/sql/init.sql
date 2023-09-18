@@ -15,7 +15,7 @@ VALUES
     ('Jane', 'Smith', 1, 'enurieva71@gmail.com', '2022-01-15', '2023-01-15', 60000.00, 'DATA_ANALYST', 'Senior Business Analyst'),
     ('Michael', 'Brown', 1, 'senior2@gmail.com', '2022-02-01', '2023-02-01', 60000.00, 'DATA_ANALYST', 'Principal Data Analyst'),
     ('Sarah', 'Johnson', 1, 'junior1@gmail.com', '2022-02-15', '2023-02-15', 45000.00, 'DATA_ANALYST', 'Data Coordinator'),
-    ('Robert', 'Wilson', 1, 'junior2@gmail.com', '2022-03-01', '2023-03-01', 45000.00, 'DATA_ANALYST', 'Research Assistant'),
+    ('Robert', 'Wilson', 1, 'enurieva71@gmail.com', '2022-03-01', '2023-03-01', 45000.00, 'DATA_ANALYST', 'Research Assistant'),
     ('Emily', 'Davis', 1, 'intern1@gmail.com', '2023-06-01', '2023-08-01', 30000.00, 'INTERN', 'Data Technician');
 
 -- Insert data for the 'IT' department

@@ -22,6 +22,18 @@ public class GlobalExceptionHandler {
     }
 
 
+    @ExceptionHandler(NoSuchFieldException.class)
+    public void handleException(NoSuchFieldException exc) {
+        System.out.println("");
+    }
+
+
+    @ExceptionHandler(ClassNotFoundException.class)
+    public void handleException(ClassNotFoundException exc) {
+        System.out.println("");
+    }
+
+
     @ExceptionHandler()
     public void handleException(Exception exc) {
         System.out.println("");

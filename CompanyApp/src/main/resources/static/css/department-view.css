@@ -78,3 +78,7 @@ h4 {
     font-size: max(1vw, 0.65rem);
     margin: max(1vw, 5px) 0;
 }
+
+.manager {
+    color: #911115;
+}

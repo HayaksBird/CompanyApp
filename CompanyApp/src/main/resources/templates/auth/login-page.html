@@ -15,7 +15,7 @@
             </header>
 
             <!-- LOGIN FORM -->
-            <form th:action="@{/auth/process_login}" th:object="${login}" method="POST">
+            <form th:action="@{/auth/process-login}" th:object="${login}" method="POST">
                 <!-- ID REQUEST -->
                 <div class="input-field">
                     <input type="text" th:field="*{id}" placeholder="ID"/>
@@ -23,7 +23,7 @@
 
                 <!-- PASSWORD REQUEST -->
                 <div class="input-field">
-                    <input type="text" th:field="*{password}" placeholder="Password"/>
+                    <input type="password" th:field="*{password}" placeholder="Password"/>
                 </div>
 
                 <!-- ERRORS -->

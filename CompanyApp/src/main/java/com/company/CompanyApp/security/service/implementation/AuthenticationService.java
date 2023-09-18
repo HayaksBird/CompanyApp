@@ -82,11 +82,15 @@ public class AuthenticationService implements IAuthenticationService {
      *
      */
     @Override
-    public void register(AuthenticationRequest request) {
-        User user;
+    public void register(AuthenticationRequest request)
+                        throws NoSuchFieldException, ClassNotFoundException, IllegalAccessException {
 
-        user = userService.createUser(worker);
+        User user = new User();
+
+        user.setId(worker.getId());
+        user.setType(worker.getWorkerType());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
+        user.setRoles(WorkerManager.getRoles(worker));
 
         userService.addUser(user);
 
