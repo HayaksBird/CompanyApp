@@ -13,16 +13,24 @@
             <h1>Personal Data</h1>
         </header>
 
+        <!-- PERSONAL DATA -->
         <div class="container">
-            <div class="data-list">
+            <div class="data-list frame">
                 <ul>
                     <li th:each="field : ${fields}">
-                        <div class="data">
-                            <span th:text="${field.getKey()} + ':'" class="key"></span>
-                            <span th:text="${field.getValue()}" class="value"></span>
-                        </div>
+                        <p th:text="${field.getKey()}"></p>
+                        <p th:text="${field.getValue()}" class="value"></p>
                     </li>
                 </ul>
+            </div>
+        </div>
+
+        <!-- UPDATE -->
+        <div class="container">
+            <div class="update-button">
+                <form th:action="@{/personal/edition}" method="GET">
+                    <button type="submit">Update</button>
+                </form>
             </div>
         </div>
     </body>

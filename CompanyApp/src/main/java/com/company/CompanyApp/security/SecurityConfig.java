@@ -50,7 +50,16 @@ public class SecurityConfig {
                                 //Regarding home page
                                 .requestMatchers(HttpMethod.GET,"/home").hasRole("D")
                                 .requestMatchers(HttpMethod.GET,"/home/**").hasRole("D")
-                                .requestMatchers(HttpMethod.POST,"/home/**").hasRole("C")
+
+                                //Regarding department page
+                                .requestMatchers(HttpMethod.GET,"/department").hasRole("D")
+                                .requestMatchers(HttpMethod.GET,"/department/**").hasRole("D")
+
+                                //Regarding department page
+                                .requestMatchers(HttpMethod.GET,"/personal").hasRole("D")
+                                .requestMatchers(HttpMethod.GET,"/personal/**").hasRole("D")
+                                .requestMatchers(HttpMethod.GET,"/personal/{id}").hasRole("B")
+                                .requestMatchers(HttpMethod.PUT,"/personal/**").hasRole("D")
         );
 
         http.csrf(csrf -> csrf.disable());

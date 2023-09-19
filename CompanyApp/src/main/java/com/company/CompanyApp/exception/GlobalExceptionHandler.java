@@ -18,24 +18,24 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(IllegalAccessException.class)
     public void handleException(IllegalAccessException exc) {
-        System.out.println("");
+        System.out.println(exc.getMessage());
     }
 
 
     @ExceptionHandler(NoSuchFieldException.class)
     public void handleException(NoSuchFieldException exc) {
-        System.out.println("");
+        System.out.println(exc.getMessage());
     }
 
 
     @ExceptionHandler(ClassNotFoundException.class)
     public void handleException(ClassNotFoundException exc) {
-        System.out.println("");
+        System.out.println(exc.getMessage());
     }
 
 
     @ExceptionHandler()
     public void handleException(Exception exc) {
-        System.out.println("");
+        System.out.println(exc.getMessage());
     }
 }

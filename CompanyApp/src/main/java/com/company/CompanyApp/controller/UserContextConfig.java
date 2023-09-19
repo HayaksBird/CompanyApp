@@ -2,6 +2,7 @@ package com.company.CompanyApp.controller;
 
 import com.company.CompanyApp.entity.worker.Worker;
 import com.company.CompanyApp.service.IWorkerService;
+import com.company.CompanyApp.service.WorkerManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
@@ -15,7 +16,7 @@ import java.util.HashSet;
  */
 @Lazy
 @Configuration
-public class UserContextConfig {
+public class UserContextConfig <T extends Worker> {
     private final IWorkerService workerService;
     private static HashSet<String> roles;
 
@@ -32,11 +33,11 @@ public class UserContextConfig {
      *
      */
     @Bean
-    public Worker userContext() {
-        Worker loggedUser;
+    public T userContext() throws NoSuchFieldException, ClassNotFoundException {
+        T loggedUser;
 
         String id = SecurityContextHolder.getContext().getAuthentication().getName();
-        loggedUser = workerService.getWorker(Integer.parseInt(id));
+        loggedUser = WorkerManager.getWorkerExtObject(workerService.getWorker(Integer.parseInt(id)));
 
         return loggedUser;
     }

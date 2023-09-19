@@ -36,7 +36,9 @@ public class WorkerManager {
     /**
      *
      */
-    public static <T extends Worker> T getWorkerExtObject(Worker worker) throws ClassNotFoundException, NoSuchFieldException {
+    public static <T extends Worker> T getWorkerExtObject(Worker worker)
+                                                          throws ClassNotFoundException, NoSuchFieldException {
+
         String fieldName = worker.getWorkerType().name();
         CorrespondingEntity entity = WorkerType.class.getField(fieldName).getAnnotation(CorrespondingEntity.class);
 
@@ -80,18 +82,20 @@ public class WorkerManager {
     /**
      * This method focuses on populating the dto list with workers info
      */
-    private static void addFieldsForView(List<WorkerData> forView, Field[] fields, Object worker) throws IllegalAccessException {
-        try {
-            for (Field field : fields) {
-                if (field.isAnnotationPresent(ViewName.class)) {
+    private static void addFieldsForView(List<WorkerData> forView,
+                                         Field[] fields,
+                                         Object worker) throws IllegalAccessException {
+        for (Field field : fields) {
+            if (field.isAnnotationPresent(ViewName.class)) {
+                try {
                     field.setAccessible(true);
 
                     forView.add(new WorkerData(field.getAnnotation(ViewName.class).message(),
                             field.get(worker)));
+                } catch (IllegalAccessException ex) {
+                    throw new IllegalAccessException("Could not access a field of a worker object " + field.getName());
                 }
             }
-        } catch (IllegalAccessException ex) {
-            throw new IllegalAccessException("Could not access a field of a worker object");
         }
     }
 
@@ -99,7 +103,10 @@ public class WorkerManager {
     /**
      *
      */
-    private static String[] getTypeBasedRoles(Object extWorker, Role rolesAnnotation) throws NoSuchFieldException, IllegalAccessException {
+    private static String[] getTypeBasedRoles(Object extWorker,
+                                              Role rolesAnnotation)
+                                              throws NoSuchFieldException, IllegalAccessException {
+
         String type;
         boolean insert = false;
         List<String> roles = new ArrayList<>();

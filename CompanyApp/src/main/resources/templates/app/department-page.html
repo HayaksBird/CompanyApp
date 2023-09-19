@@ -22,13 +22,7 @@
                 <ul>
                     <!-- IF CLICKED, THE USER'S PAGE WILL BE DEMONSTRATED -->
                     <li th:each="worker : ${department.getWorkers()}">
-                        <form th:action="@{/home/department/worker}" method="POST">
-                            <!-- Include worker's ID as a hidden input field -->
-                            <input type="hidden" name="id" th:value="${worker.getId()}"/>
-
-                            <!-- Include worker's Worker Type as a hidden input field -->
-                            <input type="hidden" name="workerType" th:value="${worker.getWorkerType()}"/>
-
+                        <form th:action="@{'/personal/' + ${worker.getId()}}" method="GET">
                             <!--
                             The button that triggers the form submission.
                             If the user has the lowest accessibility level, then it
@@ -43,11 +37,11 @@
             </div>
 
             <!-- STATS -->
-            <div>
+            <div th:if="${roles.contains('B')}">
                 <!-- Flexbox elongates containers for them to be of a certain length.
                  For this reason I have added an inner container, which will not depend on neighbouring
-                 container-->
-                <div th:if="${roles.contains('B')}" class="stats">
+                 containers -->
+                <div class="stats">
                     <h4>Statistics</h4>
 
                     <p th:text="'Minimum budget: ' + ${department.getMinBudget()} + '$'"></p>
