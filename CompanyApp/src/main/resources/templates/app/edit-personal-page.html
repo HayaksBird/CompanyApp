@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Edit Personal Page</title>
+
+        <!-- reference CSS file -->
+        <link rel="stylesheet" th:href="@{/css/personal-view.css}">
+    </head>
+
+    <body>
+        <header class="main-header">
+            <h1>Personal Data Editor</h1>
+        </header>
+
+        <!-- PERSONAL DATA TO UPDATE -->
+        <div class="container">
+            <div class="data-list frame">
+                <form th:action="@{/personal}" th:object="${fields}" method="POST">
+                    <!-- So that Spring will treat the request as PUT -->
+                    <input type="hidden" name="_method" value="PUT"/>
+
+                    <ul>
+                        <li th:each="field : ${fields}">
+                            <input th:field="*{field.value}"/>
+                        </li>
+                    </ul>
+                </form>
+            </div>
+        </div>
+
+        <!-- SUBMIT -->
+        <div class="container">
+            <div class="update-button">
+                <form th:action="@{/personal}" method="POST">
+                    <!-- So that Spring will treat the request as PUT -->
+                    <input type="hidden" name="_method" value="PUT"/>
+
+                    <button type="submit" disabled>Submit</button>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>
