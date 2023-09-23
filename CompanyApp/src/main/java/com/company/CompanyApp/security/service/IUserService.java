@@ -1,6 +1,6 @@
 package com.company.CompanyApp.security.service;
 
-import com.company.CompanyApp.entity.user.User;
+import com.company.CompanyApp.security.entity.User;
 
 /**
  * The class implementing this interface is responsible for providing

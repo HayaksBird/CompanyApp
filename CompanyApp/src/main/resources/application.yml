@@ -33,3 +33,4 @@ application:
     jwt:
       secret-key: XfHU8rFEfmFAs8gxZyAfm2ddKokNHaM7T4ND83HTF8W9HEF79SB1RS7CN0IS7cop0OD3SF83N6SAX50KR4
       expiration: 86400000 # a day (represented in milliseconds)
+      #86400000

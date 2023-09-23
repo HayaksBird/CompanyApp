@@ -1,7 +1,7 @@
 package com.company.CompanyApp.security.service.implementation;
 
-import com.company.CompanyApp.dao.UserRepository;
-import com.company.CompanyApp.entity.user.User;
+import com.company.CompanyApp.security.dao.UserRepository;
+import com.company.CompanyApp.security.entity.User;
 import com.company.CompanyApp.security.service.IUserService;
 import org.springframework.stereotype.Service;
 

@@ -59,7 +59,8 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.GET,"/personal").hasRole("D")
                                 .requestMatchers(HttpMethod.GET,"/personal/**").hasRole("D")
                                 .requestMatchers(HttpMethod.GET,"/personal/{id}").hasRole("B")
-                                .requestMatchers(HttpMethod.PUT,"/personal/**").hasRole("D")
+                                .requestMatchers(HttpMethod.POST,"/personal").hasRole("D")
+                                .requestMatchers(HttpMethod.POST,"/personal/**").hasRole("D")
         );
 
         http.csrf(csrf -> csrf.disable());

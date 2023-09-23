@@ -1,15 +1,16 @@
 package com.company.CompanyApp.security.service.implementation;
 
-import com.company.CompanyApp.entity.user.User;
-import com.company.CompanyApp.entity.worker.Worker;
+import com.company.CompanyApp.app.service.IWorkerService;
+import com.company.CompanyApp.app.service.WorkerManager;
+import com.company.CompanyApp.security.entity.User;
+import com.company.CompanyApp.app.entity.Worker;
 import com.company.CompanyApp.exception.BadLoginInputException;
-import com.company.CompanyApp.exception.WorkerkNotFoundException;
+import com.company.CompanyApp.exception.WorkerNotFoundException;
 import com.company.CompanyApp.security.dto.AuthenticationRequest;
 import com.company.CompanyApp.security.service.IAuthenticationService;
 import com.company.CompanyApp.security.service.IGmailService;
 import com.company.CompanyApp.security.service.IJwtService;
 import com.company.CompanyApp.security.service.IUserService;
-import com.company.CompanyApp.service.*;
 import jakarta.servlet.http.Cookie;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -82,6 +83,28 @@ public class AuthenticationService implements IAuthenticationService {
      *
      */
     @Override
+    public String getValidationCode(String id) throws WorkerNotFoundException {
+        int userId = Integer.parseInt(id);
+        String gmail;
+        String validCode;
+
+        worker = workerService.getWorker(userId);
+        gmail = worker.getEmail();
+
+        validCode = UUID.randomUUID().toString().substring(0, 11);
+
+        gmailService.sendGmail(gmail,
+                "Register to Company app",
+                "Enter this code in the registration window: " + validCode);
+
+        return validCode;
+    }
+
+
+    /**
+     *
+     */
+    @Override
     public void register(AuthenticationRequest request)
                         throws NoSuchFieldException, ClassNotFoundException, IllegalAccessException {
 
@@ -123,28 +146,6 @@ public class AuthenticationService implements IAuthenticationService {
         jwtCookie.setHttpOnly(true);
 
         return jwtCookie;
-    }
-
-
-    /**
-     *
-     */
-    @Override
-    public String getValidationCode(String id) throws WorkerkNotFoundException {
-        int userId = Integer.parseInt(id);
-        String gmail;
-        String validCode;
-
-        worker = workerService.getWorker(userId);
-        gmail = worker.getEmail();
-
-        validCode = UUID.randomUUID().toString().substring(0, 11);
-
-        gmailService.sendGmail(gmail,
-                        "Register to Company app",
-                        "Enter this code in the registration window: " + validCode);
-
-        return validCode;
     }
 
 

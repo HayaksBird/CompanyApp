@@ -13,30 +13,36 @@
             <h1>Personal Data Editor</h1>
         </header>
 
-        <!-- PERSONAL DATA TO UPDATE -->
         <div class="container">
-            <div class="data-list frame">
-                <form th:action="@{/personal}" th:object="${fields}" method="POST">
-                    <!-- So that Spring will treat the request as PUT -->
-                    <input type="hidden" name="_method" value="PUT"/>
+            <div class="frame">
+                <form th:action="@{/personal/edition}" th:object="${data}" method="post">
+                    <!-- PERSONAL DATA TO UPDATE -->
+                    <table class="table">
+                        <tbody>
+                            <tr th:each="workerData, itemStat : *{workersData}">
+                                <td th:text="${workerData.key}"></td>
+                                <td class="to-end"><input th:field="*{workersData[__${itemStat.index}__].value}"/></td>
+                                <!-- Keep the field name for future data binding -->
+                                <td><input type="hidden" th:field="*{workersData[__${itemStat.index}__].field}" th:value="${workerData.field}"/></td>
+                                <!-- Keep the view name for a potential new update request to the user -->
+                                <td><input type="hidden" th:field="*{workersData[__${itemStat.index}__].key}" th:value="${workerData.key}"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
 
-                    <ul>
-                        <li th:each="field : ${fields}">
-                            <input th:field="*{field.value}"/>
-                        </li>
-                    </ul>
-                </form>
-            </div>
-        </div>
+                    <!-- ERRORS -->
+                    <div class="error">
+                        <ul>
+                            <li th:each="error : ${data.getErrorMessages()}">
+                                <p th:text="${error}"></p>
+                            </li>
+                        </ul>
+                    </div>
 
-        <!-- SUBMIT -->
-        <div class="container">
-            <div class="update-button">
-                <form th:action="@{/personal}" method="POST">
-                    <!-- So that Spring will treat the request as PUT -->
-                    <input type="hidden" name="_method" value="PUT"/>
-
-                    <button type="submit" disabled>Submit</button>
+                    <!-- SUBMIT -->
+                    <div class="action-button">
+                        <button type="submit">Submit</button>
+                    </div>
                 </form>
             </div>
         </div>

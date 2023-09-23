@@ -1,5 +1,7 @@
 package com.company.CompanyApp.security.service;
 
+import com.company.CompanyApp.exception.BadLoginInputException;
+import com.company.CompanyApp.exception.WorkerNotFoundException;
 import com.company.CompanyApp.security.dto.AuthenticationRequest;
 import jakarta.servlet.http.Cookie;
 
@@ -14,10 +16,10 @@ public interface IAuthenticationService {
      * TO BE IMPLEMENTED:
      * After the successful authentication it generates and returns a JWT.
      */
-    void authenticate(AuthenticationRequest request);
+    void authenticate(AuthenticationRequest request) throws BadLoginInputException;
 
 
-    String getValidationCode(String id);
+    String getValidationCode(String id) throws WorkerNotFoundException;
 
 
     void register(AuthenticationRequest request) throws NoSuchFieldException, ClassNotFoundException, IllegalAccessException;
