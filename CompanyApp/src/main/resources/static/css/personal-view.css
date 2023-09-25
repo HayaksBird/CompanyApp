@@ -37,9 +37,6 @@ h1 {
 .container {
     margin: 0 auto;
     width: 35%;
-
-    display: flex;
-    justify-content: center;
 }
 
 .frame {
@@ -121,4 +118,10 @@ h1 {
 .error p {
     color: red;
     font-weight: bold;
+}
+
+.success {
+    margin: 1% 0;
+    text-align: center;
+    color: green;
 }

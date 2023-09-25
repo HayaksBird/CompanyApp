@@ -14,7 +14,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Department {
     //
-    public String message() default "Department does not exist!";
+    public String message() default "Department does not exist";
 
     //
     public Class<?>[] groups() default {};

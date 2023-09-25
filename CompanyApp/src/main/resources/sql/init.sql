@@ -21,11 +21,11 @@ VALUES
 -- Insert data for the 'IT' department
 INSERT INTO worker (first_name, last_name, department_id, email, employed_since, vacation, salary, worker_type, position)
 VALUES
-    ('David', 'Miller', 2, 'manager2@gmail.com', '2022-01-01', '2024-01-01', 80000.00, 'MANAGER', 'Manager'),
-    ('Olivia', 'Anderson', 2, 'seniordev1@gmail.com', '2022-01-15', '2024-01-15', 70000.00, 'SOFTWARE_DEVELOPER', 'Lead Developer'),
+    ('David', 'Miller', 2, 'enurieva71@gmail.com', '2022-01-01', '2024-01-01', 80000.00, 'MANAGER', 'Manager'),
+    ('Olivia', 'Anderson', 2, 'enurieva71@gmail.com', '2022-01-15', '2024-01-15', 70000.00, 'SOFTWARE_DEVELOPER', 'Lead Developer'),
     ('William', 'Jones', 2, 'seniordev2@gmail.com', '2022-02-01', '2024-02-01', 70000.00, 'SOFTWARE_DEVELOPER', 'Senior Frontend Developer'),
     ('Elizabeth', 'Taylor', 2, 'juniord1@gmail.com', '2022-02-15', '2024-02-15', 55000.00, 'SOFTWARE_DEVELOPER', 'Entry-Level Software Developer'),
-    ('Matthew', 'Clark', 2, 'juniord2@gmail.com', '2022-03-01', '2024-03-01', 55000.00, 'SOFTWARE_DEVELOPER', 'Trainee Software Developer'),
+    ('Matthew', 'Clark', 2, 'enurieva71@gmail.com', '2022-03-01', '2024-03-01', 55000.00, 'SOFTWARE_DEVELOPER', 'Trainee Software Developer'),
     ('Sophia', 'Brown', 2, 'intern2@gmail.com', '2023-06-01', '2024-08-01', 30000.00, 'INTERN', 'Apprentice Developer');
 
 -- Insert Managers

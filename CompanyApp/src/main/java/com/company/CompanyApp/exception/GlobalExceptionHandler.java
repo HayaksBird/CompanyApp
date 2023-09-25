@@ -34,6 +34,12 @@ public class GlobalExceptionHandler {
     }
 
 
+    @ExceptionHandler(UnknownTypeException.class)
+    public void handleException(UnknownTypeException exc) {
+        System.out.println(exc.getMessage());
+    }
+
+
     @ExceptionHandler()
     public void handleException(Exception exc) {
         System.out.println(exc.getMessage());

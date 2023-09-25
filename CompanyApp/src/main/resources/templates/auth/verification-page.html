@@ -27,11 +27,13 @@
 
                 <!-- ERRORS -->
                 <div class="error-block">
-                    <div class="error-item">
-                        <p th:if="${#fields.hasErrors('inputCode')}"
-                            th:errors="*{inputCode}"
-                            class="error"></p>
-                    </div>
+                    <ul>
+                        <li th:each="error : ${verify.getErrorMessages()}">
+                            <div class="error-item">
+                                <p th:text="${error}"></p>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
 
                 <!-- SUBMIT BUTTON -->

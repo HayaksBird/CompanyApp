@@ -28,22 +28,13 @@
 
                 <!-- ERRORS -->
                 <div class="error-block">
-                    <div class="error-item">
-                        <p th:if="${#fields.hasErrors('id')}"
-                            th:errors="*{id}"
-                            class="error"></p>
-                    </div>
-
-                    <div class="error-item">
-                        <p th:if="${not #strings.isEmpty(login.error)}"
-                            th:text="${login.error}" class="error"></p>
-                    </div>
-
-                    <div class="error-item">
-                        <p th:if="${#fields.hasErrors('password')}"
-                            th:errors="*{password}"
-                            class="error"></p>
-                    </div>
+                    <ul>
+                        <li th:each="error : ${login.getErrorMessages()}">
+                            <div class="error-item">
+                                <p th:text="${error}"></p>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
 
                 <!-- LOGIN BUTTON -->

@@ -1,30 +1,31 @@
 package com.company.CompanyApp.security.dto;
 
-import com.company.CompanyApp.security.validation.annotations.MatchCode;
+import com.company.CompanyApp.validation.annotations.MatchCode;
 import jakarta.validation.constraints.NotNull;
 
-public class VerificationRequest {
-    private static String code;
+import java.util.List;
 
-    @NotNull(message = "Provide a code")
+public class VerificationRequest {
     @MatchCode
+    @NotNull(message = "Provide a code")
     private String inputCode;
+    private List<String> errorMessages;
 
 
     //Setters & Getters;
-    public static String getCode() {
-        return code;
-    }
-
-    public static void setCode(String code) {
-        VerificationRequest.code = code;
-    }
-
     public String getInputCode() {
         return inputCode;
     }
 
     public void setInputCode(String inputCode) {
         this.inputCode = inputCode;
+    }
+
+    public List<String> getErrorMessages() {
+        return errorMessages;
+    }
+
+    public void setErrorMessages(List<String> errorMessages) {
+        this.errorMessages = errorMessages;
     }
 }

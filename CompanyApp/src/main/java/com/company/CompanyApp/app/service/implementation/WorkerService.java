@@ -4,6 +4,7 @@ import com.company.CompanyApp.app.dao.WorkerRepository;
 import com.company.CompanyApp.app.entity.Worker;
 import com.company.CompanyApp.exception.WorkerNotFoundException;
 import com.company.CompanyApp.app.service.IWorkerService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -11,7 +12,9 @@ public class WorkerService implements IWorkerService {
     private final WorkerRepository workerRepository;
 
 
-    public WorkerService(WorkerRepository workerRepository) {
+    public WorkerService(@Qualifier("workerRepository")
+                         WorkerRepository workerRepository) {
+
         this.workerRepository = workerRepository;
     }
 

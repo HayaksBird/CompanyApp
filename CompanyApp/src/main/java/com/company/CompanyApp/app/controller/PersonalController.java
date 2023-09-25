@@ -19,19 +19,26 @@ import java.util.List;
 @Controller
 @RequestMapping("/personal")
 public class PersonalController <T extends Worker> {
-    private final T loggedUser;
-    private final BindingService<T> bindingService;
-    private T viewedWorker;
-    private List<WorkerData> workersFields;
+    private final BindingService bindingService;
+    private final WorkerManager workerManager;
     private final IWorkerService workerService;
+    private final T loggedUser;
+    private T viewedWorker;
+    private final String templateDir;
+    private List<WorkerData> workersFields;
+
 
 
     //CONSTRUCTORS
     public PersonalController(T loggedUser,
                               IWorkerService workerService,
-                              BindingService<T> bindingService) {
+                              BindingService bindingService,
+                              WorkerManager workerManager) {
 
+        templateDir = "app";
         this.loggedUser = loggedUser;
+
+        this.workerManager = workerManager;
         this.workerService = workerService;
         this.bindingService = bindingService;
     }
@@ -40,11 +47,11 @@ public class PersonalController <T extends Worker> {
     @GetMapping("")
     public String viewPersonalInfo(Model model) throws IllegalAccessException {
         viewedWorker = loggedUser;
-        workersFields = WorkerManager.getWorkersFields(viewedWorker);
+        workersFields = workerManager.getWorkersFields(viewedWorker);
 
         model.addAttribute("fields", workersFields);
 
-        return "app/personal-page";
+        return String.format("%s/personal-page", templateDir);
     }
 
 
@@ -54,12 +61,12 @@ public class PersonalController <T extends Worker> {
                                    int id)
                                    throws NoSuchFieldException, ClassNotFoundException, IllegalAccessException, WorkerNotFoundException {
 
-        viewedWorker = WorkerManager.getWorkerExtObject(workerService.getWorker(id));
-        workersFields = WorkerManager.getWorkersFields(viewedWorker);
+        viewedWorker = workerManager.getWorkerExtObject(workerService.getWorker(id));
+        workersFields = workerManager.getWorkersFields(viewedWorker);
 
         model.addAttribute("fields", workersFields);
 
-        return "app/personal-page";
+        return String.format("%s/personal-page", templateDir);
     }
 
 
@@ -67,33 +74,38 @@ public class PersonalController <T extends Worker> {
     public String updatePersonalInfo(Model model) {
         model.addAttribute("data", new WorkerDataContainer(workersFields));
 
-        return "app/edit-personal-page";
+        return String.format("%s/edit-personal-page", templateDir);
     }
 
 
     @PostMapping("/edition")
     public String updatePersonalInfo(@ModelAttribute
                                      WorkerDataContainer data,
-                                     Model model) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException, InstantiationException {
+                                     Model model)
+                                     throws IllegalAccessException, NoSuchMethodException, InvocationTargetException, InstantiationException {
 
         T updatedWorker;
         List<String> errorMessages;
 
         updatedWorker = (T) viewedWorker.getClass().getDeclaredConstructor().newInstance();
+        updatedWorker.setWorkerType(viewedWorker.getWorkerType());
+
         bindingService.bindToWorkerEntity(data.getWorkersData(), updatedWorker);
         errorMessages = bindingService.getErrorMessages();
 
         if (errorMessages.isEmpty()) {
             workerService.updateWorker(updatedWorker);
 
-            viewedWorker = updatedWorker;
-        } else {
-            data.setErrorMessages(errorMessages);
-            model.addAttribute("data", data);
+            //Make sure to update the logged user if necessary
+            if (viewedWorker == loggedUser) {
+                workerManager.equalize(loggedUser.getClass(), loggedUser, updatedWorker);
+            }
 
-            return "app/edit-personal-page";
-        }
+            data.setAdded(true);
+        } else data.setErrorMessages(errorMessages);
 
-        return null;
+        model.addAttribute("data", data);
+
+        return String.format("%s/edit-personal-page", templateDir);
     }
 }

@@ -30,9 +30,9 @@ public class DepartmentController <T extends Worker> {
 
     @GetMapping("")
     public String viewDepartmentInfo(Model model) throws DepartmentNotFoundException {
-        if (usersDepartment == null) {
+        //if (usersDepartment == null) {
             usersDepartment = departmentService.getDepartmentWithWorkers(loggedUser.getDepartmentId());
-        }
+        //}
 
         model.addAttribute("roles", UserContextConfig.getRoles());
         model.addAttribute("department", usersDepartment);

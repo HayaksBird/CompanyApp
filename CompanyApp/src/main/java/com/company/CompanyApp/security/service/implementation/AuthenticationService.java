@@ -4,7 +4,6 @@ import com.company.CompanyApp.app.service.IWorkerService;
 import com.company.CompanyApp.app.service.WorkerManager;
 import com.company.CompanyApp.security.entity.User;
 import com.company.CompanyApp.app.entity.Worker;
-import com.company.CompanyApp.exception.BadLoginInputException;
 import com.company.CompanyApp.exception.WorkerNotFoundException;
 import com.company.CompanyApp.security.dto.AuthenticationRequest;
 import com.company.CompanyApp.security.service.IAuthenticationService;
@@ -34,8 +33,10 @@ public class AuthenticationService implements IAuthenticationService {
     private final IWorkerService workerService;
     private final IJwtService jwtService;
     private final IGmailService gmailService;
+    private final WorkerManager workerManager;
     private final AuthenticationManager authenticationManager;
     private Worker worker = null;
+    private String validationCode;
 
 
     //CONSTRUCTORS
@@ -44,8 +45,10 @@ public class AuthenticationService implements IAuthenticationService {
                                  AuthenticationManager authenticationManager,
                                  IWorkerService workerService,
                                  IGmailService gmailService,
-                                 IJwtService jwtService) {
+                                 IJwtService jwtService,
+                                 WorkerManager workerManager) {
 
+        this.workerManager = workerManager;
         this.authenticationManager = authenticationManager;
         this.passwordEncoder = passwordEncoder;
         this.userService = userService;
@@ -61,7 +64,7 @@ public class AuthenticationService implements IAuthenticationService {
      * After the successful authentication it generates and returns a JWT.
      */
     @Override
-    public void authenticate(AuthenticationRequest request) throws BadLoginInputException {
+    public String authenticate(AuthenticationRequest request) {
         Authentication authentication;
 
         try {
@@ -71,11 +74,12 @@ public class AuthenticationService implements IAuthenticationService {
                     request.getPassword()
                 )
             );
-        } catch (AuthenticationException ex) {
-            throw new BadLoginInputException();
-        }
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            return null;
+        } catch (AuthenticationException ex) {
+            return "Wrong username and/or password!";
+        }
     }
 
 
@@ -83,12 +87,16 @@ public class AuthenticationService implements IAuthenticationService {
      *
      */
     @Override
-    public String getValidationCode(String id) throws WorkerNotFoundException {
+    public String sendValidationCode(String id) {
         int userId = Integer.parseInt(id);
         String gmail;
         String validCode;
 
-        worker = workerService.getWorker(userId);
+        try {
+            worker = workerService.getWorker(userId);
+        } catch (WorkerNotFoundException ex) {
+            return ex.getMessage();
+        }
         gmail = worker.getEmail();
 
         validCode = UUID.randomUUID().toString().substring(0, 11);
@@ -97,7 +105,8 @@ public class AuthenticationService implements IAuthenticationService {
                 "Register to Company app",
                 "Enter this code in the registration window: " + validCode);
 
-        return validCode;
+        validationCode = validCode;
+        return null;
     }
 
 
@@ -113,7 +122,7 @@ public class AuthenticationService implements IAuthenticationService {
         user.setId(worker.getId());
         user.setType(worker.getWorkerType());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
-        user.setRoles(WorkerManager.getRoles(worker));
+        user.setRoles(workerManager.getRoles(worker));
 
         userService.addUser(user);
 
@@ -160,5 +169,12 @@ public class AuthenticationService implements IAuthenticationService {
         extraClaims.put("roles", roles.substring(1, roles.length() - 1).split(", "));
 
         return jwtService.generateToken(extraClaims, Authentication::getName, userAuth);
+    }
+
+
+    //Setters & Getters
+    @Override
+    public String getValidationCode() {
+        return validationCode;
     }
 }

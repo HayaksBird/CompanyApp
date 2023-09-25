@@ -1,23 +1,19 @@
 package com.company.CompanyApp.security.controller;
 
-import com.company.CompanyApp.exception.BadLoginInputException;
-import com.company.CompanyApp.exception.WorkerNotFoundException;
 import com.company.CompanyApp.security.dto.AuthenticationRequest;
 import com.company.CompanyApp.security.dto.VerificationRequest;
 import com.company.CompanyApp.security.service.IAuthenticationService;
+import com.company.CompanyApp.validation.service.ValidationService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import jakarta.validation.Valid;
 
 import org.springframework.ui.Model;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * This controller deals with authentication requests.
@@ -26,11 +22,17 @@ import java.io.IOException;
 @RequestMapping("/auth")
 public class AuthController {
     private final IAuthenticationService authenticationService;
+    private final ValidationService validationService;
+    private final String templateDir;
     private AuthenticationRequest registerInfo;
 
 
     //CONSTRUCTORS
-    public AuthController(IAuthenticationService authenticationService) {
+    public AuthController(IAuthenticationService authenticationService,
+                          ValidationService validationService) {
+
+        templateDir = "auth";
+        this.validationService = validationService;
         this.authenticationService = authenticationService;
     }
 
@@ -58,7 +60,7 @@ public class AuthController {
     public String showLoginPage(Model model) {
         model.addAttribute("login", new AuthenticationRequest());
 
-        return "auth/login-page";
+        return String.format("%s/login-page", templateDir);
     }
 
 
@@ -69,7 +71,7 @@ public class AuthController {
     public String showRegistrationPage(Model model) {
         model.addAttribute("register", new AuthenticationRequest());
 
-        return "auth/register-page";
+        return String.format("%s/register-page", templateDir);
     }
 
 
@@ -77,26 +79,29 @@ public class AuthController {
      * Try to authenticate the user based on the retrieved data.
      */
     @PostMapping("/process-login")
-    public String login(@Valid
-                              @ModelAttribute("login")
-                              AuthenticationRequest login,
-                              BindingResult result,
-                              HttpServletResponse response) throws IOException {
+    public String login(@ModelAttribute("login")
+                        AuthenticationRequest login,
+                        HttpServletResponse response) throws IOException {
 
-        if (result.hasErrors()) {
-            return "auth/login-page";
+        List<String> errorMessages;
+
+        errorMessages = validationService.validate(login);
+
+        if (errorMessages.isEmpty()) {
+            String badLogin = authenticationService.authenticate(login);
+
+            if (badLogin != null) errorMessages.add(badLogin);
+        }
+
+        if (errorMessages.isEmpty()) {
+            response.addCookie(authenticationService.generateJwtCookie());
+            response.sendRedirect("/home");
+
+            return null;
         } else {
-            try {
-                authenticationService.authenticate(login);
+            login.setErrorMessages(errorMessages);
 
-                response.addCookie(authenticationService.generateJwtCookie());
-                response.sendRedirect("/home");
-                return null;
-            } catch (BadLoginInputException ex) {
-                login.setError(ex.getMessage());
-
-                return "auth/login-page";
-            }
+            return String.format("%s/login-page", templateDir);
         }
     }
 
@@ -105,29 +110,29 @@ public class AuthController {
      * Try to authenticate the user based on the retrieved data.
      */
     @PostMapping("/process-register")
-    public String registration(@Valid
-                                     @ModelAttribute("register")
-                                     AuthenticationRequest register,
-                                     BindingResult result,
-                                     Model model) {
+    public String registration(@ModelAttribute("register")
+                               AuthenticationRequest register,
+                               Model model) {
 
-        if (result.hasErrors()) {
-            return "auth/register-page";
+        List<String> errorMessages;
+
+        errorMessages = validationService.validate(register);
+
+        if (errorMessages.isEmpty()) {
+            String noWorker = authenticationService.sendValidationCode(register.getId());
+
+            if (noWorker != null) errorMessages.add(noWorker);
+        }
+
+        if (errorMessages.isEmpty()) {
+            registerInfo = register;
+            model.addAttribute("verify", new VerificationRequest());
+
+            return String.format("%s/verification-page", templateDir);
         } else {
-            try {
-                registerInfo = register;
+            register.setErrorMessages(errorMessages);
 
-                String code = authenticationService.getValidationCode(register.getId());
-
-                model.addAttribute("verify", new VerificationRequest());
-                VerificationRequest.setCode(code);
-
-                return "auth/verification-page";
-            } catch (WorkerNotFoundException ex) {
-                register.setError(ex.getMessage());
-
-                return "auth/register-page";
-            }
+            return String.format("%s/register-page", templateDir);
         }
     }
 
@@ -136,21 +141,26 @@ public class AuthController {
      *
      */
     @PostMapping("/verify")
-    public String verification(@Valid
-                                     @ModelAttribute("verify")
-                                     VerificationRequest verify,
-                                     BindingResult result,
-                                     HttpServletResponse response)
-                                     throws IOException, NoSuchFieldException, ClassNotFoundException, IllegalAccessException {
+    public String verification(@ModelAttribute("verify")
+                               VerificationRequest verify,
+                               HttpServletResponse response)
+                               throws IOException, NoSuchFieldException, ClassNotFoundException, IllegalAccessException {
 
-        if (result.hasErrors()) {
-            return "auth/verification-page";
-        } else {
+        List<String> errorMessages;
+
+        errorMessages = validationService.validate(verify);
+
+        if (errorMessages.isEmpty()) {
             authenticationService.register(registerInfo);
 
             response.addCookie(authenticationService.generateJwtCookie());
             response.sendRedirect("/home");
+
             return null;
+        } else {
+            verify.setErrorMessages(errorMessages);
+
+            return String.format("%s/verification-page", templateDir);
         }
     }
 }

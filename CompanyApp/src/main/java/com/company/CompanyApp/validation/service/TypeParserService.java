@@ -9,7 +9,7 @@ import java.time.LocalDate;
 @Service
 public class TypeParserService {
 
-    public static Object parse(Class<?> toType, String val) throws TypeParseException, UnknownTypeException {
+    public Object parse(Class<?> toType, String val) throws TypeParseException, UnknownTypeException {
         //Get purely the class name
         int nameStart = toType.getName().lastIndexOf('.') + 1;
         String className = toType.getName().substring(nameStart);

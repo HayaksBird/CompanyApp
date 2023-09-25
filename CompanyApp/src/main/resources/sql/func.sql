@@ -60,7 +60,10 @@ CREATE TRIGGER set_related_data_update
 AFTER UPDATE ON worker
 FOR EACH ROW
 BEGIN
-    CALL update_min_budget(OLD.salary, NEW.salary, NEW.department_id);
+	CALL update_employee_count(TRUE, OLD.department_id);
+    CALL update_employee_count(FALSE, NEW.department_id);
+    CALL update_min_budget(OLD.salary, 0, OLD.department_id);
+    CALL update_min_budget(0, NEW.salary, NEW.department_id);
 END;
 //
 

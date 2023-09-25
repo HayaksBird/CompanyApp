@@ -7,6 +7,7 @@ spring:
     url: jdbc:mysql://localhost:3306/company
     username: root
     password: Kenan@sql#16
+  #Set gmail connection properties
   mail:
     host: smtp.gmail.com
     port: 587
@@ -18,6 +19,13 @@ spring:
           auth: true
           starttls:
             enable: true
+  #Turn off hibernates automatic validation before the persistence
+  jpa:
+    properties:
+      jakarta:
+        persistence:
+          validation:
+            mode: none
 
 #Add actuators
 management:

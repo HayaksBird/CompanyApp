@@ -13,8 +13,8 @@
             <h1>Personal Data</h1>
         </header>
 
-        <!-- PERSONAL DATA -->
         <div class="container">
+            <!-- PERSONAL DATA -->
             <div class="data-list frame">
                 <ul>
                     <li th:each="field : ${fields}">
@@ -23,10 +23,8 @@
                     </li>
                 </ul>
             </div>
-        </div>
 
-        <!-- UPDATE -->
-        <div class="container">
+            <!-- UPDATE -->
             <div class="action-button">
                 <form th:action="@{/personal/edition}" method="GET">
                     <button type="submit">Update</button>

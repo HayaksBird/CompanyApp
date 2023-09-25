@@ -5,6 +5,7 @@ import java.util.List;
 public class WorkerDataContainer {
     private List<WorkerData> workersData;
     private List<String> errorMessages;
+    private boolean isAdded = false;
 
 
     //CONSTRUCTORS
@@ -37,5 +38,13 @@ public class WorkerDataContainer {
 
     public void setErrorMessages(List<String> errorMessages) {
         this.errorMessages = errorMessages;
+    }
+
+    public boolean isAdded() {
+        return isAdded;
+    }
+
+    public void setAdded(boolean added) {
+        isAdded = added;
     }
 }

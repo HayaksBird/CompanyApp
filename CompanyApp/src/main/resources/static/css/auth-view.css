@@ -59,12 +59,12 @@ span {
 }
 
 .error-item {
-    height: max(1.25vw, 0.6rem);
+    margin: max(1.25vw, 5px) 0;
     display: flex;
     justify-content: center;
 }
 
-.error {
+.error-item p {
     color: red;
     font-weight: bold;
 }

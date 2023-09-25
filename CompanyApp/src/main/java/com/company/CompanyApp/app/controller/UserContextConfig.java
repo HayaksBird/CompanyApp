@@ -19,10 +19,14 @@ import java.util.HashSet;
 @Configuration
 public class UserContextConfig <T extends Worker> {
     private final IWorkerService workerService;
+    private final WorkerManager workerManager;
     private static HashSet<String> roles;
 
 
-    public UserContextConfig(IWorkerService workerService) {
+    public UserContextConfig(IWorkerService workerService,
+                             WorkerManager workerManager) {
+
+        this.workerManager = workerManager;
         this.workerService = workerService;
 
         roles = new HashSet<>();
@@ -38,7 +42,7 @@ public class UserContextConfig <T extends Worker> {
         T loggedUser;
 
         String id = SecurityContextHolder.getContext().getAuthentication().getName();
-        loggedUser = WorkerManager.getWorkerExtObject(workerService.getWorker(Integer.parseInt(id)));
+        loggedUser = workerManager.getWorkerExtObject(workerService.getWorker(Integer.parseInt(id)));
 
         return loggedUser;
     }

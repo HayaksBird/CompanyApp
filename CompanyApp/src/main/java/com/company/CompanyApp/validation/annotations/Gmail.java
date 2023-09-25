@@ -14,7 +14,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Gmail {
     //
-    public String message() default "Wrong email format!";
+    public String message() default "Wrong email format";
 
     //
     public Class<?>[] groups() default {};

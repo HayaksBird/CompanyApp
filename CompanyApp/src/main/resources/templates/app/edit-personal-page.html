@@ -39,10 +39,22 @@
                         </ul>
                     </div>
 
+                    <!-- SUCCESS -->
+                    <div class="success" th:if="${data.isAdded()}">
+                        <p>Worker has been successfully edited</p>
+                    </div>
+
                     <!-- SUBMIT -->
                     <div class="action-button">
                         <button type="submit">Submit</button>
                     </div>
+                </form>
+            </div>
+
+            <!-- RETURN TO MAIN -->
+            <div class="action-button">
+                <form th:action="@{/home}" method="GET">
+                    <button type="submit">Back to main page</button>
                 </form>
             </div>
         </div>
