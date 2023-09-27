@@ -123,5 +123,35 @@ h1 {
 .success {
     margin: 1% 0;
     text-align: center;
+}
+
+.success p {
     color: green;
+}
+
+.hidden {
+    margin: 0;
+    padding: 0;
+}
+
+.options {
+    text-align: center;
+}
+
+.pick-type {
+    padding-left: 0;
+}
+
+.pick button {
+    background-color: #f7f7f7;
+    color: #383838;
+    border: 1px solid #f7f7f7;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.pick button:hover {
+    cursor: pointer;
+    background-color: #383838;
+    color: #f7f7f7;
 }

@@ -1,22 +1,17 @@
 package com.company.CompanyApp.app.dto;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class WorkerDataContainer {
     private List<WorkerData> workersData;
     private List<String> errorMessages;
-    private boolean isAdded = false;
+    private boolean isOperationSuccessful = false;
 
 
     //CONSTRUCTORS
     public WorkerDataContainer(List<WorkerData> workersData) {
         this.workersData = workersData;
-    }
-
-
-    public WorkerDataContainer(List<WorkerData> workersData, List<String> errorMessages) {
-        this.workersData = workersData;
-        this.errorMessages = errorMessages;
     }
 
 
@@ -40,11 +35,17 @@ public class WorkerDataContainer {
         this.errorMessages = errorMessages;
     }
 
-    public boolean isAdded() {
-        return isAdded;
+    public void setErrorMessage(String errorMessage) {
+        errorMessages = new LinkedList<>();
+
+        errorMessages.add(errorMessage);
     }
 
-    public void setAdded(boolean added) {
-        isAdded = added;
+    public boolean isOperationSuccessful() {
+        return isOperationSuccessful;
+    }
+
+    public void setOperationSuccessful(boolean operationSuccessful) {
+        isOperationSuccessful = operationSuccessful;
     }
 }

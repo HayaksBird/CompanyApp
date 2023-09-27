@@ -1,15 +1,13 @@
 package com.company.CompanyApp.app.controller;
 
 import com.company.CompanyApp.app.entity.Worker;
+import com.company.CompanyApp.hierarchy.service.IHierarchyService;
 import com.company.CompanyApp.app.service.IWorkerService;
-import com.company.CompanyApp.app.service.WorkerManager;
 import com.company.CompanyApp.exception.WorkerNotFoundException;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.context.SecurityContextHolder;
-
-import java.util.HashSet;
 
 /**
  * Made this bean lazy, because it requires user's data from the SecurityContextHolder.
@@ -17,20 +15,18 @@ import java.util.HashSet;
  */
 @Lazy
 @Configuration
-public class UserContextConfig <T extends Worker> {
+public class UserContextConfig {
     private final IWorkerService workerService;
-    private final WorkerManager workerManager;
-    private static HashSet<String> roles;
 
 
+    //CONSTRUCTORS
     public UserContextConfig(IWorkerService workerService,
-                             WorkerManager workerManager) {
+                             IHierarchyService hierarchyManagementService) throws NoSuchFieldException {
 
-        this.workerManager = workerManager;
         this.workerService = workerService;
 
-        roles = new HashSet<>();
-        addUserRoles();
+        hierarchyManagementService.addLoggedUserRoles();
+        hierarchyManagementService.setSubordinateWorkerTypes(hierarchyManagementService.getLoggedUsersRoles());
     }
 
 
@@ -38,30 +34,12 @@ public class UserContextConfig <T extends Worker> {
      *
      */
     @Bean
-    public T userContext() throws NoSuchFieldException, ClassNotFoundException, WorkerNotFoundException {
+    public <T extends Worker> T userContext() throws NoSuchFieldException, ClassNotFoundException, WorkerNotFoundException {
         T loggedUser;
 
         String id = SecurityContextHolder.getContext().getAuthentication().getName();
-        loggedUser = workerManager.getWorkerExtObject(workerService.getWorker(Integer.parseInt(id)));
+        loggedUser = workerService.getWorkerExtObject(workerService.getWorker(Integer.parseInt(id)));
 
         return loggedUser;
-    }
-
-
-    /**
-     * This method extracts the roles of the currently logged-in user.
-     */
-    private static void addUserRoles() {
-        var roles = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
-
-        for (var role : roles) {
-            UserContextConfig.roles.add(role.toString().substring(5));
-        }
-    }
-
-
-    //SETTERS & GETTERS
-    public static HashSet<String> getRoles() {
-        return roles;
     }
 }

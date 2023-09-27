@@ -20,18 +20,27 @@
             <!-- NAVIGATION PANEL -->
             <div class="nav-panel">
                 <!-- VIEW ACCOUNT INFO -->
-                <form th:action="@{/personal}" method="GET">
+                <form th:action="@{/personal}" method="get">
                     <div class="nav-item">
                         <button type="submit">Personal</button>
                     </div>
                 </form>
 
                 <!-- VIEW DEPARTMENT INFO -->
-                <form th:action="@{/department}" method="GET">
+                <form th:action="@{/department}" method="get">
                     <div class="nav-item">
                         <button type="submit">Department</button>
                     </div>
                 </form>
+
+                <!-- ADD A WORKER -->
+                <div th:if="${roles.contains('B')}">
+                    <form th:action="@{/personal/creation}" method="get">
+                        <div class="nav-item">
+                            <button type="submit">Add Worker</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </body>

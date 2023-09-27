@@ -8,7 +8,7 @@ import com.company.CompanyApp.app.annotations.Role;
  */
 public enum WorkerType {
     @CorrespondingEntity(entityClass = "DataAnalyst")
-    @Role(isTypeBased = true, roles = {"JUNIOR",
+    @Role(isPositionTypeBased = true, roles = {"JUNIOR",
                                        "ROLE_D",
                                        "SENIOR",
                                        "ROLE_C",
@@ -17,7 +17,7 @@ public enum WorkerType {
 
 
     @CorrespondingEntity(entityClass = "SoftwareDeveloper")
-    @Role(isTypeBased = true, roles = {"JUNIOR",
+    @Role(isPositionTypeBased = true, roles = {"JUNIOR",
                                        "ROLE_D",
                                        "SENIOR",
                                        "ROLE_C",

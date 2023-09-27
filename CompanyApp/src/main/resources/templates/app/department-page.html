@@ -18,7 +18,7 @@
 
         <div class="container">
             <!-- DISPLAY A LIST OF WORKERS -->
-            <div th:if="${roles.contains('D')}" class="worker-list">
+            <div class="worker-list">
                 <ul>
                     <!-- IF CLICKED, THE USER'S PAGE WILL BE DEMONSTRATED -->
                     <li th:each="worker : ${department.getWorkers()}">
@@ -29,7 +29,7 @@
                             will not work
                             -->
                             <button th:utext="${worker}"
-                                    th:disabled="${!roles.contains('C')}"
+                                    th:disabled="${!roles.contains('B')}"
                                     th:classappend="${worker.getWorkerType().toString() == 'MANAGER'} ? 'manager'"></button>
                         </form>
                     </li>

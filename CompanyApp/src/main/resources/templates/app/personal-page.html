@@ -17,17 +17,37 @@
             <!-- PERSONAL DATA -->
             <div class="data-list frame">
                 <ul>
-                    <li th:each="field : ${fields}">
+                    <li th:each="field : ${data.getWorkersData()}">
                         <p th:text="${field.getKey()}"></p>
                         <p th:text="${field.getValue()}" class="value"></p>
                     </li>
                 </ul>
+
+                <!-- SUCCESSFUL DELETING -->
+                <div class="success" th:if="${data.isOperationSuccessful()}">
+                    <p>Worker has been successfully deleted</p>
+                </div>
+
+                <!-- DELETE -->
+                <div class="action-button">
+                    <form th:action="@{/personal/deletion}" method="post">
+                        <input type="hidden" name="_method" value="delete">
+                        <button type="submit">Delete</button>
+                    </form>
+                </div>
+
+                <!-- UPDATE -->
+                <div class="action-button">
+                    <form th:action="@{/personal/edition}" method="get">
+                        <button type="submit">Update</button>
+                    </form>
+                </div>
             </div>
 
-            <!-- UPDATE -->
+            <!-- RETURN TO MAIN -->
             <div class="action-button">
-                <form th:action="@{/personal/edition}" method="GET">
-                    <button type="submit">Update</button>
+                <form th:action="@{/home}" method="get">
+                    <button type="submit">Back to main page</button>
                 </form>
             </div>
         </div>

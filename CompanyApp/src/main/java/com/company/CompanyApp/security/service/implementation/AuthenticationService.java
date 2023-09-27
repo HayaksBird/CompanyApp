@@ -1,7 +1,7 @@
 package com.company.CompanyApp.security.service.implementation;
 
 import com.company.CompanyApp.app.service.IWorkerService;
-import com.company.CompanyApp.app.service.WorkerManager;
+import com.company.CompanyApp.hierarchy.service.IHierarchyService;
 import com.company.CompanyApp.security.entity.User;
 import com.company.CompanyApp.app.entity.Worker;
 import com.company.CompanyApp.exception.WorkerNotFoundException;
@@ -33,7 +33,7 @@ public class AuthenticationService implements IAuthenticationService {
     private final IWorkerService workerService;
     private final IJwtService jwtService;
     private final IGmailService gmailService;
-    private final WorkerManager workerManager;
+    private final IHierarchyService hierarchyService;
     private final AuthenticationManager authenticationManager;
     private Worker worker = null;
     private String validationCode;
@@ -46,9 +46,9 @@ public class AuthenticationService implements IAuthenticationService {
                                  IWorkerService workerService,
                                  IGmailService gmailService,
                                  IJwtService jwtService,
-                                 WorkerManager workerManager) {
+                                 IHierarchyService hierarchyService) {
 
-        this.workerManager = workerManager;
+        this.hierarchyService = hierarchyService;
         this.authenticationManager = authenticationManager;
         this.passwordEncoder = passwordEncoder;
         this.userService = userService;
@@ -122,7 +122,7 @@ public class AuthenticationService implements IAuthenticationService {
         user.setId(worker.getId());
         user.setType(worker.getWorkerType());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
-        user.setRoles(workerManager.getRoles(worker));
+        user.setRoles(hierarchyService.getRoles(worker));
 
         userService.addUser(user);
 

@@ -8,6 +8,7 @@
         <link rel="stylesheet" th:href="@{/css/personal-view.css}">
     </head>
 
+    <!-- THIS TEMPLATE WILL BE USED FOR THE UPDATE PROCEDURE -->
     <body>
         <header class="main-header">
             <h1>Personal Data Editor</h1>
@@ -16,6 +17,9 @@
         <div class="container">
             <div class="frame">
                 <form th:action="@{/personal/edition}" th:object="${data}" method="post">
+                    <!-- CHANGE THE OPERATION TO UPDATE -->
+                    <input type="hidden" name="_method" value="put">
+
                     <!-- PERSONAL DATA TO UPDATE -->
                     <table class="table">
                         <tbody>
@@ -39,8 +43,8 @@
                         </ul>
                     </div>
 
-                    <!-- SUCCESS -->
-                    <div class="success" th:if="${data.isAdded()}">
+                    <!-- SUCCESSFUL UPDATE -->
+                    <div class="success" th:if="${data.isOperationSuccessful()}">
                         <p>Worker has been successfully edited</p>
                     </div>
 
@@ -53,7 +57,7 @@
 
             <!-- RETURN TO MAIN -->
             <div class="action-button">
-                <form th:action="@{/home}" method="GET">
+                <form th:action="@{/home}" method="get">
                     <button type="submit">Back to main page</button>
                 </form>
             </div>

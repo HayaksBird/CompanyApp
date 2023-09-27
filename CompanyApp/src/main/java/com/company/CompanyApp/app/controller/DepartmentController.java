@@ -3,6 +3,7 @@ package com.company.CompanyApp.app.controller;
 import com.company.CompanyApp.app.entity.Department;
 import com.company.CompanyApp.app.entity.Worker;
 import com.company.CompanyApp.app.service.IDepartmentService;
+import com.company.CompanyApp.hierarchy.service.IHierarchyService;
 import com.company.CompanyApp.exception.DepartmentNotFoundException;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
@@ -17,24 +18,25 @@ public class DepartmentController <T extends Worker> {
     private final T loggedUser;
     private Department usersDepartment;
     private final IDepartmentService departmentService;
+    private final IHierarchyService hierarchyManagementService;
 
 
     //CONSTRUCTORS
     public DepartmentController(T loggedUser,
-                                IDepartmentService departmentService) {
+                                IDepartmentService departmentService,
+                                IHierarchyService hierarchyManagementService) {
 
         this.loggedUser = loggedUser;
         this.departmentService = departmentService;
+        this.hierarchyManagementService = hierarchyManagementService;
     }
 
 
     @GetMapping("")
     public String viewDepartmentInfo(Model model) throws DepartmentNotFoundException {
-        //if (usersDepartment == null) {
-            usersDepartment = departmentService.getDepartmentWithWorkers(loggedUser.getDepartmentId());
-        //}
+        usersDepartment = departmentService.getDepartmentWithWorkers(loggedUser.getDepartmentId());
 
-        model.addAttribute("roles", UserContextConfig.getRoles());
+        model.addAttribute("roles", hierarchyManagementService.getLoggedUsersRoles());
         model.addAttribute("department", usersDepartment);
 
         return "app/department-page";

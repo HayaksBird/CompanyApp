@@ -15,7 +15,7 @@
             </header>
 
             <!-- LOGIN FORM -->
-            <form th:action="@{/auth/process-login}" th:object="${login}" method="POST">
+            <form th:action="@{/auth/process-login}" th:object="${login}" method="post">
                 <!-- ID REQUEST -->
                 <div class="input-field">
                     <input type="text" th:field="*{id}" placeholder="ID"/>
@@ -44,7 +44,7 @@
             </form>
 
             <!-- REDIRECT TO REGISTRATION FORM -->
-            <form th:action="@{/auth/register}" method="GET">
+            <form th:action="@{/auth/register}" method="get">
                 <div class="to-register">
                     <span>Don't have an account?</span>
 

@@ -57,10 +57,10 @@ public class SecurityConfig {
 
                                 //Regarding department page
                                 .requestMatchers(HttpMethod.GET,"/personal").hasRole("D")
-                                .requestMatchers(HttpMethod.GET,"/personal/**").hasRole("D")
-                                .requestMatchers(HttpMethod.GET,"/personal/{id}").hasRole("B")
-                                .requestMatchers(HttpMethod.POST,"/personal").hasRole("D")
-                                .requestMatchers(HttpMethod.POST,"/personal/**").hasRole("D")
+                                .requestMatchers(HttpMethod.GET,"/personal/**").hasRole("B")
+                                .requestMatchers(HttpMethod.POST,"/personal/**").hasRole("B")
+                                .requestMatchers(HttpMethod.DELETE,"/personal/**").hasRole("B")
+                                .requestMatchers(HttpMethod.PUT,"/personal/**").hasRole("B")
         );
 
         http.csrf(csrf -> csrf.disable());

@@ -1,4 +1,9 @@
 spring:
+  #Allow Spring to spot put/delete requests from the html forms
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
   main:
     #Turn off the logo
     banner-mode: off

@@ -16,7 +16,7 @@ public @interface Role {
     If set to true, a further investigation is needed to determine the
     role of an entity.
      */
-    public boolean isTypeBased() default false;
+    public boolean isPositionTypeBased() default false;
 
 
     /**

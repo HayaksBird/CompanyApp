@@ -19,7 +19,7 @@
             </header>
 
             <!-- VERIFICATION FORM -->
-            <form th:action="@{/auth/verify}" th:object="${verify}" method="POST">
+            <form th:action="@{/auth/verify}" th:object="${verify}" method="post">
                 <!-- CODE REQUEST -->
                 <div class="input-field">
                     <input type="text" th:field="*{inputCode}" placeholder="Code"/>

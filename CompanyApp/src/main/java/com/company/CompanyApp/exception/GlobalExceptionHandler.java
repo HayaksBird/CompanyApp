@@ -16,31 +16,7 @@ public class GlobalExceptionHandler {
     }
 
 
-    @ExceptionHandler(IllegalAccessException.class)
-    public void handleException(IllegalAccessException exc) {
-        System.out.println(exc.getMessage());
-    }
-
-
-    @ExceptionHandler(NoSuchFieldException.class)
-    public void handleException(NoSuchFieldException exc) {
-        System.out.println(exc.getMessage());
-    }
-
-
-    @ExceptionHandler(ClassNotFoundException.class)
-    public void handleException(ClassNotFoundException exc) {
-        System.out.println(exc.getMessage());
-    }
-
-
-    @ExceptionHandler(UnknownTypeException.class)
-    public void handleException(UnknownTypeException exc) {
-        System.out.println(exc.getMessage());
-    }
-
-
-    @ExceptionHandler()
+    @ExceptionHandler(Exception.class)
     public void handleException(Exception exc) {
         System.out.println(exc.getMessage());
     }

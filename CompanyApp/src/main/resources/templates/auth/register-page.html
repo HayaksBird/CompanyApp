@@ -15,7 +15,7 @@
             </header>
 
             <!-- REGISTRATION FORM -->
-            <form th:action="@{/auth/process-register}" th:object="${register}" method="POST">
+            <form th:action="@{/auth/process-register}" th:object="${register}" method="post">
                 <!-- ID REQUEST -->
                 <div class="input-field">
                     <input type="text" th:field="*{id}" placeholder="ID"/>
