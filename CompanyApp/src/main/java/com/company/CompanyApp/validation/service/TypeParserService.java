@@ -6,9 +6,17 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 
+/**
+ * This service focuses on parsing String to a requested format.
+ */
 @Service
 public class TypeParserService {
 
+    /**
+     * Parse the String to a requested format. If the parsing failed, then
+     * a TypeParseException is thrown. If the data type requested is not presented, then
+     * the UnknownTypeException is thrown.
+     */
     public Object parse(Class<?> toType, String val) throws TypeParseException, UnknownTypeException {
         //Get purely the class name
         int nameStart = toType.getName().lastIndexOf('.') + 1;

@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.*;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
+/**
+ * This bean is lazy, because it must be initialized after the SecurityContextHolder is set.
+ */
 @Lazy
 @Controller
 @RequestMapping("/personal")
@@ -46,6 +49,9 @@ public class PersonalController <T extends Worker> {
 
 
     //VIEW PERSONAL PAGE
+    /**
+     * View logged user's personal page.
+     */
     @GetMapping("")
     public String viewPersonalInfo(Model model) throws IllegalAccessException {
         viewedWorker = loggedUser;
@@ -58,6 +64,9 @@ public class PersonalController <T extends Worker> {
     }
 
 
+    /**
+     * View a personal page of a worker.
+     */
     @GetMapping("/{id}")
     public String viewPersonalInfo(@PathVariable
                                    int id,
@@ -65,6 +74,7 @@ public class PersonalController <T extends Worker> {
                                    throws NoSuchFieldException, ClassNotFoundException, IllegalAccessException, WorkerNotFoundException {
 
         viewedWorker = workerService.getWorkerExtObject(workerService.getWorker(id));
+
         workersFields = workerService.getWorkersFields(viewedWorker);
 
         model.addAttribute("data", new WorkerDataContainer(workersFields));
@@ -74,6 +84,9 @@ public class PersonalController <T extends Worker> {
 
 
     //DELETE PERSONAL PAGE
+    /**
+     * Delete the viewed worker from the system.
+     */
     @DeleteMapping("/deletion")
     public String deletePersonalInfo(@ModelAttribute
                                      WorkerDataContainer data,
@@ -90,6 +103,9 @@ public class PersonalController <T extends Worker> {
 
 
     //UPDATE PERSONAL PAGE
+    /**
+     * Prepare the worker update template for the user.
+     */
     @GetMapping("/edition")
     public String updatePersonalInfo(@ModelAttribute
                                      WorkerDataContainer data,
@@ -106,25 +122,24 @@ public class PersonalController <T extends Worker> {
     }
 
 
+    /**
+     * Process the worker update template.
+     * Create an object model, which will be bound with the data from the form.
+     * Note that the id and the worker type are always predefined, since they could not
+     * be altered.
+     * If no errors to be found during the binding, then we persist the worker.
+     */
     @PutMapping("/edition")
     public String processUpdate(@ModelAttribute
                                 WorkerDataContainer data,
                                 Model model)
                                 throws IllegalAccessException, NoSuchMethodException, InvocationTargetException, InstantiationException {
 
-        List<String> errorMessages;
-
         tempWorker = (T) viewedWorker.getClass().getDeclaredConstructor().newInstance();
         tempWorker.setId(viewedWorker.getId());
         tempWorker.setWorkerType(viewedWorker.getWorkerType());
 
-        bindingService.bindToWorkerEntity(data.getWorkersData(), tempWorker);
-        errorMessages = bindingService.getErrorMessages();
-
-        if (errorMessages.isEmpty()) {
-            workerService.save(tempWorker);
-            data.setOperationSuccessful(true);
-        } else data.setErrorMessages(errorMessages);
+        saveWorker(data);
 
         model.addAttribute("data", data);
 
@@ -133,6 +148,9 @@ public class PersonalController <T extends Worker> {
 
 
     //CREATE PERSONAL PAGE
+    /**
+     * Prepare the worker creation template for the user.
+     */
     @GetMapping("/creation")
     public String createPersonalInfo(Model model) throws IllegalAccessException {
 
@@ -149,6 +167,13 @@ public class PersonalController <T extends Worker> {
     }
 
 
+    /**
+     * Process the worker creation template.
+     * If the user requests a certain worker type, then we provide him with one.
+     * If the user wants to submit the new worker, then we first check if he previously
+     * requested a certain worker type (which is necessary). If not, we throw him an error message.
+     * If he has, then we validate his input data. If no errors to be found, then we persist the worker.
+     */
     @PostMapping("/creation")
     public String processCreate(@ModelAttribute
                                 WorkerDataContainer data,
@@ -161,28 +186,12 @@ public class PersonalController <T extends Worker> {
         //If the user wants to choose a specific worker type
         if (isRequestingType != null) {
             if (!selectedOption.equals("-- Select --")) {
-                WorkerType type = hierarchyService.getSubordinateWorkerTypes().get(selectedOption);
-
-                tempWorker = workerService.createWorker(type);
-
-                workersFields = workerService.getWorkersFields(tempWorker);
-                workersFields.removeIf(workerData -> "id".equals(workerData.getField()));
-                workerService.mergeWorkersFieldsData(workersFields, data.getWorkersData());
-
-                data.setWorkersData(workersFields);
+                requestExtObject(selectedOption, data);
             } else data.setErrorMessage("No worker type selected");
         //If the user wants to add a new worker
         } else {
-            List<String> errorMessages;
-
             if (tempWorker != null) {
-                bindingService.bindToWorkerEntity(data.getWorkersData(), tempWorker);
-                errorMessages = bindingService.getErrorMessages();
-
-                if (errorMessages.isEmpty()) {
-                    workerService.save(tempWorker);
-                    data.setOperationSuccessful(true);
-                } else data.setErrorMessages(errorMessages);
+                saveWorker(data);
             } else data.setErrorMessage("No worker type selected");
         }
 
@@ -190,5 +199,41 @@ public class PersonalController <T extends Worker> {
         model.addAttribute("data", data);
 
         return String.format("%s/create-personal-page", templateDir);
+    }
+
+
+    /**
+     * This method is summoned only during the worker creation, when
+     * the user requests a certain type of worker.
+     * We get the list of fields for the new worker type, and if the user already
+     * entered some data before requesting the worker type, then we rewrite the data form
+     * the old list to the new one (so that the user doesn't need to manually rewrite).
+     */
+    private void requestExtObject(String selectedOption, WorkerDataContainer data) throws Exception {
+        WorkerType type = hierarchyService.getSubordinateWorkerTypes().get(selectedOption);
+
+        tempWorker = workerService.createWorker(type);
+
+        workersFields = workerService.getWorkersFields(tempWorker);
+        workersFields.removeIf(workerData -> "id".equals(workerData.getField()));
+        workerService.mergeWorkersFieldsData(workersFields, data.getWorkersData());
+
+        data.setWorkersData(workersFields);
+    }
+
+
+    /**
+     * Attempt to save a worker in to the database (update/create).
+     * If the operation is successful, then the container's status message
+     * is set accordingly. However, if failed, the error list is provided to the
+     * container.
+     */
+    private void saveWorker(WorkerDataContainer data) throws IllegalAccessException {
+        List<String> errorMessages = bindingService.bindToWorkerEntity(data.getWorkersData(), tempWorker);
+
+        if (errorMessages.isEmpty()) {
+            workerService.save(tempWorker);
+            data.setOperationSuccessful(true);
+        } else data.setErrorMessages(errorMessages);
     }
 }

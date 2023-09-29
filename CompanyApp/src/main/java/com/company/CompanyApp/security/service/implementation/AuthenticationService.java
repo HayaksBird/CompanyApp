@@ -115,7 +115,7 @@ public class AuthenticationService implements IAuthenticationService {
      */
     @Override
     public void register(AuthenticationRequest request)
-                        throws NoSuchFieldException, ClassNotFoundException, IllegalAccessException {
+                         throws Exception {
 
         User user = new User();
 

@@ -1,7 +1,6 @@
 package com.company.CompanyApp.hierarchy.service.implementation;
 
 import com.company.CompanyApp.app.annotations.CorrespondingEntity;
-import com.company.CompanyApp.app.annotations.Role;
 import com.company.CompanyApp.app.entity.Worker;
 import com.company.CompanyApp.app.enums.WorkerType;
 import com.company.CompanyApp.hierarchy.service.IHierarchyService;
@@ -22,7 +21,6 @@ import java.util.*;
 public class HierarchyService implements IHierarchyService {
     private final IWorkerService workerService;
     private HashSet<String> loggedUsersRoles;
-    //Subordinate worker types for the currently logged-in user
     private HashMap<String, WorkerType> subordinateWorkerTypes;
     private List<String> subordinateWorkerTypesList;
 
@@ -48,25 +46,12 @@ public class HierarchyService implements IHierarchyService {
 
 
     /**
-     * Get an array of roles of a provided worker.
-     *
-     * NOTE: If the worker is position type based, then an extended (complete)
-     * version of the worker will be acquired to determine the roles.
+     * Get a list of roles of a provided worker.
      */
     @Override
-    public <T extends Worker> String[] getRoles(Worker worker)
-                                       throws NoSuchFieldException, ClassNotFoundException, IllegalAccessException {
-
-        String[] roles;
-        String fieldName = worker.getWorkerType().name();
-        Role rolesAnnotation = WorkerType.class.getField(fieldName).getAnnotation(Role.class);
-
-        if (rolesAnnotation.isPositionTypeBased()) {
-            T extWorker = workerService.getWorkerExtObject(worker);
-            roles = getTypeBasedRoles(extWorker, rolesAnnotation);
-        } else roles = rolesAnnotation.roles();
-
-        return roles;
+    public <T extends Worker> List<String> getRoles(Worker worker) throws Exception {
+        String maxRole = getMaxRole(worker);
+        return accumulateRoles(maxRole);
     }
 
 
@@ -81,29 +66,21 @@ public class HierarchyService implements IHierarchyService {
      * its possible set of roles is smaller than the provided set of roles.
      */
     @Override
-    public void setSubordinateWorkerTypes(Set<String> roles) throws NoSuchFieldException {
+    public void setSubordinateWorkerTypes(int maxRolePos) throws NoSuchFieldException {
         subordinateWorkerTypes = new HashMap<>();
         subordinateWorkerTypesList = new LinkedList<>();
 
-        for (WorkerType workerType : WorkerType.values()) {
-            int minCounter = 0;
-            int counter = 0;
-            Role role = WorkerType.class.getField(workerType.name()).getAnnotation(Role.class);
+        for (var workerType : WorkerType.values()) {
             CorrespondingEntity entity = WorkerType.class.getField(workerType.name()).getAnnotation(CorrespondingEntity.class);
+            int count = 0, minCount = 0;
 
-            /*
-            A worker type is considered to be subordinate if all of its possible
-            types have lower roles.
-             */
-            for (String workerRole : role.roles()) {
-                if (workerRole.startsWith("ROLE_")) counter++;
-                else {
-                    if (counter < minCounter || minCounter == 0) minCounter = counter;
-                    counter = 0;
-                }
+            for (var allRoles : workerType.getRoles().entrySet()) {
+                count = Hierarchy.valueOf(allRoles.getValue()).ordinal() + 1;
+
+                if (count < minCount || minCount == 0) minCount = count;
             }
 
-            if (roles.size() > counter && roles.size() > minCounter) {
+            if (maxRolePos > minCount && maxRolePos > count) {
                 subordinateWorkerTypes.put(entity.entityClass(), workerType);
                 subordinateWorkerTypesList.add(entity.entityClass());
             }
@@ -112,31 +89,50 @@ public class HierarchyService implements IHierarchyService {
 
 
     /**
-     * If worker's roles could not be determined purely on its worker type
-     * attribute, then it means that we must acquire his specific position type to
-     * determine his set of roles.
+     * Get the max role of the worker.
+     *
+     * NOTE: If the worker is position type based, then an extended (complete)
+     * version of the worker will be acquired to determine the roles.
      */
-    private String[] getTypeBasedRoles(Object extWorker,
-                                       Role rolesAnnotation)
-                                       throws NoSuchFieldException, IllegalAccessException {
+    private <T extends Worker> String getMaxRole(Worker worker) throws Exception {
+        String maxRole;
 
-        String type;
-        boolean insert = false;
-        List<String> roles = new ArrayList<>();
-        Field field = extWorker.getClass().getDeclaredField(rolesAnnotation.typeField());
+        var allRoles = worker.getWorkerType().getRoles();
 
-        field.setAccessible(true);
-        type = field.get(extWorker).toString();
+        if (allRoles.size() == 1) maxRole = allRoles.get("");
+        //Max role could only be determined by knowing the position type
+        else {
+            T extWorker;
+            Field posTypeField;
+            String posType;
 
-        for (String role : rolesAnnotation.roles()) {
-            if (!role.startsWith("ROLE_") && insert) break;
+            extWorker = workerService.getWorkerExtObject(worker);
+            posTypeField = extWorker.getClass().getDeclaredField(worker.getWorkerType().getPosTypeFieldName());
+            posTypeField.setAccessible(true);
+            posType = posTypeField.get(extWorker).toString();
 
-            if (insert) roles.add(role);
-
-            if (role.equals(type)) insert = true;
+            maxRole = allRoles.get(posType);
         }
 
-        return roles.toArray(new String[0]);
+        if (maxRole != null) return maxRole;
+
+        throw new Exception("Requested position is not found: " + worker.getWorkerType().getPosTypeFieldName());
+    }
+
+
+    /**
+     * Accumulate the roles from the lowest to the requested one
+     */
+    private List<String> accumulateRoles(String maxRole) {
+        List<String> roles = new LinkedList<>();
+
+        for (Hierarchy role : Hierarchy.values()) {
+            roles.add(role.name());
+
+            if (role.name().equals(maxRole)) break;
+        }
+
+        return roles;
     }
 
 
@@ -154,5 +150,19 @@ public class HierarchyService implements IHierarchyService {
     @Override
     public List<String> getSubordinateWorkerTypesList() {
         return subordinateWorkerTypesList;
+    }
+
+
+    /**
+     * Enum with all possible roles in the app
+     * From the lowest role (top) to the biggest (bottom)
+     *
+     * NOTE: Order matters!
+     */
+    private enum Hierarchy {
+        ROLE_D,
+        ROLE_C,
+        ROLE_B,
+        ROLE_A
     }
 }

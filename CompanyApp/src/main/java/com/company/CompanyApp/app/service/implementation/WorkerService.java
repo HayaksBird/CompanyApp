@@ -11,8 +11,8 @@ import com.company.CompanyApp.app.service.IWorkerService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -28,6 +28,9 @@ public class WorkerService implements IWorkerService {
     }
 
 
+    /**
+     *
+     */
     @Override
     public <T extends Worker> T getWorkerExtObject(Worker worker)
                                                    throws ClassNotFoundException, NoSuchFieldException {
@@ -56,6 +59,32 @@ public class WorkerService implements IWorkerService {
     }
 
 
+    /**
+     * Check if a certain annotation is present on the object's field.
+     */
+    @Override
+    public <T extends Worker> boolean isAnnotated(Class<?> workerClass,
+                                                  T worker,
+                                                  String fieldName,
+                                                  Class<? extends Annotation> annotation) throws NoSuchFieldException {
+
+        try {
+            if (!workerClass.getName().equals("java.lang.Object")) {
+                Field field = workerClass.getDeclaredField(fieldName);
+                field.setAccessible(true);
+                return field.isAnnotationPresent(annotation);
+            }
+        } catch (NoSuchFieldException ex) {
+            return isAnnotated(workerClass.getSuperclass(), worker, fieldName, annotation);
+        }
+
+        throw new NoSuchFieldException(String.format("%s worker type has no field %s", worker.getWorkerType(), fieldName));
+    }
+
+
+    /**
+     *
+     */
     @Override
     public <T extends Worker> T createWorker(WorkerType type) throws Exception {
         CorrespondingEntity entity = WorkerType.class.getField(type.name()).getAnnotation(CorrespondingEntity.class);
@@ -81,6 +110,9 @@ public class WorkerService implements IWorkerService {
     }
 
 
+    /**
+     * Transfer data from one fields list to another.
+     */
     @Override
     public void mergeWorkersFieldsData(List<WorkerData> to, List<WorkerData> from) {
         for (int i = 0; i < from.size(); i++) {
@@ -91,6 +123,9 @@ public class WorkerService implements IWorkerService {
     }
 
 
+    /**
+     *
+     */
     @Override
     public List<WorkerData> getWorkersFields(Object worker) throws IllegalAccessException {
         List<WorkerData> forView = new LinkedList<>();
@@ -132,6 +167,7 @@ public class WorkerService implements IWorkerService {
     private void addFieldsForView(List<WorkerData> forView,
                                   Field[] fields,
                                   Object worker) throws IllegalAccessException {
+
         for (Field field : fields) {
             if (field.isAnnotationPresent(ViewName.class)) {
                 try {

@@ -25,11 +25,11 @@
                         <tbody>
                             <tr th:each="workerData, itemStat : *{workersData}">
                                 <td th:text="${workerData.key}"></td>
-                                <td class="to-end"><input th:field="*{workersData[__${itemStat.index}__].value}"/></td>
+                                <td class="to-end input-field"><input th:field="*{workersData[__${itemStat.index}__].value}"/></td>
                                 <!-- Keep the field name for future data binding -->
-                                <td><input type="hidden" th:field="*{workersData[__${itemStat.index}__].field}" th:value="${workerData.field}"/></td>
+                                <td class="hidden"><input type="hidden" th:field="*{workersData[__${itemStat.index}__].field}" th:value="${workerData.field}"/></td>
                                 <!-- Keep the view name for a potential new update request to the user -->
-                                <td><input type="hidden" th:field="*{workersData[__${itemStat.index}__].key}" th:value="${workerData.key}"/></td>
+                                <td class="hidden"><input type="hidden" th:field="*{workersData[__${itemStat.index}__].key}" th:value="${workerData.key}"/></td>
                             </tr>
                         </tbody>
                     </table>

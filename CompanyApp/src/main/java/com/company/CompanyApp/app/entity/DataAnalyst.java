@@ -2,6 +2,8 @@ package com.company.CompanyApp.app.entity;
 
 import com.company.CompanyApp.app.annotations.ViewName;
 import com.company.CompanyApp.app.enums.WorkerType;
+import com.company.CompanyApp.validation.annotations.CanBeNull;
+import com.company.CompanyApp.validation.annotations.PositionType;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -9,11 +11,13 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "data_analyst")
 public class DataAnalyst extends Worker {
+    @CanBeNull
     @ViewName(message = "Database Tied To")
     @Column(name = "database_")
     private String database;
 
-    //Don't want to show this at the GUI app
+    @PositionType(types = {"JUNIOR", "SENIOR"})
+    @ViewName(message = "Position Type")
     @Column(name = "position_type")
     private String positionType;
 

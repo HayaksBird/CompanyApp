@@ -23,7 +23,8 @@ public class MathCodeValidator implements ConstraintValidator<MatchCode, String>
 
     @Override
     public boolean isValid(String s, ConstraintValidatorContext constraintValidatorContext) {
-        if (s != null) return s.equals(authenticationService.getValidationCode());
-        else return true;
+        if (s == null) return true;
+
+        return s.equals(authenticationService.getValidationCode());
     }
 }

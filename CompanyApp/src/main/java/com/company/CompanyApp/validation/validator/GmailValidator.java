@@ -13,6 +13,8 @@ public class GmailValidator implements ConstraintValidator<Gmail, String> {
 
     @Override
     public boolean isValid(String s, ConstraintValidatorContext constraintValidatorContext) {
+        if (s == null) return true;
+
         return s.endsWith("@gmail.com");
     }
 }

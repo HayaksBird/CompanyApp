@@ -2,6 +2,8 @@ package com.company.CompanyApp.app.entity;
 
 import com.company.CompanyApp.app.annotations.ViewName;
 import com.company.CompanyApp.app.enums.WorkerType;
+import com.company.CompanyApp.validation.annotations.CanBeNull;
+import com.company.CompanyApp.validation.annotations.PositionType;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -9,11 +11,13 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "software_developer")
 public class SoftwareDeveloper extends Worker {
+    @CanBeNull
     @ViewName(message = "Project")
     @Column(name = "project")
     private String project;
 
-    //Don't want to show this at the GUI app
+    @PositionType(types = {"JUNIOR", "SENIOR"})
+    @ViewName(message = "Position Type")
     @Column(name = "position_type")
     private String positionType;
 

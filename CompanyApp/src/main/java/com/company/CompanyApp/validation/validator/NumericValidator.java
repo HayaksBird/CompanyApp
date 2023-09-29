@@ -14,7 +14,8 @@ public class NumericValidator implements ConstraintValidator<Numeric, String> {
 
     @Override
     public boolean isValid(String s, ConstraintValidatorContext constraintValidatorContext) {
-        if (s != null) return s.matches("\\d+");
-        else return true;
+        if (s == null) return true;
+
+        return s.matches("\\d+");
     }
 }

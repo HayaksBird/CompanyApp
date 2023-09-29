@@ -26,7 +26,7 @@ public class UserContextConfig {
         this.workerService = workerService;
 
         hierarchyManagementService.addLoggedUserRoles();
-        hierarchyManagementService.setSubordinateWorkerTypes(hierarchyManagementService.getLoggedUsersRoles());
+        hierarchyManagementService.setSubordinateWorkerTypes(hierarchyManagementService.getLoggedUsersRoles().size());
     }
 
 

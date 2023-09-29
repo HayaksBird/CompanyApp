@@ -2,6 +2,7 @@ package com.company.CompanyApp.app.entity;
 
 import com.company.CompanyApp.app.annotations.ViewName;
 import com.company.CompanyApp.app.enums.WorkerType;
+import com.company.CompanyApp.validation.annotations.CanBeNull;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -10,6 +11,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "manager")
 public class Manager extends Worker {
+    @CanBeNull
     @ViewName(message = "Progress Report")
     @Column(name = "progress_report")
     private String progressReport;

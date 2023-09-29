@@ -144,7 +144,7 @@ public class AuthController {
     public String verification(@ModelAttribute("verify")
                                VerificationRequest verify,
                                HttpServletResponse response)
-                               throws IOException, NoSuchFieldException, ClassNotFoundException, IllegalAccessException {
+                               throws Exception {
 
         List<String> errorMessages;
 

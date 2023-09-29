@@ -5,6 +5,7 @@ import com.company.CompanyApp.app.entity.Worker;
 import com.company.CompanyApp.app.enums.WorkerType;
 import com.company.CompanyApp.exception.WorkerNotFoundException;
 
+import java.lang.annotation.Annotation;
 import java.util.List;
 
 public interface IWorkerService {
@@ -19,6 +20,12 @@ public interface IWorkerService {
 
     Worker getWorker(int id) throws WorkerNotFoundException;
 
+    <T extends Worker> boolean isAnnotated(Class<?> workerClass,
+                                           T worker,
+                                           String fieldName,
+                                           Class<? extends Annotation> annotation) throws NoSuchFieldException;
+
+    //CRUD
     void save(Worker worker);
 
     void deleteWorker(Worker worker);

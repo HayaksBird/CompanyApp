@@ -11,7 +11,9 @@ import com.company.CompanyApp.exception.UnknownTypeException;
 import org.springframework.stereotype.Service;
 
 /**
- *
+ * This service is used to bind data from field's list with its
+ * corresponding object. Currently, is used only for the Worker amd
+ * its extensions.
  */
 @Service
 public class BindingService {
@@ -28,7 +30,10 @@ public class BindingService {
     }
 
 
-    public void bindToWorkerEntity(List<WorkerData> workersData,
+    /**
+     * Bind the data form the field's list to its corresponding object.
+     */
+    public List<String> bindToWorkerEntity(List<WorkerData> workersData,
                                    Object worker) throws IllegalAccessException {
 
         errorMessages = new LinkedList<>();
@@ -36,6 +41,8 @@ public class BindingService {
         traverse(worker.getClass(), worker, workersData);
 
         errorMessages.addAll(validationService.validate(worker));
+
+        return errorMessages;
     }
 
 
@@ -52,6 +59,10 @@ public class BindingService {
     }
 
 
+    /**
+     * Match field object's name with the field name from the workerData.
+     * If there is a match, then try to set a new value for this field.
+     */
     private void bind(Field[] fields,
                       Object worker,
                       List<WorkerData> workersData) throws IllegalAccessException {
@@ -67,6 +78,11 @@ public class BindingService {
     }
 
 
+    /**
+     * Try to set the value of the field. If the field is empty, then no attempt
+     * is done whatsoever (the null validator will handle it). If the type parser throws an exception,
+     * then we set it to the error list for the user.
+     */
     private void setField(Field field,
                           Object worker,
                           WorkerData data)
@@ -74,21 +90,18 @@ public class BindingService {
 
         Object dataConverted = null;
 
-        try {
-            dataConverted = typeParserService.parse(field.getType(), data.getValue());
-        } catch (TypeParseException ex) {
-            errorMessages.add(ex.getMessage());
-            return;
+        //If no input is passed, then the null validator will handle it
+        if (!data.getValue().isEmpty()) {
+            try {
+                dataConverted = typeParserService.parse(field.getType(), data.getValue());
+            } catch (TypeParseException ex) {
+                errorMessages.add(ex.getMessage());
+                return;
+            }
+
+            field.setAccessible(true);
+
+            field.set(worker, dataConverted);
         }
-
-        field.setAccessible(true);
-
-        field.set(worker, dataConverted);
-    }
-
-
-    //Setters & Getters
-    public List<String> getErrorMessages() {
-        return errorMessages;
     }
 }

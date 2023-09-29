@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 
 @Entity
@@ -40,7 +41,7 @@ public class User implements UserDetails {
         List<GrantedAuthority> roles = new ArrayList<>();
 
         for (Role userRole : this.roles) {
-            roles.add(new SimpleGrantedAuthority(userRole.getRole().toString()));
+            roles.add(new SimpleGrantedAuthority(userRole.getRole()));
         }
 
         return roles;
@@ -92,8 +93,8 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    public void setRoles(String[] roles) {
-        this.roles = new ArrayList<>();
+    public void setRoles(List<String> roles) {
+        this.roles = new LinkedList<>();
 
         for (String role : roles) {
             this.roles.add(new Role(role, id));
