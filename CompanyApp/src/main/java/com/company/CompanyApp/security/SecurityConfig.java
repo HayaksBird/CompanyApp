@@ -49,13 +49,15 @@ public class SecurityConfig {
 
                                 //Regarding home page
                                 .requestMatchers(HttpMethod.GET,"/home").hasRole("D")
-                                .requestMatchers(HttpMethod.GET,"/home/**").hasRole("D")
 
                                 //Regarding department page
                                 .requestMatchers(HttpMethod.GET,"/department").hasRole("D")
-                                .requestMatchers(HttpMethod.GET,"/department/**").hasRole("D")
+                                .requestMatchers(HttpMethod.GET,"/department/**").hasRole("B")
+                                .requestMatchers(HttpMethod.POST,"/department/**").hasRole("B")
+                                .requestMatchers(HttpMethod.DELETE,"/department/**").hasRole("B")
+                                .requestMatchers(HttpMethod.PUT,"/department/**").hasRole("B")
 
-                                //Regarding department page
+                                //Regarding personal page
                                 .requestMatchers(HttpMethod.GET,"/personal").hasRole("D")
                                 .requestMatchers(HttpMethod.GET,"/personal/**").hasRole("B")
                                 .requestMatchers(HttpMethod.POST,"/personal/**").hasRole("B")

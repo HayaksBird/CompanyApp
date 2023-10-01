@@ -1,4 +1,4 @@
-package com.company.CompanyApp.app.annotations;
+package com.company.CompanyApp.validation.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -12,5 +12,5 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface ViewName {
-    public String message() default "default";
+    public String message() default "Field";
 }

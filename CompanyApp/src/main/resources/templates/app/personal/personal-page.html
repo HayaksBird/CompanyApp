@@ -17,7 +17,7 @@
             <!-- PERSONAL DATA -->
             <div class="data-list frame">
                 <ul>
-                    <li th:each="field : ${data.getWorkersData()}">
+                    <li th:each="field : ${data.getModelData()}">
                         <p th:text="${field.getKey()}"></p>
                         <p th:text="${field.getValue()}" class="value"></p>
                     </li>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Department Edit Page</title>
+
+    <!-- reference CSS file -->
+    <link rel="stylesheet" th:href="@{/css/personal-view.css}">
+</head>
+
+<body>
+<!-- EDIT DEPARTMENT TITLE -->
+<div>
+    <header class="main-header">
+        <h1>Create Department</h1>
+    </header>
+</div>
+
+<div class="container">
+    <div class="frame">
+        <form th:action="@{/department/creation}" th:object="${data}" method="post">
+            <!-- DEPARTMENT DATA TO UPDATE -->
+            <table class="table">
+                <tbody>
+                <tr th:each="departmentData, itemStat : *{modelData}">
+                    <td th:text="${departmentData.key}"></td>
+                    <td class="to-end input-field"><input th:field="*{modelData[__${itemStat.index}__].value}"/></td>
+                    <!-- Keep the field name for future data binding -->
+                    <td class="hidden"><input type="hidden" th:field="*{modelData[__${itemStat.index}__].field}" th:value="${departmentData.field}"/></td>
+                    <!-- Keep the view name for a potential new update request to the user -->
+                    <td class="hidden"><input type="hidden" th:field="*{modelData[__${itemStat.index}__].key}" th:value="${departmentData.key}"/></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <!-- ERRORS -->
+            <div class="error">
+                <ul>
+                    <li th:each="error : ${data.getErrorMessages()}">
+                        <p th:text="${error}"></p>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- SUCCESSFUL UPDATE -->
+            <div class="success" th:if="${data.isOperationSuccessful()}">
+                <p>Department has been successfully edited</p>
+            </div>
+
+            <!-- SUBMIT -->
+            <div class="action-button">
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- RETURN TO MAIN -->
+    <div class="action-button">
+        <form th:action="@{/home}" method="get">
+            <button type="submit">Back to main page</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

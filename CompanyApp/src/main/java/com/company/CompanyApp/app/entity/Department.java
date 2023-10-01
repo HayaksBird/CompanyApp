@@ -1,9 +1,12 @@
 package com.company.CompanyApp.app.entity;
 
+import com.company.CompanyApp.validation.annotations.NoNullEntity;
+import com.company.CompanyApp.validation.annotations.ViewName;
 import jakarta.persistence.*;
 
 import java.util.List;
 
+@NoNullEntity
 @Entity
 @Table(name = "department")
 public class Department {
@@ -11,6 +14,7 @@ public class Department {
     @Column(name = "id")
     private int id;
 
+    @ViewName(message = "Name")
     @Column(name = "name")
     private String name;
 
@@ -20,8 +24,11 @@ public class Department {
     @Column(name = "min_budget")
     private int minBudget;
 
-    @OneToMany(cascade = CascadeType.ALL,
-                fetch = FetchType.LAZY)
+    /**
+     * If the department is deleted, then delete all of its workers.
+     */
+    @OneToMany(cascade = CascadeType.REMOVE,
+               fetch = FetchType.LAZY)
     @JoinColumn(name = "department_id",
                 referencedColumnName = "id")
     private List<Worker> workers;

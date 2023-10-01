@@ -1,6 +1,6 @@
 package com.company.CompanyApp.app.entity;
 
-import com.company.CompanyApp.app.annotations.ViewName;
+import com.company.CompanyApp.validation.annotations.ViewName;
 import com.company.CompanyApp.app.enums.WorkerType;
 import com.company.CompanyApp.validation.annotations.CanBeNull;
 import com.company.CompanyApp.validation.annotations.PositionType;

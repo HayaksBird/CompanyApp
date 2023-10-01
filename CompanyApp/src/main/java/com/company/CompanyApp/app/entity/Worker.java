@@ -1,17 +1,17 @@
 package com.company.CompanyApp.app.entity;
 
-import com.company.CompanyApp.app.annotations.ViewName;
+import com.company.CompanyApp.validation.annotations.ViewName;
 import com.company.CompanyApp.app.enums.WorkerType;
 import com.company.CompanyApp.validation.annotations.Department;
 import com.company.CompanyApp.validation.annotations.Gmail;
-import com.company.CompanyApp.validation.annotations.WorkerNoNull;
+import com.company.CompanyApp.validation.annotations.NoNullEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.Past;
 
 import java.time.LocalDate;
 
-@WorkerNoNull
+@NoNullEntity
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "worker")
@@ -95,10 +95,10 @@ public class Worker {
     @Override
     public String toString() {
         return String.format("ID: <strong>%s</strong>&emsp;" +
-                        "first name: <strong>%s</strong>&emsp;" +
-                        "last name: <strong>%s</strong>&emsp;" +
-                        "position: %s",
-                        id, firstName, lastName, position);
+                             "first name: <strong>%s</strong>&emsp;" +
+                             "last name: <strong>%s</strong>&emsp;" +
+                             "position: %s",
+                             id, firstName, lastName, position);
     }
 
 

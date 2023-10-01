@@ -22,6 +22,11 @@ h4 {
     font-size: max(1.2vw, 0.7rem);
 }
 
+p {
+    font-size: max(1.15vw, 0.7rem);
+    margin-bottom: 2%;
+}
+
 
 /* CLASSES */
 .main-header {
@@ -35,6 +40,25 @@ h4 {
 
     display: flex;
     justify-content: space-around;
+}
+
+
+.search-bar-container {
+    width: 90%;
+    margin: 2% auto;
+
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    gap: 3%;
+}
+
+.search-bar {
+    width: 40%;
+}
+
+.search-bar input{
+    width: 100%;
 }
 
 .worker-list ul {
@@ -75,10 +99,68 @@ h4 {
 }
 
 .stats p {
-    font-size: max(1vw, 0.65rem);
     margin: max(1vw, 5px) 0;
 }
 
 .manager {
     color: #911115;
+}
+
+.hidden {
+    margin: 0;
+    padding: 0;
+}
+
+.error ul {
+    list-style-type: none;
+}
+
+.error li {
+    margin: 3% 0;
+    text-align: center;
+}
+
+.error p {
+    color: red;
+    font-weight: bold;
+}
+
+.ed-panel {
+    background-color: #787276;
+    border: 2px solid #594D5B;
+    width: 100%; /* the whole nav panel will take 20% of the screen */
+    margin-top: 8%;
+}
+
+.ed-item {
+    display: flex;
+    justify-content: center;
+    margin: max(1.5vw, 10px)  0;
+}
+
+.ed-item button {
+    background-color: #383838;
+    color: #f7f7f7;
+    border: 2px solid #383838;
+
+    width: 80%; /* the button will take 60% of the nav panel */
+    padding: max(0.9vw, 7px) 0;
+    font-size: max(0.9vw, 10px);
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.ed-item button:hover {
+    cursor: pointer;
+    background-color: #f7f7f7;
+    color: #383838;
+}
+
+.success {
+    margin: 1% 0;
+    text-align: center;
+}
+
+.success p {
+    color: green;
 }

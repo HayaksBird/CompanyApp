@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Department Info Page</title>
+
+        <!-- reference CSS file -->
+        <link rel="stylesheet" th:href="@{/css/department-view.css}">
+    </head>
+
+    <body>
+        <!-- DEPARTMENT TITLE -->
+        <div>
+            <header class="main-header">
+                <h1 th:text="${data.getDepartment.getName()} + ' Department'"></h1>
+            </header>
+        </div>
+
+        <!-- SEARCH BAR FOR THE ADMIN TO VIEW DIFFERENT DEPARTMENTS -->
+        <div class="search-bar-container">
+            <!-- SEARCH BAR -->
+            <div class="search-bar">
+                <form th:action="@{/department/other}" th:object="${data}" method="get">
+                    <input type="search" th:field="*{departmentId}" placeholder="Search department..."/>
+                </form>
+            </div>
+
+            <!-- ERROR -->
+            <div class="error">
+                <ul>
+                    <li th:each="error : ${data.getErrorMessages()}">
+                        <p th:text="${error}"></p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="container">
+            <!-- DISPLAY A LIST OF WORKERS -->
+            <div class="worker-list">
+                <ul>
+                    <!-- IF CLICKED, THE USER'S PAGE WILL BE DEMONSTRATED -->
+                    <li th:each="worker : ${data.department.getWorkers()}">
+                        <form th:action="@{'/personal/' + ${worker.getId()}}" method="get">
+                            <!--
+                            The button that triggers the form submission.
+                            If the user has the lowest accessibility level, then it
+                            will not work
+                            -->
+                            <button th:utext="${worker}"
+                                    th:disabled="${!roles.contains('B')}"
+                                    th:classappend="${worker.getWorkerType().toString() == 'MANAGER'} ? 'manager'"></button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+
+            <div th:if="${roles.contains('B')}">
+                <!-- STATS -->
+                <div class="stats">
+                    <h4>Statistics</h4>
+
+                    <p th:text="'Minimum budget: ' + ${data.department.getMinBudget()} + '$'"></p>
+                    <p th:text="'Employee count: ' + ${data.department.getEmployeeCount()}"></p>
+                </div>
+
+                <!-- DEPARTMENT EDITION PANEL -->
+                <div class="ed-panel">
+                    <!-- UPDATE -->
+                    <form th:action="@{/department/edition}" method="get">
+                        <div class="ed-item">
+                            <button type="submit">Update</button>
+                        </div>
+                    </form>
+
+                    <!-- DELETE -->
+                    <form th:action="@{/department/deletion}" method="post">
+                        <!-- CHANGE THE OPERATION TO UPDATE -->
+                        <input type="hidden" name="_method" value="delete">
+
+                        <div class="ed-item">
+                            <button type="submit">Delete</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- SUCCESSFUL UPDATE -->
+                <div class="success" th:if="${data.isOperationSuccessful()}">
+                    <p>Department has been deleted</p>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

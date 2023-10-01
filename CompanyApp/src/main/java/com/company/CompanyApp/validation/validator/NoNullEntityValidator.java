@@ -1,9 +1,9 @@
 package com.company.CompanyApp.validation.validator;
 
 import com.company.CompanyApp.app.entity.Worker;
-import com.company.CompanyApp.app.service.IWorkerService;
 import com.company.CompanyApp.validation.annotations.CanBeNull;
-import com.company.CompanyApp.validation.annotations.WorkerNoNull;
+import com.company.CompanyApp.validation.annotations.NoNullEntity;
+import com.company.CompanyApp.validation.service.ModelDataService;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
@@ -11,25 +11,25 @@ import jakarta.validation.ConstraintValidatorContext;
  * Make sure that all fields of the worker that are not annotated with
  * 'CanBeNull' are not null.
  */
-public class WorkerNoNullValidator implements ConstraintValidator<WorkerNoNull, Worker> {
+public class NoNullEntityValidator implements ConstraintValidator<NoNullEntity, Object> {
 
-    IWorkerService workerService;
+    private final ModelDataService modelDataService;
 
 
     //CONSTRUCTORS
-    public WorkerNoNullValidator(IWorkerService workerService) {
-        this.workerService = workerService;
+    public NoNullEntityValidator(ModelDataService modelDataService) {
+        this.modelDataService = modelDataService;
     }
 
 
     @Override
-    public void initialize(WorkerNoNull constraintAnnotation) {
+    public void initialize(NoNullEntity constraintAnnotation) {
         ConstraintValidator.super.initialize(constraintAnnotation);
     }
 
 
     @Override
-    public boolean isValid(Worker worker, ConstraintValidatorContext constraintValidatorContext) {
+    public boolean isValid(Object worker, ConstraintValidatorContext constraintValidatorContext) {
         try {
             return areFieldsValid(worker);
         } catch(Exception ex) {
@@ -44,14 +44,13 @@ public class WorkerNoNullValidator implements ConstraintValidator<WorkerNoNull, 
      * Scan through them to make sure that those that are not annotated with 'CanBeNull'
      * are not null.
      */
-    private <T extends Worker> boolean areFieldsValid(Worker worker)
-                                                   throws NoSuchFieldException, ClassNotFoundException, IllegalAccessException {
+    private <T extends Worker> boolean areFieldsValid(Object worker)
+                                                   throws NoSuchFieldException, IllegalAccessException {
 
-        T workerExt = workerService.getWorkerExtObject(worker);
-        var workersFields = workerService.getWorkersFields(workerExt);
+        var workersFields = modelDataService.getModelsFields(worker);
 
         for (var workerField : workersFields) {
-            if (!workerService.isAnnotated(workerExt.getClass(), workerExt, workerField.getField(), CanBeNull.class)) {
+            if (!modelDataService.isAnnotated(worker.getClass(), worker, workerField.getField(), CanBeNull.class)) {
                 if (workerField.getValue() == null) return false;
             }
         }

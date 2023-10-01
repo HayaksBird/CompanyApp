@@ -36,4 +36,16 @@ public class DepartmentService implements IDepartmentService {
         if (department.isPresent()) return department.get();
         else throw new DepartmentNotFoundException(departmentId);
     }
+
+
+    @Override
+    public void save(Department department) {
+        departmentRepository.save(department);
+    }
+
+
+    @Override
+    public void delete(Department department) {
+        departmentRepository.delete(department);
+    }
 }

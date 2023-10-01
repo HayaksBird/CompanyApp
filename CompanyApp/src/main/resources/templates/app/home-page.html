@@ -41,6 +41,15 @@
                         </div>
                     </form>
                 </div>
+
+                <!-- ADD A DEPARTMENT -->
+                <div th:if="${roles.contains('B')}">
+                    <form th:action="@{/department/creation}" method="get">
+                        <div class="nav-item">
+                            <button type="submit">Add Department</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </body>

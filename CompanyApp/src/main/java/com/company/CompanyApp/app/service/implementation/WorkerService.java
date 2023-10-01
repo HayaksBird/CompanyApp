@@ -1,20 +1,13 @@
 package com.company.CompanyApp.app.service.implementation;
 
 import com.company.CompanyApp.app.annotations.CorrespondingEntity;
-import com.company.CompanyApp.app.annotations.ViewName;
 import com.company.CompanyApp.app.dao.WorkerRepository;
-import com.company.CompanyApp.app.dto.WorkerData;
 import com.company.CompanyApp.app.entity.Worker;
 import com.company.CompanyApp.app.enums.WorkerType;
 import com.company.CompanyApp.exception.WorkerNotFoundException;
 import com.company.CompanyApp.app.service.IWorkerService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Field;
-import java.util.LinkedList;
-import java.util.List;
 
 @Service
 public class WorkerService implements IWorkerService {
@@ -60,29 +53,6 @@ public class WorkerService implements IWorkerService {
 
 
     /**
-     * Check if a certain annotation is present on the object's field.
-     */
-    @Override
-    public <T extends Worker> boolean isAnnotated(Class<?> workerClass,
-                                                  T worker,
-                                                  String fieldName,
-                                                  Class<? extends Annotation> annotation) throws NoSuchFieldException {
-
-        try {
-            if (!workerClass.getName().equals("java.lang.Object")) {
-                Field field = workerClass.getDeclaredField(fieldName);
-                field.setAccessible(true);
-                return field.isAnnotationPresent(annotation);
-            }
-        } catch (NoSuchFieldException ex) {
-            return isAnnotated(workerClass.getSuperclass(), worker, fieldName, annotation);
-        }
-
-        throw new NoSuchFieldException(String.format("%s worker type has no field %s", worker.getWorkerType(), fieldName));
-    }
-
-
-    /**
      *
      */
     @Override
@@ -110,35 +80,6 @@ public class WorkerService implements IWorkerService {
     }
 
 
-    /**
-     * Transfer data from one fields list to another.
-     */
-    @Override
-    public void mergeWorkersFieldsData(List<WorkerData> to, List<WorkerData> from) {
-        for (int i = 0; i < from.size(); i++) {
-            if (from.get(i).getField().equals(to.get(i).getField())) {
-                to.get(i).setValue(from.get(i).getValue());
-            } else break;
-        }
-    }
-
-
-    /**
-     *
-     */
-    @Override
-    public List<WorkerData> getWorkersFields(Object worker) throws IllegalAccessException {
-        List<WorkerData> forView = new LinkedList<>();
-        Field[] base = worker.getClass().getSuperclass().getDeclaredFields();
-        Field[] extended = worker.getClass().getDeclaredFields();
-
-        addFieldsForView(forView, base, worker);
-        addFieldsForView(forView, extended, worker);
-
-        return forView;
-    }
-
-
     //CRUD
     @Override
     public Worker getWorker(int id) throws WorkerNotFoundException {
@@ -158,28 +99,5 @@ public class WorkerService implements IWorkerService {
     @Override
     public void deleteWorker(Worker worker) {
         workerRepository.delete(worker);
-    }
-
-
-    /**
-     * This method focuses on populating the dto list with workers info
-     */
-    private void addFieldsForView(List<WorkerData> forView,
-                                  Field[] fields,
-                                  Object worker) throws IllegalAccessException {
-
-        for (Field field : fields) {
-            if (field.isAnnotationPresent(ViewName.class)) {
-                try {
-                    field.setAccessible(true);
-
-                    forView.add(new WorkerData(field.getName(),
-                            field.getAnnotation(ViewName.class).message(),
-                            (field.get(worker) != null ? field.get(worker).toString() : null)));
-                } catch (IllegalAccessException ex) {
-                    throw new IllegalAccessException("Could not access a field of a worker object " + field.getName());
-                }
-            }
-        }
     }
 }

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Edit Personal Page</title>
+
+        <!-- reference CSS file -->
+        <link rel="stylesheet" th:href="@{/css/personal-view.css}">
+    </head>
+
+    <!-- THIS TEMPLATE WILL BE USED FOR THE UPDATE PROCEDURE -->
+    <body>
+        <header class="main-header">
+            <h1>Personal Data Editor</h1>
+        </header>
+
+        <div class="container">
+            <div class="frame">
+                <form th:action="@{/personal/edition}" th:object="${data}" method="post">
+                    <!-- CHANGE THE OPERATION TO UPDATE -->
+                    <input type="hidden" name="_method" value="put">
+
+                    <!-- PERSONAL DATA TO UPDATE -->
+                    <table class="table">
+                        <tbody>
+                            <tr th:each="workerData, itemStat : *{modelData}">
+                                <td th:text="${workerData.key}"></td>
+                                <td class="to-end input-field"><input th:field="*{modelData[__${itemStat.index}__].value}"/></td>
+                                <!-- Keep the field name for future data binding -->
+                                <td class="hidden"><input type="hidden" th:field="*{modelData[__${itemStat.index}__].field}" th:value="${workerData.field}"/></td>
+                                <!-- Keep the view name for a potential new update request to the user -->
+                                <td class="hidden"><input type="hidden" th:field="*{modelData[__${itemStat.index}__].key}" th:value="${workerData.key}"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- ERRORS -->
+                    <div class="error">
+                        <ul>
+                            <li th:each="error : ${data.getErrorMessages()}">
+                                <p th:text="${error}"></p>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- SUCCESSFUL UPDATE -->
+                    <div class="success" th:if="${data.isOperationSuccessful()}">
+                        <p>Worker has been successfully edited</p>
+                    </div>
+
+                    <!-- SUBMIT -->
+                    <div class="action-button">
+                        <button type="submit">Submit</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- RETURN TO MAIN -->
+            <div class="action-button">
+                <form th:action="@{/home}" method="get">
+                    <button type="submit">Back to main page</button>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

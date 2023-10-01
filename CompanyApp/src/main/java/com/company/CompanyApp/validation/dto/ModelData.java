@@ -1,16 +1,19 @@
-package com.company.CompanyApp.app.dto;
+package com.company.CompanyApp.validation.dto;
 
-public class WorkerData {
+/**
+ * A dto object for an entity's field.
+ */
+public class ModelData {
     private String field;
-    private String key;
-    private String value;
+    private String key; //Field's name
+    private String value;   //Field's value
 
 
 
     //CONSTRUCTORS
-    public WorkerData(String field,
-                      String key,
-                      String value) {
+    public ModelData(String field,
+                     String key,
+                     String value) {
 
         this.field = field;
         this.key = key;
@@ -18,7 +21,7 @@ public class WorkerData {
     }
 
 
-    public WorkerData() {}
+    public ModelData() {}
 
 
     //SETTERS & GETTERS

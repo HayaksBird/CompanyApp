@@ -1,6 +1,6 @@
 package com.company.CompanyApp.app.entity;
 
-import com.company.CompanyApp.app.annotations.ViewName;
+import com.company.CompanyApp.validation.annotations.ViewName;
 import com.company.CompanyApp.app.enums.WorkerType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

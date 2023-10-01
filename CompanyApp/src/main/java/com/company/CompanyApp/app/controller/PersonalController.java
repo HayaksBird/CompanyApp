@@ -1,13 +1,14 @@
 package com.company.CompanyApp.app.controller;
 
-import com.company.CompanyApp.app.dto.WorkerData;
-import com.company.CompanyApp.app.dto.WorkerDataContainer;
+import com.company.CompanyApp.validation.dto.ModelData;
+import com.company.CompanyApp.validation.dto.ModelDataContainer;
 import com.company.CompanyApp.app.entity.Worker;
 import com.company.CompanyApp.app.enums.WorkerType;
 import com.company.CompanyApp.hierarchy.service.IHierarchyService;
 import com.company.CompanyApp.validation.service.BindingService;
 import com.company.CompanyApp.app.service.IWorkerService;
 import com.company.CompanyApp.exception.WorkerNotFoundException;
+import com.company.CompanyApp.validation.service.ModelDataService;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +18,10 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 /**
- * This bean is lazy, because it must be initialized after the SecurityContextHolder is set.
+ * Made this bean lazy, because it requires user's data from the SecurityContextHolder.
+ *
+ * This controller handles everything to do with the user's/worker's personal page:
+ * view, update, delete, create.
  */
 @Lazy
 @Controller
@@ -26,22 +30,25 @@ public class PersonalController <T extends Worker> {
     private final BindingService bindingService;
     private final IHierarchyService hierarchyService;
     private final IWorkerService workerService;
+    private final ModelDataService modelDataService;
     private final String templateDir;
     private final T loggedUser;
     private T viewedWorker;
     private T tempWorker;
-    private List<WorkerData> workersFields;
+    private List<ModelData> workersFields;
 
 
     //CONSTRUCTORS
     public PersonalController(T loggedUser,
                               IWorkerService workerService,
                               BindingService bindingService,
-                              IHierarchyService hierarchyService) {
+                              IHierarchyService hierarchyService,
+                              ModelDataService modelDataService) {
 
-        templateDir = "app";
+        templateDir = "app/personal";
         this.loggedUser = loggedUser;
 
+        this.modelDataService = modelDataService;
         this.hierarchyService = hierarchyService;
         this.workerService = workerService;
         this.bindingService = bindingService;
@@ -56,9 +63,9 @@ public class PersonalController <T extends Worker> {
     public String viewPersonalInfo(Model model) throws IllegalAccessException {
         viewedWorker = loggedUser;
 
-        workersFields = workerService.getWorkersFields(viewedWorker);
+        workersFields = modelDataService.getModelsFields(viewedWorker);
 
-        model.addAttribute("data", new WorkerDataContainer(workersFields));
+        model.addAttribute("data", new ModelDataContainer(workersFields));
 
         return String.format("%s/personal-page", templateDir);
     }
@@ -75,9 +82,9 @@ public class PersonalController <T extends Worker> {
 
         viewedWorker = workerService.getWorkerExtObject(workerService.getWorker(id));
 
-        workersFields = workerService.getWorkersFields(viewedWorker);
+        workersFields = modelDataService.getModelsFields(viewedWorker);
 
-        model.addAttribute("data", new WorkerDataContainer(workersFields));
+        model.addAttribute("data", new ModelDataContainer(workersFields));
 
         return String.format("%s/personal-page", templateDir);
     }
@@ -89,12 +96,12 @@ public class PersonalController <T extends Worker> {
      */
     @DeleteMapping("/deletion")
     public String deletePersonalInfo(@ModelAttribute
-                                     WorkerDataContainer data,
+                                     ModelDataContainer data,
                                      Model model) {
 
         workerService.deleteWorker(viewedWorker);
 
-        data.setWorkersData(workersFields);
+        data.setModelData(workersFields);
         data.setOperationSuccessful(true);
         model.addAttribute("data", data);
 
@@ -108,13 +115,13 @@ public class PersonalController <T extends Worker> {
      */
     @GetMapping("/edition")
     public String updatePersonalInfo(@ModelAttribute
-                                     WorkerDataContainer data,
+                                     ModelDataContainer data,
                                      Model model) {
 
         tempWorker = null;
 
         workersFields.removeIf(workerData -> "id".equals(workerData.getField()));
-        data.setWorkersData(workersFields);
+        data.setModelData(workersFields);
 
         model.addAttribute("data", data);
 
@@ -125,17 +132,17 @@ public class PersonalController <T extends Worker> {
     /**
      * Process the worker update template.
      * Create an object model, which will be bound with the data from the form.
-     * Note that the id and the worker type are always predefined, since they could not
-     * be altered.
+     * Note that the static data is automatically set.
      * If no errors to be found during the binding, then we persist the worker.
      */
     @PutMapping("/edition")
     public String processUpdate(@ModelAttribute
-                                WorkerDataContainer data,
+                                ModelDataContainer data,
                                 Model model)
                                 throws IllegalAccessException, NoSuchMethodException, InvocationTargetException, InstantiationException {
 
         tempWorker = (T) viewedWorker.getClass().getDeclaredConstructor().newInstance();
+        //Set static data
         tempWorker.setId(viewedWorker.getId());
         tempWorker.setWorkerType(viewedWorker.getWorkerType());
 
@@ -153,14 +160,13 @@ public class PersonalController <T extends Worker> {
      */
     @GetMapping("/creation")
     public String createPersonalInfo(Model model) throws IllegalAccessException {
-
         tempWorker = null;
 
-        workersFields = workerService.getWorkersFields(new Worker());
+        workersFields = modelDataService.getModelsFields(new Worker());
 
         workersFields.removeIf(workerData -> "id".equals(workerData.getField()));
 
-        model.addAttribute("data", new WorkerDataContainer(workersFields));
+        model.addAttribute("data", new ModelDataContainer(workersFields));
         model.addAttribute("workerTypes", hierarchyService.getSubordinateWorkerTypesList());
 
         return String.format("%s/create-personal-page", templateDir);
@@ -176,7 +182,7 @@ public class PersonalController <T extends Worker> {
      */
     @PostMapping("/creation")
     public String processCreate(@ModelAttribute
-                                WorkerDataContainer data,
+                                ModelDataContainer data,
                                 //Check if the user picked a type of worker to add
                                 @RequestParam(name = "pickType", required = false) String isRequestingType,
                                 @RequestParam("selectedOption") String selectedOption,
@@ -209,16 +215,16 @@ public class PersonalController <T extends Worker> {
      * entered some data before requesting the worker type, then we rewrite the data form
      * the old list to the new one (so that the user doesn't need to manually rewrite).
      */
-    private void requestExtObject(String selectedOption, WorkerDataContainer data) throws Exception {
+    private void requestExtObject(String selectedOption, ModelDataContainer data) throws Exception {
         WorkerType type = hierarchyService.getSubordinateWorkerTypes().get(selectedOption);
 
         tempWorker = workerService.createWorker(type);
 
-        workersFields = workerService.getWorkersFields(tempWorker);
+        workersFields = modelDataService.getModelsFields(tempWorker);
         workersFields.removeIf(workerData -> "id".equals(workerData.getField()));
-        workerService.mergeWorkersFieldsData(workersFields, data.getWorkersData());
+        modelDataService.mergeModelDataList(workersFields, data.getModelData());
 
-        data.setWorkersData(workersFields);
+        data.setModelData(workersFields);
     }
 
 
@@ -228,8 +234,8 @@ public class PersonalController <T extends Worker> {
      * is set accordingly. However, if failed, the error list is provided to the
      * container.
      */
-    private void saveWorker(WorkerDataContainer data) throws IllegalAccessException {
-        List<String> errorMessages = bindingService.bindToWorkerEntity(data.getWorkersData(), tempWorker);
+    private void saveWorker(ModelDataContainer data) throws IllegalAccessException {
+        List<String> errorMessages = bindingService.bindToModelEntity(data.getModelData(), tempWorker);
 
         if (errorMessages.isEmpty()) {
             workerService.save(tempWorker);

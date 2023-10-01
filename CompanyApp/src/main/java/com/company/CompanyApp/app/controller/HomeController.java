@@ -12,7 +12,8 @@ import org.springframework.context.annotation.Lazy;
  * Made this bean lazy, because it requires user's data from the SecurityContextHolder.
  * Thus, this bean must be created after the jwt filter is ran.
  *
- * Acts like a dispatcher controller
+ * Acts like a dispatcher controller, sending requests to different
+ * endpoints depending on the user's choice.
  */
 @Lazy
 @Controller
