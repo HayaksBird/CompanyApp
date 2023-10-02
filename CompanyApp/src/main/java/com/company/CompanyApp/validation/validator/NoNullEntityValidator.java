@@ -1,6 +1,6 @@
 package com.company.CompanyApp.validation.validator;
 
-import com.company.CompanyApp.app.entity.Worker;
+import com.company.CompanyApp.app.entity.worker.Worker;
 import com.company.CompanyApp.validation.annotations.CanBeNull;
 import com.company.CompanyApp.validation.annotations.NoNullEntity;
 import com.company.CompanyApp.validation.service.ModelDataService;

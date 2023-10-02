@@ -1,8 +1,8 @@
 package com.company.CompanyApp.validation.validator;
 
 import com.company.CompanyApp.app.service.IDepartmentService;
+import com.company.CompanyApp.exception.ItemNotFoundException;
 import com.company.CompanyApp.validation.annotations.Department;
-import com.company.CompanyApp.exception.DepartmentNotFoundException;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
@@ -27,7 +27,7 @@ public class DepartmentValidator implements ConstraintValidator<Department, Inte
         try {
             departmentService.getDepartment(id);
             return true;
-        } catch (DepartmentNotFoundException ex) {
+        } catch (ItemNotFoundException ex) {
             return false;
         }
     }

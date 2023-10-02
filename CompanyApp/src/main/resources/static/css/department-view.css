@@ -42,7 +42,6 @@ p {
     justify-content: space-around;
 }
 
-
 .search-bar-container {
     width: 90%;
     margin: 2% auto;
@@ -163,4 +162,34 @@ p {
 
 .success p {
     color: green;
+}
+
+.action-button {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    margin: 4% 0;
+}
+
+.action-button form {
+    width: 30%;
+}
+
+.action-button button {
+    width: 100%;
+    padding: max(1.2vw, 4px) 0;
+    font-size: max(1.3vw, 0.7rem);
+
+    background-color: #f7f7f7;
+    color: #383838;
+    text-transform: uppercase;
+    font-weight: bold;
+    border: 2px solid #f7f7f7;
+}
+
+.action-button button:hover {
+    cursor: pointer;
+    background-color: #383838;
+    color: #f7f7f7;
 }

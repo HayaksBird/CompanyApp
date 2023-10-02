@@ -1,4 +1,4 @@
-package com.company.CompanyApp.app.entity;
+package com.company.CompanyApp.app.entity.worker;
 
 import com.company.CompanyApp.validation.annotations.ViewName;
 import com.company.CompanyApp.app.enums.WorkerType;
@@ -66,30 +66,6 @@ public class Worker {
 
     //CONSTRUCTORS
     public Worker() {}
-
-
-    public Worker(int id,
-                  String firstName,
-                  String lastName,
-                  int departmentId,
-                  String email,
-                  LocalDate employedSince,
-                  LocalDate vacation,
-                  double salary,
-                  WorkerType workerType,
-                  String position) {
-
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.departmentId = departmentId;
-        this.email = email;
-        this.employedSince = employedSince;
-        this.vacation = vacation;
-        this.salary = salary;
-        this.workerType = workerType;
-        this.position = position;
-    }
 
 
     @Override

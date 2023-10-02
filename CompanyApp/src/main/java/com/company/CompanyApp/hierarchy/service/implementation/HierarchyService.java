@@ -1,7 +1,7 @@
 package com.company.CompanyApp.hierarchy.service.implementation;
 
 import com.company.CompanyApp.app.annotations.CorrespondingEntity;
-import com.company.CompanyApp.app.entity.Worker;
+import com.company.CompanyApp.app.entity.worker.Worker;
 import com.company.CompanyApp.app.enums.WorkerType;
 import com.company.CompanyApp.hierarchy.service.IHierarchyService;
 import com.company.CompanyApp.app.service.IWorkerService;

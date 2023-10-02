@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Create Post Page</title>
+
+        <!-- reference CSS file -->
+        <link rel="stylesheet" th:href="@{/css/personal-view.css}">
+    </head>
+
+    <body>
+        <header class="main-header">
+            <h1>Add a Post</h1>
+        </header>
+
+        <div class="container">
+            <div class="frame">
+                <form th:action="@{/post/creation}" th:object="${data}" method="post">
+                    <!-- POST TO INSERT -->
+                    <table class="table">
+                        <tbody>
+                            <tr th:each="postsData, itemStat : *{modelData}"
+                                th:class="${postsData.field == 'content' ? 'content-row' : ''}">
+                                <td th:text="${postsData.key}"></td>
+                                <td class="input-field span-cell">
+                                    <!-- DISPLAY A TEXT ARE FOR THE CONTENT-->
+                                    <div th:if="${postsData.field == 'content'}" class="content">
+                                        <textarea th:field="*{modelData[__${itemStat.index}__].value}"
+                                                  maxlength="4000"></textarea>
+                                    </div>
+
+                                    <div th:unless="${postsData.field == 'content'}" class="to-end2">
+                                        <input th:field="*{modelData[__${itemStat.index}__].value}"/>
+                                    </div>
+                                </td>
+                                <!-- Keep the field name for future data binding -->
+                                <td class="hidden"><input type="hidden" th:field="*{modelData[__${itemStat.index}__].field}" th:value="${postsData.field}"/></td>
+                                <!-- Keep the view name for a potential new update request to the user -->
+                                <td class="hidden"><input type="hidden" th:field="*{modelData[__${itemStat.index}__].key}" th:value="${postsData.key}"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- ERRORS -->
+                    <div class="error">
+                        <ul>
+                            <li th:each="error : ${data.getErrorMessages()}">
+                                <p th:text="${error}"></p>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- SUCCESSFUL CREATION -->
+                    <div class="success" th:if="${data.isOperationSuccessful()}">
+                        <p>Post has been successfully created</p>
+                    </div>
+
+                    <!-- SUBMIT -->
+                    <div class="action-button">
+                        <button type="submit">Submit</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- RETURN TO MAIN -->
+            <div class="action-button">
+                <form th:action="@{/home}" method="get">
+                    <button type="submit">Back to main page</button>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

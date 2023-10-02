@@ -1,9 +1,9 @@
 package com.company.CompanyApp.app.controller;
 
-import com.company.CompanyApp.app.entity.Worker;
+import com.company.CompanyApp.app.entity.worker.Worker;
+import com.company.CompanyApp.exception.ItemNotFoundException;
 import com.company.CompanyApp.hierarchy.service.IHierarchyService;
 import com.company.CompanyApp.app.service.IWorkerService;
-import com.company.CompanyApp.exception.WorkerNotFoundException;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
@@ -34,7 +34,7 @@ public class UserContextConfig {
      *
      */
     @Bean
-    public <T extends Worker> T userContext() throws NoSuchFieldException, ClassNotFoundException, WorkerNotFoundException {
+    public <T extends Worker> T userContext() throws NoSuchFieldException, ClassNotFoundException, ItemNotFoundException {
         T loggedUser;
 
         String id = SecurityContextHolder.getContext().getAuthentication().getName();

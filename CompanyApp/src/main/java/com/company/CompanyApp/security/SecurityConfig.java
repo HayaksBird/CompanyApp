@@ -52,10 +52,10 @@ public class SecurityConfig {
 
                                 //Regarding department page
                                 .requestMatchers(HttpMethod.GET,"/department").hasRole("D")
-                                .requestMatchers(HttpMethod.GET,"/department/**").hasRole("B")
-                                .requestMatchers(HttpMethod.POST,"/department/**").hasRole("B")
-                                .requestMatchers(HttpMethod.DELETE,"/department/**").hasRole("B")
-                                .requestMatchers(HttpMethod.PUT,"/department/**").hasRole("B")
+                                .requestMatchers(HttpMethod.GET,"/department/**").hasRole("A")
+                                .requestMatchers(HttpMethod.POST,"/department/**").hasRole("A")
+                                .requestMatchers(HttpMethod.DELETE,"/department/**").hasRole("A")
+                                .requestMatchers(HttpMethod.PUT,"/department/**").hasRole("A")
 
                                 //Regarding personal page
                                 .requestMatchers(HttpMethod.GET,"/personal").hasRole("D")
@@ -63,6 +63,12 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.POST,"/personal/**").hasRole("B")
                                 .requestMatchers(HttpMethod.DELETE,"/personal/**").hasRole("B")
                                 .requestMatchers(HttpMethod.PUT,"/personal/**").hasRole("B")
+
+                                //Regarding posts
+                                .requestMatchers(HttpMethod.GET,"/post/**").hasRole("C")
+                                .requestMatchers(HttpMethod.POST,"/post/**").hasRole("C")
+                                .requestMatchers(HttpMethod.DELETE,"/post/**").hasRole("C")
+                                .requestMatchers(HttpMethod.PUT,"/post/**").hasRole("C")
         );
 
         http.csrf(csrf -> csrf.disable());

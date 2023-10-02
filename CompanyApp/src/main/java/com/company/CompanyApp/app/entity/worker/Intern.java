@@ -1,7 +1,6 @@
-package com.company.CompanyApp.app.entity;
+package com.company.CompanyApp.app.entity.worker;
 
 import com.company.CompanyApp.validation.annotations.ViewName;
-import com.company.CompanyApp.app.enums.WorkerType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -28,28 +27,6 @@ public class Intern extends Worker {
 
     //CONSTRUCTORS
     public Intern() {}
-
-
-    public Intern(int id,
-                  String firstName,
-                  String lastName,
-                  int departmentId,
-                  String email,
-                  LocalDate employedSince,
-                  LocalDate vacation,
-                  double salary,
-                  WorkerType workerType,
-                  String position,
-                  String university,
-                  LocalDate employedUntil,
-                  boolean hasUniversityInsurance) {
-
-        super(id, firstName, lastName, departmentId, email, employedSince, vacation, salary, workerType, position);
-
-        this.university = university;
-        this.employedUntil = employedUntil;
-        this.hasUniversityInsurance = hasUniversityInsurance;
-    }
 
 
     //SETTERS & GETTERS

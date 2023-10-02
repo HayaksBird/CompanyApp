@@ -1,10 +1,10 @@
 package com.company.CompanyApp.security.service.implementation;
 
 import com.company.CompanyApp.app.service.IWorkerService;
+import com.company.CompanyApp.exception.ItemNotFoundException;
 import com.company.CompanyApp.hierarchy.service.IHierarchyService;
 import com.company.CompanyApp.security.entity.User;
-import com.company.CompanyApp.app.entity.Worker;
-import com.company.CompanyApp.exception.WorkerNotFoundException;
+import com.company.CompanyApp.app.entity.worker.Worker;
 import com.company.CompanyApp.security.dto.AuthenticationRequest;
 import com.company.CompanyApp.security.service.IAuthenticationService;
 import com.company.CompanyApp.security.service.IGmailService;
@@ -94,7 +94,7 @@ public class AuthenticationService implements IAuthenticationService {
 
         try {
             worker = workerService.getWorker(userId);
-        } catch (WorkerNotFoundException ex) {
+        } catch (ItemNotFoundException ex) {
             return ex.getMessage();
         }
         gmail = worker.getEmail();

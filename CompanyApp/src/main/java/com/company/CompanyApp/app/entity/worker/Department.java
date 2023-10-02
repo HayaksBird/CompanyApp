@@ -1,4 +1,4 @@
-package com.company.CompanyApp.app.entity;
+package com.company.CompanyApp.app.entity.worker;
 
 import com.company.CompanyApp.validation.annotations.NoNullEntity;
 import com.company.CompanyApp.validation.annotations.ViewName;

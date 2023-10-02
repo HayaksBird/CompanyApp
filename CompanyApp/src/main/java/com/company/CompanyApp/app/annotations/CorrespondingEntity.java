@@ -10,5 +10,5 @@ import java.lang.annotation.Target;
 public @interface CorrespondingEntity {
     public String entityClass();
 
-    public String path() default "com.company.CompanyApp.app.entity";
+    public String path() default "com.company.CompanyApp.app.entity.worker";
 }

@@ -1,12 +1,9 @@
-package com.company.CompanyApp.app.entity;
+package com.company.CompanyApp.app.entity.worker;
 
 import com.company.CompanyApp.validation.annotations.ViewName;
-import com.company.CompanyApp.app.enums.WorkerType;
 import com.company.CompanyApp.validation.annotations.CanBeNull;
 import com.company.CompanyApp.validation.annotations.PositionType;
 import jakarta.persistence.*;
-
-import java.time.LocalDate;
 
 @Entity
 @Table(name = "software_developer")
@@ -32,30 +29,6 @@ public class SoftwareDeveloper extends Worker {
 
     //CONSTRUCTORS
     public SoftwareDeveloper() {}
-
-
-    public SoftwareDeveloper(int id,
-                             String firstName,
-                             String lastName,
-                             int departmentId,
-                             String email,
-                             LocalDate employedSince,
-                             LocalDate vacation,
-                             double salary,
-                             WorkerType workerType,
-                             String position,
-                             String project,
-                             String positionType,
-                             String programmingLanguage,
-                             String field) {
-
-        super(id, firstName, lastName, departmentId, email, employedSince, vacation, salary, workerType, position);
-
-        this.project = project;
-        this.positionType = positionType;
-        this.programmingLanguage = programmingLanguage;
-        this.field = field;
-    }
 
 
     //SETTERS & GETTERS

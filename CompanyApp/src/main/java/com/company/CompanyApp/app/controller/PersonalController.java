@@ -1,13 +1,13 @@
 package com.company.CompanyApp.app.controller;
 
+import com.company.CompanyApp.exception.ItemNotFoundException;
 import com.company.CompanyApp.validation.dto.ModelData;
 import com.company.CompanyApp.validation.dto.ModelDataContainer;
-import com.company.CompanyApp.app.entity.Worker;
+import com.company.CompanyApp.app.entity.worker.Worker;
 import com.company.CompanyApp.app.enums.WorkerType;
 import com.company.CompanyApp.hierarchy.service.IHierarchyService;
 import com.company.CompanyApp.validation.service.BindingService;
 import com.company.CompanyApp.app.service.IWorkerService;
-import com.company.CompanyApp.exception.WorkerNotFoundException;
 import com.company.CompanyApp.validation.service.ModelDataService;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
@@ -78,7 +78,7 @@ public class PersonalController <T extends Worker> {
     public String viewPersonalInfo(@PathVariable
                                    int id,
                                    Model model)
-                                   throws NoSuchFieldException, ClassNotFoundException, IllegalAccessException, WorkerNotFoundException {
+                                   throws NoSuchFieldException, ClassNotFoundException, IllegalAccessException, ItemNotFoundException {
 
         viewedWorker = workerService.getWorkerExtObject(workerService.getWorker(id));
 

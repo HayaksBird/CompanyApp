@@ -1,6 +1,6 @@
 package com.company.CompanyApp.hierarchy.service;
 
-import com.company.CompanyApp.app.entity.Worker;
+import com.company.CompanyApp.app.entity.worker.Worker;
 import com.company.CompanyApp.app.enums.WorkerType;
 
 import java.util.HashMap;

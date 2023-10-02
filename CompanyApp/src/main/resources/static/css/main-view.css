@@ -17,11 +17,19 @@ body {
     min-width: 850px;
 }
 
+span {
+    font-size: max(0.85vw, 0.55rem);
+}
+
+ul {
+    list-style-type: none;
+}
+
 
 /* CLASSES */
 .main-header {
     margin-top: 3%;
-    margin-bottom: 4%;
+    margin-bottom: 8%;
 }
 
 .container {
@@ -32,10 +40,14 @@ body {
     justify-content: flex-start;
 }
 
+.inner-container {
+    width: 20%;
+}
+
 .nav-panel {
     background-color: #787276;
     border: 2px solid #594D5B;
-    width: 20%; /* the whole nav panel will take 20% of the screen */
+    width: 100%; /* the whole nav panel will take 20% of the screen */
 }
 
 .nav-item {
@@ -60,4 +72,83 @@ body {
     cursor: pointer;
     background-color: #f7f7f7;
     color: #383838;
+}
+
+.to-end {
+    margin-left: auto;
+}
+
+.posts {
+    width: 75%;
+}
+
+.post {
+    margin-bottom: 5%;
+    border-bottom: 4px solid #787276;
+}
+
+.buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 2%;
+
+    margin: 5%;
+}
+
+.action-button {
+    width: 10%;
+}
+
+.action-button form {
+    width: 100%;
+}
+
+.action-button button {
+    width: 100%;
+    padding: max(0.65vw, 3px) 0;
+    font-size: max(0.7vw, 0.6rem);
+
+    background-color: #383838;
+    color: #f7f7f7;
+    text-transform: uppercase;
+    font-weight: bold;
+    border: 2px solid #383838;
+}
+
+.action-button button:hover {
+    cursor: pointer;
+    background-color: #f7f7f7;
+    color: #383838;
+}
+
+.title {
+    margin-bottom: 4%;
+
+    text-align: center;
+    font-size: max(1.35vw, 0.8rem);
+    font-style: italic;
+}
+
+.content {
+    margin-bottom: 2.5%;
+
+    font-size: max(1vw, 0.6rem);
+}
+
+.author {
+    font-weight: bold;
+}
+
+.author span {
+    border-bottom: 1px black solid;
+}
+
+.extra {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 5%;
+}
+
+.date {
+    font-style: italic;
 }

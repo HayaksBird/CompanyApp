@@ -2,10 +2,10 @@ package com.company.CompanyApp.app.service.implementation;
 
 import com.company.CompanyApp.app.annotations.CorrespondingEntity;
 import com.company.CompanyApp.app.dao.WorkerRepository;
-import com.company.CompanyApp.app.entity.Worker;
+import com.company.CompanyApp.app.entity.worker.Worker;
 import com.company.CompanyApp.app.enums.WorkerType;
-import com.company.CompanyApp.exception.WorkerNotFoundException;
 import com.company.CompanyApp.app.service.IWorkerService;
+import com.company.CompanyApp.exception.ItemNotFoundException;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -82,11 +82,11 @@ public class WorkerService implements IWorkerService {
 
     //CRUD
     @Override
-    public Worker getWorker(int id) throws WorkerNotFoundException {
+    public Worker getWorker(int id) throws ItemNotFoundException {
         var worker = workerRepository.findById(id);
 
         if (worker.isPresent()) return (Worker)worker.get();
-        else throw new WorkerNotFoundException(id);
+        else throw new ItemNotFoundException(Worker.class, id);
     }
 
 

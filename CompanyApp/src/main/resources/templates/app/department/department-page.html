@@ -16,8 +16,8 @@
             </header>
         </div>
 
-        <!-- SEARCH BAR FOR THE ADMIN TO VIEW DIFFERENT DEPARTMENTS -->
-        <div class="search-bar-container">
+        <!-- SEARCH BAR FOR THE ADMIN TO VIEW DIFFERENT DEPARTMENTS (Admin only) -->
+        <div class="search-bar-container" th:if="${roles.contains('A')}">
             <!-- SEARCH BAR -->
             <div class="search-bar">
                 <form th:action="@{/department/other}" th:object="${data}" method="get">
@@ -64,8 +64,8 @@
                     <p th:text="'Employee count: ' + ${data.department.getEmployeeCount()}"></p>
                 </div>
 
-                <!-- DEPARTMENT EDITION PANEL -->
-                <div class="ed-panel">
+                <!-- DEPARTMENT EDITION PANEL (Admin only) -->
+                <div class="ed-panel" th:if="${roles.contains('A')}">
                     <!-- UPDATE -->
                     <form th:action="@{/department/edition}" method="get">
                         <div class="ed-item">
@@ -75,7 +75,7 @@
 
                     <!-- DELETE -->
                     <form th:action="@{/department/deletion}" method="post">
-                        <!-- CHANGE THE OPERATION TO UPDATE -->
+                        <!-- CHANGE THE OPERATION TO DELETE -->
                         <input type="hidden" name="_method" value="delete">
 
                         <div class="ed-item">
@@ -89,6 +89,13 @@
                     <p>Department has been deleted</p>
                 </div>
             </div>
+        </div>
+
+        <!-- RETURN TO MAIN -->
+        <div class="action-button">
+            <form th:action="@{/home}" method="get">
+                <button type="submit">Back to main page</button>
+            </form>
         </div>
     </body>
 </html>

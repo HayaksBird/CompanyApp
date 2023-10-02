@@ -1,11 +1,11 @@
 package com.company.CompanyApp.app.controller;
 
 import com.company.CompanyApp.app.dto.DepartmentContainer;
-import com.company.CompanyApp.app.entity.Department;
-import com.company.CompanyApp.app.entity.Worker;
+import com.company.CompanyApp.app.entity.worker.Department;
+import com.company.CompanyApp.app.entity.worker.Worker;
 import com.company.CompanyApp.app.service.IDepartmentService;
+import com.company.CompanyApp.exception.ItemNotFoundException;
 import com.company.CompanyApp.hierarchy.service.IHierarchyService;
-import com.company.CompanyApp.exception.DepartmentNotFoundException;
 import com.company.CompanyApp.validation.dto.ModelData;
 import com.company.CompanyApp.validation.dto.ModelDataContainer;
 import com.company.CompanyApp.validation.service.BindingService;
@@ -65,7 +65,7 @@ public class DepartmentController <T extends Worker> {
      */
     @GetMapping("")
     public String viewDepartment(Model model)
-                                 throws DepartmentNotFoundException, IllegalAccessException {
+                                 throws ItemNotFoundException {
 
         department = departmentService.getDepartmentWithWorkers(loggedUser.getDepartmentId());
 
@@ -90,7 +90,7 @@ public class DepartmentController <T extends Worker> {
             if (data.getErrorMessages().isEmpty()) {
                 department = departmentService.getDepartmentWithWorkers(Integer.parseInt(data.getDepartmentId()));
             }
-        } catch (DepartmentNotFoundException ex) {
+        } catch (ItemNotFoundException ex) {
             data.setErrorMessage("Department does not exist");
         }
 
@@ -129,8 +129,8 @@ public class DepartmentController <T extends Worker> {
      */
     @GetMapping("/edition")
     public String editDepartment(@ModelAttribute
-                                     DepartmentContainer data,
-                                     Model model) throws IllegalAccessException {
+                                 DepartmentContainer data,
+                                 Model model) throws IllegalAccessException {
 
         tempDepartment = null;
 

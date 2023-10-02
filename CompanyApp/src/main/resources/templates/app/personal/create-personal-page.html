@@ -20,32 +20,32 @@
                     <!-- PERSONAL DATA TO INSERT -->
                     <table class="table">
                         <tbody>
-                        <tr th:each="workerData, itemStat : *{modelData}">
-                            <td th:text="${workerData.key}"></td>
-                            <td class="to-end input-field"><input th:field="*{modelData[__${itemStat.index}__].value}"/></td>
-                            <!-- Keep the field name for future data binding -->
-                            <td class="hidden"><input type="hidden" th:field="*{modelData[__${itemStat.index}__].field}" th:value="${workerData.field}"/></td>
-                            <!-- Keep the view name for a potential new update request to the user -->
-                            <td class="hidden"><input type="hidden" th:field="*{modelData[__${itemStat.index}__].key}" th:value="${workerData.key}"/></td>
-                        </tr>
+                            <tr th:each="workerData, itemStat : *{modelData}">
+                                <td th:text="${workerData.key}"></td>
+                                <td class="to-end input-field"><input th:field="*{modelData[__${itemStat.index}__].value}"/></td>
+                                <!-- Keep the field name for future data binding -->
+                                <td class="hidden"><input type="hidden" th:field="*{modelData[__${itemStat.index}__].field}" th:value="${workerData.field}"/></td>
+                                <!-- Keep the view name for a potential new update request to the user -->
+                                <td class="hidden"><input type="hidden" th:field="*{modelData[__${itemStat.index}__].key}" th:value="${workerData.key}"/></td>
+                            </tr>
 
-                        <!-- CHOSE WORKER TYPE -->
-                        <tr>
-                            <td><label for="selectBox">Worker Type</label></td>
-                            <td class="to-end">
-                                <select id="selectBox" name="selectedOption" class="to-end options">
-                                    <option>-- Select --</option>
-                                    <option th:each="workerType : ${workerTypes}"
-                                            th:value="${workerType}"
-                                            th:text="${workerType}"></option>
-                                </select>
-                            </td>
-                            <td class="pick-type">
-                                <div class="pick">
-                                    <button type="submit" name="pickType">Pick</button>
-                                </div>
-                            </td>
-                        </tr>
+                            <!-- CHOSE WORKER TYPE -->
+                            <tr>
+                                <td><label for="selectBox">Worker Type</label></td>
+                                <td class="to-end">
+                                    <select id="selectBox" name="selectedOption" class="to-end options">
+                                        <option>-- Select --</option>
+                                        <option th:each="workerType : ${workerTypes}"
+                                                th:value="${workerType}"
+                                                th:text="${workerType}"></option>
+                                    </select>
+                                </td>
+                                <td class="pick-type">
+                                    <div class="pick">
+                                        <button type="submit" name="pickType">Pick</button>
+                                    </div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
 

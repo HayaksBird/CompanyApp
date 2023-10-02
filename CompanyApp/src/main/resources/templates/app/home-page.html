@@ -17,39 +17,105 @@
 
         <!-- CONTENT -->
         <div class="container">
-            <!-- NAVIGATION PANEL -->
-            <div class="nav-panel">
-                <!-- VIEW ACCOUNT INFO -->
-                <form th:action="@{/personal}" method="get">
-                    <div class="nav-item">
-                        <button type="submit">Personal</button>
-                    </div>
-                </form>
-
-                <!-- VIEW DEPARTMENT INFO -->
-                <form th:action="@{/department}" method="get">
-                    <div class="nav-item">
-                        <button type="submit">Department</button>
-                    </div>
-                </form>
-
-                <!-- ADD A WORKER -->
-                <div th:if="${roles.contains('B')}">
-                    <form th:action="@{/personal/creation}" method="get">
+            <div class="inner-container">
+                <!-- NAVIGATION PANEL -->
+                <div class="nav-panel">
+                    <!-- VIEW ACCOUNT INFO -->
+                    <form th:action="@{/personal}" method="get">
                         <div class="nav-item">
-                            <button type="submit">Add Worker</button>
+                            <button type="submit">Personal</button>
                         </div>
                     </form>
-                </div>
 
-                <!-- ADD A DEPARTMENT -->
-                <div th:if="${roles.contains('B')}">
-                    <form th:action="@{/department/creation}" method="get">
+                    <!-- VIEW DEPARTMENT INFO -->
+                    <form th:action="@{/department}" method="get">
                         <div class="nav-item">
-                            <button type="submit">Add Department</button>
+                            <button type="submit">Department</button>
                         </div>
                     </form>
+
+                    <!-- ADD A WORKER -->
+                    <div th:if="${roles.contains('B')}">
+                        <form th:action="@{/personal/creation}" method="get">
+                            <div class="nav-item">
+                                <button type="submit">Add Worker</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- ADD A DEPARTMENT -->
+                    <div th:if="${roles.contains('A')}">
+                        <form th:action="@{/department/creation}" method="get">
+                            <div class="nav-item">
+                                <button type="submit">Add Department</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- ADD A POST -->
+                    <div th:if="${roles.contains('C')}">
+                        <form th:action="@{/post/creation}" method="get">
+                            <div class="nav-item">
+                                <button type="submit">Post</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
+            </div>
+
+            <!-- SHOW POSTS -->
+            <div class="posts to-end">
+                <ul>
+                    <li th:each="post : ${posts}">
+                        <div class="post">
+                            <!-- TITLE -->
+                            <div class="title">
+                                <p th:text="${post.title}"></p>
+                            </div>
+
+                            <!-- CONTENT -->
+                            <div class="content">
+                                <p th:utext="${post.content}"></p>
+                            </div>
+
+                            <!-- ADDITIONAL INFO -->
+                            <div class="extra">
+                                <!-- DATE -->
+                                <div class="date">
+                                    <span th:text="${post.date}"></span>
+                                </div>
+
+                                <!-- AUTHOR -->
+                                <div class="author">
+                                    <span th:text="${post.author}"></span>
+                                </div>
+                            </div>
+
+                            <!--
+                            ACTION BUTTONS
+                            Only available to the admin or to the author of the post
+                            -->
+                            <div class="buttons" th:if="${roles.contains('A') or user.id == post.workerId}">
+                                <!-- DELETE -->
+                                <div class="action-button">
+                                    <form th:action="@{'/post/deletion/' + ${post.id}}" method="post">
+                                        <!-- CHANGE THE OPERATION TO UPDATE -->
+                                        <input type="hidden" name="_method" value="delete">
+
+                                        <button type="submit">Delete</button>
+                                    </form>
+                                </div>
+
+                                <!-- UPDATE -->
+                                <div class="action-button">
+                                    <form th:action="@{'/post/edition/' + ${post.id}}" method="get">
+                                        <button type="submit">Update</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
             </div>
         </div>
     </body>
