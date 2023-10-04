@@ -28,10 +28,11 @@ import java.util.List;
 @RequestMapping("/personal")
 public class PersonalController <T extends Worker> {
     private final BindingService bindingService;
-    private final IHierarchyService hierarchyService;
     private final IWorkerService workerService;
     private final ModelDataService modelDataService;
     private final String templateDir;
+    private final UserContextConfig.UserContextData userContextConfig;
+    private final IHierarchyService hierarchyService;
     private final T loggedUser;
     private T viewedWorker;
     private T tempWorker;
@@ -41,15 +42,17 @@ public class PersonalController <T extends Worker> {
     //CONSTRUCTORS
     public PersonalController(T loggedUser,
                               IWorkerService workerService,
-                              BindingService bindingService,
                               IHierarchyService hierarchyService,
-                              ModelDataService modelDataService) {
+                              BindingService bindingService,
+                              ModelDataService modelDataService,
+                              UserContextConfig.UserContextData userContextConfig) {
 
         templateDir = "app/personal";
         this.loggedUser = loggedUser;
+        this.userContextConfig = userContextConfig;
 
-        this.modelDataService = modelDataService;
         this.hierarchyService = hierarchyService;
+        this.modelDataService = modelDataService;
         this.workerService = workerService;
         this.bindingService = bindingService;
     }
@@ -60,12 +63,13 @@ public class PersonalController <T extends Worker> {
      * View logged user's personal page.
      */
     @GetMapping("")
-    public String viewPersonalInfo(Model model) throws IllegalAccessException {
+    public String viewPersonalInfo(Model model) throws IllegalAccessException, NoSuchFieldException {
         viewedWorker = loggedUser;
 
         workersFields = modelDataService.getModelsFields(viewedWorker);
 
         model.addAttribute("data", new ModelDataContainer(workersFields));
+        updatable(model);
 
         return String.format("%s/personal-page", templateDir);
     }
@@ -85,6 +89,7 @@ public class PersonalController <T extends Worker> {
         workersFields = modelDataService.getModelsFields(viewedWorker);
 
         model.addAttribute("data", new ModelDataContainer(workersFields));
+        updatable(model);
 
         return String.format("%s/personal-page", templateDir);
     }
@@ -103,6 +108,7 @@ public class PersonalController <T extends Worker> {
 
         data.setModelData(workersFields);
         data.setOperationSuccessful(true);
+        model.addAttribute("updatable", true);
         model.addAttribute("data", data);
 
         return String.format("%s/personal-page", templateDir);
@@ -167,7 +173,7 @@ public class PersonalController <T extends Worker> {
         workersFields.removeIf(workerData -> "id".equals(workerData.getField()));
 
         model.addAttribute("data", new ModelDataContainer(workersFields));
-        model.addAttribute("workerTypes", hierarchyService.getSubordinateWorkerTypesList());
+        model.addAttribute("workerTypes", userContextConfig.getSubordinateWorkerTypesList());
 
         return String.format("%s/create-personal-page", templateDir);
     }
@@ -201,7 +207,7 @@ public class PersonalController <T extends Worker> {
             } else data.setErrorMessage("No worker type selected");
         }
 
-        model.addAttribute("workerTypes", hierarchyService.getSubordinateWorkerTypesList());
+        model.addAttribute("workerTypes", userContextConfig.getSubordinateWorkerTypesList());
         model.addAttribute("data", data);
 
         return String.format("%s/create-personal-page", templateDir);
@@ -216,7 +222,7 @@ public class PersonalController <T extends Worker> {
      * the old list to the new one (so that the user doesn't need to manually rewrite).
      */
     private void requestExtObject(String selectedOption, ModelDataContainer data) throws Exception {
-        WorkerType type = hierarchyService.getSubordinateWorkerTypes().get(selectedOption);
+        WorkerType type = userContextConfig.getSubordinateWorkerTypes().get(selectedOption);
 
         tempWorker = workerService.createWorker(type);
 
@@ -241,5 +247,15 @@ public class PersonalController <T extends Worker> {
             workerService.save(tempWorker);
             data.setOperationSuccessful(true);
         } else data.setErrorMessages(errorMessages);
+    }
+
+
+    /**
+     * Check if the worker that is view could be updated. Note that the worker
+     * can be updated by the user iff he is of subordinate type.
+     */
+    private void updatable(Model model) throws NoSuchFieldException {
+        boolean canModify = hierarchyService.isSubordinateWorkerType(viewedWorker.getWorkerType(), userContextConfig.getSubordinateWorkerTypes());
+        model.addAttribute("updatable", canModify);
     }
 }

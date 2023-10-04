@@ -1,6 +1,6 @@
 package com.company.CompanyApp.app.dto;
 
-import com.company.CompanyApp.app.entity.worker.Department;
+import com.company.CompanyApp.app.entity.Department;
 import com.company.CompanyApp.validation.annotations.Numeric;
 import com.company.CompanyApp.validation.dto.ModelData;
 import com.company.CompanyApp.validation.dto.ModelDataContainer;

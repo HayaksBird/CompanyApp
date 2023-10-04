@@ -47,9 +47,10 @@
                             If the user has the lowest accessibility level, then it
                             will not work
                             -->
-                            <button th:utext="${worker}"
-                                    th:disabled="${!roles.contains('B')}"
-                                    th:classappend="${worker.getWorkerType().toString() == 'MANAGER'} ? 'manager'"></button>
+                            <div th:class="${worker.getWorkerType().toString() == 'MANAGER'} ? 'manager'">
+                                <button th:utext="${worker}"
+                                        th:disabled="${!roles.contains('B')}"></button>
+                            </div>
                         </form>
                     </li>
                 </ul>

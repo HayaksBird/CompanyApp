@@ -8,15 +8,13 @@ import java.util.HashSet;
 import java.util.List;
 
 public interface IHierarchyService {
-    void addLoggedUserRoles();
+    public boolean isSubordinateWorkerType(WorkerType workerType,
+                                           HashMap<String, WorkerType> subordinateWorkerTypes) throws NoSuchFieldException;
+    HashSet<String> getLoggedUsersRoles();
 
     <T extends Worker> List<String> getRoles(Worker worker) throws Exception;
 
-    void setSubordinateWorkerTypes(int maxRolePos) throws NoSuchFieldException;
+    public HashMap<String, WorkerType> getSubordinateWorkerTypes(int maxRolePos) throws NoSuchFieldException;
 
-    HashSet<String> getLoggedUsersRoles();
-
-    HashMap<String, WorkerType> getSubordinateWorkerTypes();
-
-    List<String> getSubordinateWorkerTypesList();
+    public List<String> getSubordinateWorkerTypesList(HashMap<String, WorkerType> subordinateWorkerTypes);
 }

@@ -6,6 +6,7 @@ import com.company.CompanyApp.app.entity.worker.Worker;
 import com.company.CompanyApp.app.enums.WorkerType;
 import com.company.CompanyApp.app.service.IWorkerService;
 import com.company.CompanyApp.exception.ItemNotFoundException;
+import com.company.CompanyApp.security.dao.UserRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -98,6 +99,10 @@ public class WorkerService implements IWorkerService {
 
     @Override
     public void deleteWorker(Worker worker) {
-        workerRepository.delete(worker);
+        try {
+            workerRepository.delete(worker);
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
     }
 }

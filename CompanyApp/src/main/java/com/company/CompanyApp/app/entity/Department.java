@@ -1,5 +1,6 @@
-package com.company.CompanyApp.app.entity.worker;
+package com.company.CompanyApp.app.entity;
 
+import com.company.CompanyApp.app.entity.worker.Worker;
 import com.company.CompanyApp.validation.annotations.NoNullEntity;
 import com.company.CompanyApp.validation.annotations.ViewName;
 import jakarta.persistence.*;

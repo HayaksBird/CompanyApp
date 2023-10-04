@@ -1,7 +1,7 @@
 package com.company.CompanyApp.app.controller;
 
 import com.company.CompanyApp.app.dto.DepartmentContainer;
-import com.company.CompanyApp.app.entity.worker.Department;
+import com.company.CompanyApp.app.entity.Department;
 import com.company.CompanyApp.app.entity.worker.Worker;
 import com.company.CompanyApp.app.service.IDepartmentService;
 import com.company.CompanyApp.exception.ItemNotFoundException;

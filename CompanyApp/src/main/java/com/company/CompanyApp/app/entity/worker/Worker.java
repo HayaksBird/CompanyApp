@@ -1,5 +1,6 @@
 package com.company.CompanyApp.app.entity.worker;
 
+import com.company.CompanyApp.app.entity.Post;
 import com.company.CompanyApp.validation.annotations.ViewName;
 import com.company.CompanyApp.app.enums.WorkerType;
 import com.company.CompanyApp.validation.annotations.Department;
@@ -10,6 +11,7 @@ import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.Past;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @NoNullEntity
 @Entity
@@ -62,6 +64,17 @@ public class Worker {
     @ViewName(message = "Official Position")
     @Column(name = "position")
     private String position;
+
+
+    /**
+     * This list is added only so that hibernate deletes corresponding posts of the worker,
+     * when he is deleted.
+     */
+    @JoinColumn(name = "worker_id",
+                referencedColumnName = "id")
+    @OneToMany(cascade = CascadeType.REMOVE,
+               fetch = FetchType.LAZY)
+    List<Post> correspondingPosts;
 
 
     //CONSTRUCTORS

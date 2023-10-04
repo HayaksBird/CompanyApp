@@ -20,9 +20,6 @@ import java.util.*;
 @Service
 public class HierarchyService implements IHierarchyService {
     private final IWorkerService workerService;
-    private HashSet<String> loggedUsersRoles;
-    private HashMap<String, WorkerType> subordinateWorkerTypes;
-    private List<String> subordinateWorkerTypesList;
 
 
     //CONSTRUCTORS
@@ -32,16 +29,30 @@ public class HierarchyService implements IHierarchyService {
 
 
     /**
+     *
+     */
+    @Override
+    public boolean isSubordinateWorkerType(WorkerType workerType, HashMap<String, WorkerType> subordinateWorkerTypes) throws NoSuchFieldException {
+        CorrespondingEntity entity = WorkerType.class.getField(workerType.name()).getAnnotation(CorrespondingEntity.class);
+        WorkerType retrievedType = subordinateWorkerTypes.get(entity.entityClass());
+
+        return retrievedType != null;
+    }
+
+
+    /**
      * This method extracts the roles of the currently logged-in user.
      */
     @Override
-    public void addLoggedUserRoles() {
-        loggedUsersRoles = new HashSet<>();
+    public HashSet<String> getLoggedUsersRoles() {
+        HashSet<String> loggedUsersRoles = new HashSet<>();
         var roles = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
 
         for (var role : roles) {
-            this.loggedUsersRoles.add(role.toString().substring(5));
+            loggedUsersRoles.add(role.toString().substring(5));
         }
+
+        return loggedUsersRoles;
     }
 
 
@@ -66,9 +77,8 @@ public class HierarchyService implements IHierarchyService {
      * its possible set of roles is smaller than the provided set of roles.
      */
     @Override
-    public void setSubordinateWorkerTypes(int maxRolePos) throws NoSuchFieldException {
-        subordinateWorkerTypes = new HashMap<>();
-        subordinateWorkerTypesList = new LinkedList<>();
+    public HashMap<String, WorkerType> getSubordinateWorkerTypes(int maxRolePos) throws NoSuchFieldException {
+        HashMap<String, WorkerType> subordinateWorkerTypes = new HashMap<>();
 
         for (var workerType : WorkerType.values()) {
             CorrespondingEntity entity = WorkerType.class.getField(workerType.name()).getAnnotation(CorrespondingEntity.class);
@@ -82,9 +92,22 @@ public class HierarchyService implements IHierarchyService {
 
             if (maxRolePos > minCount && maxRolePos > count) {
                 subordinateWorkerTypes.put(entity.entityClass(), workerType);
-                subordinateWorkerTypesList.add(entity.entityClass());
             }
         }
+
+        return subordinateWorkerTypes;
+    }
+
+
+    @Override
+    public List<String> getSubordinateWorkerTypesList(HashMap<String, WorkerType> subordinateWorkerTypes) {
+        List<String> subordinateWorkerTypesList = new LinkedList<>();
+
+        for (var entityName : subordinateWorkerTypes.entrySet()) {
+            subordinateWorkerTypesList.add(entityName.getKey());
+        }
+
+        return subordinateWorkerTypesList;
     }
 
 
@@ -133,23 +156,6 @@ public class HierarchyService implements IHierarchyService {
         }
 
         return roles;
-    }
-
-
-    //GETTERS
-    @Override
-    public HashSet<String> getLoggedUsersRoles() {
-        return loggedUsersRoles;
-    }
-
-    @Override
-    public HashMap<String, WorkerType> getSubordinateWorkerTypes() {
-        return subordinateWorkerTypes;
-    }
-
-    @Override
-    public List<String> getSubordinateWorkerTypesList() {
-        return subordinateWorkerTypesList;
     }
 
 

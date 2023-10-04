@@ -101,7 +101,11 @@ p {
     margin: max(1vw, 5px) 0;
 }
 
-.manager {
+.manager button {
+    color: #911115;
+}
+
+.manager button[disabled] {
     color: #911115;
 }
 

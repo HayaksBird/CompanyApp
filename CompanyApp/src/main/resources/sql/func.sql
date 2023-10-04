@@ -35,6 +35,23 @@ END;
 
 
 /*
+Make sure to delete the user account if the worker is deleted
+*/
+CREATE TRIGGER delete_corresponding_user
+BEFORE DELETE ON worker
+FOR EACH ROW
+BEGIN
+	DELETE FROM role
+	WHERE user_id = OLD.id;
+	
+	DELETE FROM user
+	WHERE id = OLD.id;
+END;
+//
+
+
+
+/*
 These triggers focus on updating the department table based on what changes were
 done on the worker table.
 */

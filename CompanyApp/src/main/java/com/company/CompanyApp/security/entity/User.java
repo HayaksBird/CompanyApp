@@ -25,7 +25,12 @@ public class User implements UserDetails {
     @Column(name = "type")
     private WorkerType type;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    /**
+     * A user can only be deleted if the worker is deleted. I made sure
+     * that the database itself handles that.
+     */
+    @OneToMany(fetch = FetchType.EAGER,
+               cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "user_id",
                 referencedColumnName = "id")
     private List<Role> roles;

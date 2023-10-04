@@ -2,7 +2,7 @@ package com.company.CompanyApp.app.service.implementation;
 
 
 import com.company.CompanyApp.app.dao.DepartmentRepository;
-import com.company.CompanyApp.app.entity.worker.Department;
+import com.company.CompanyApp.app.entity.Department;
 import com.company.CompanyApp.app.service.IDepartmentService;
 import com.company.CompanyApp.exception.ItemNotFoundException;
 import org.hibernate.Hibernate;

@@ -1,6 +1,6 @@
 package com.company.CompanyApp.app.service;
 
-import com.company.CompanyApp.app.entity.worker.Department;
+import com.company.CompanyApp.app.entity.Department;
 import com.company.CompanyApp.exception.ItemNotFoundException;
 
 public interface IDepartmentService {
