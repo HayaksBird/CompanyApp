@@ -1,5 +1,6 @@
 package com.company.CompanyApp.app.controller;
 
+import com.company.CompanyApp.app.AppContextManager;
 import com.company.CompanyApp.exception.ItemNotFoundException;
 import com.company.CompanyApp.validation.dto.ModelData;
 import com.company.CompanyApp.validation.dto.ModelDataContainer;
@@ -31,7 +32,7 @@ public class PersonalController <T extends Worker> {
     private final IWorkerService workerService;
     private final ModelDataService modelDataService;
     private final String templateDir;
-    private final UserContextConfig.UserContextData userContextConfig;
+    private final AppContextManager.UserContextData userContextConfig;
     private final IHierarchyService hierarchyService;
     private final T loggedUser;
     private T viewedWorker;
@@ -45,7 +46,7 @@ public class PersonalController <T extends Worker> {
                               IHierarchyService hierarchyService,
                               BindingService bindingService,
                               ModelDataService modelDataService,
-                              UserContextConfig.UserContextData userContextConfig) {
+                              AppContextManager.UserContextData userContextConfig) {
 
         templateDir = "app/personal";
         this.loggedUser = loggedUser;
@@ -61,6 +62,8 @@ public class PersonalController <T extends Worker> {
     //VIEW PERSONAL PAGE
     /**
      * View logged user's personal page.
+     *
+     * Note that the editing view/delete is available only for the superior worker types.
      */
     @GetMapping("")
     public String viewPersonalInfo(Model model) throws IllegalAccessException, NoSuchFieldException {
@@ -77,6 +80,8 @@ public class PersonalController <T extends Worker> {
 
     /**
      * View a personal page of a worker.
+     *
+     * Note that the editing view/delete is available only for the superior worker types.
      */
     @GetMapping("/{id}")
     public String viewPersonalInfo(@PathVariable

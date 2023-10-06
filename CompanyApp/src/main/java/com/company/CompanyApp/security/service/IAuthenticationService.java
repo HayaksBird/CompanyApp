@@ -26,5 +26,8 @@ public interface IAuthenticationService {
     Cookie generateJwtCookie();
 
 
+    public Cookie generateJwtCookieKiller();
+
+
     String getValidationCode();
 }

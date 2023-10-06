@@ -114,6 +114,21 @@ public class AuthenticationService implements IAuthenticationService {
      *
      */
     @Override
+    public Cookie generateJwtCookieKiller() {
+        Cookie jwtKiller = new Cookie("jwt", "");
+        jwtKiller.setMaxAge(0);
+        jwtKiller.setDomain("localhost");
+        jwtKiller.setPath("/");
+        jwtKiller.setHttpOnly(true);
+
+        return jwtKiller;
+    }
+
+
+    /**
+     *
+     */
+    @Override
     public void register(AuthenticationRequest request)
                          throws Exception {
 

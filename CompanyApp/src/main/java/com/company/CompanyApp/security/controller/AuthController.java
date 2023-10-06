@@ -1,5 +1,6 @@
 package com.company.CompanyApp.security.controller;
 
+import com.company.CompanyApp.app.AppContextManager;
 import com.company.CompanyApp.security.dto.AuthenticationRequest;
 import com.company.CompanyApp.security.dto.VerificationRequest;
 import com.company.CompanyApp.security.service.IAuthenticationService;
@@ -21,6 +22,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/auth")
 public class AuthController {
+    private final AppContextManager appContextManager;
     private final IAuthenticationService authenticationService;
     private final ValidationService validationService;
     private final String templateDir;
@@ -29,9 +31,12 @@ public class AuthController {
 
     //CONSTRUCTORS
     public AuthController(IAuthenticationService authenticationService,
-                          ValidationService validationService) {
+                          ValidationService validationService,
+                          AppContextManager appContextManager) {
 
         templateDir = "auth";
+
+        this.appContextManager = appContextManager;
         this.validationService = validationService;
         this.authenticationService = authenticationService;
     }
@@ -162,5 +167,14 @@ public class AuthController {
 
             return String.format("%s/verification-page", templateDir);
         }
+    }
+
+
+    @GetMapping("log-out")
+    public String logout(HttpServletResponse response) throws IOException {
+        response.addCookie(authenticationService.generateJwtCookieKiller());
+        appContextManager.killContextDependentBeans();
+        response.sendRedirect("/auth/login");
+        return null;
     }
 }

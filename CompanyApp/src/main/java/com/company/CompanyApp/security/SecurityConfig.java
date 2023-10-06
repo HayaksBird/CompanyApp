@@ -46,6 +46,7 @@ public class SecurityConfig {
                                 .requestMatchers("/auth").permitAll()
                                 .requestMatchers("/auth/**").permitAll()
                                 .requestMatchers("/css/**").permitAll()
+                                .requestMatchers("/actuator/**").permitAll()
 
                                 //Regarding home page
                                 .requestMatchers(HttpMethod.GET,"/home").hasRole("D")

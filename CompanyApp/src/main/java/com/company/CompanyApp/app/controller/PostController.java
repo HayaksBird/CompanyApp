@@ -18,6 +18,11 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * Made this bean lazy, because it requires user's data from the SecurityContextHolder.
+ *
+ * This controller handles the post's that are published by the users.
+ */
 @Lazy
 @Controller
 @RequestMapping("/post")
@@ -49,7 +54,7 @@ public class PostController <T extends Worker> {
 
     //CREATE POST
     /**
-     *
+     * Prepare the post creation template for the user.
      */
     @GetMapping("/creation")
     public String createPost(Model model) throws IllegalAccessException {
@@ -64,7 +69,8 @@ public class PostController <T extends Worker> {
 
 
     /**
-     *
+     * Process the post creation template.
+     * We validate his input data. If no errors to be found, then we persist the post.
      */
     @PostMapping("/creation")
     public String processCreation(@ModelAttribute
@@ -86,7 +92,7 @@ public class PostController <T extends Worker> {
 
     //UPDATE POST
     /**
-     *
+     * Prepare the post update template for the user.
      */
     @GetMapping("/edition/{id}")
     public String updatePost(@PathVariable
@@ -107,7 +113,8 @@ public class PostController <T extends Worker> {
 
 
     /**
-     *
+     * Process the post update template.
+     * We validate his input data. If no errors to be found, then we persist the post.
      */
     @PutMapping("/edition")
     public String processUpdate(@ModelAttribute
@@ -130,7 +137,7 @@ public class PostController <T extends Worker> {
 
     //DELETE POST
     /**
-     *
+     * Delete the viewed post from the system.
      */
     @DeleteMapping("/deletion/{id}")
     public String deletePost(@PathVariable
@@ -146,7 +153,10 @@ public class PostController <T extends Worker> {
 
 
     /**
-     *
+     * Attempt to save a post in to the database (update/create).
+     * If the operation is successful, then the container's status message
+     * is set accordingly. However, if failed, the error list is provided to the
+     * container.
      */
     private void savePost(ModelDataContainer data) throws IllegalAccessException {
         List<String> errorMessages = bindingService.bindToModelEntity(data.getModelData(), tempPost);
