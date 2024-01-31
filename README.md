@@ -6,6 +6,7 @@ This is an employee management system app which allows:
 * **workers to communicate with each other.** Workers can add & read posts and thus be aware of the latests news.
 * **workers to see relevant to them information.** The workers can view their personal info and their department info and thus have a better sense ofunderstanding of their position and their role in the company.
 
+## Roles
 The app is comprised of 3 roles of workers - manager, senior, junior. The role hierarchy is linear and works in inheriting (accumulative) fashion. Meaning, each role is eather beneath or above the other role, and if it is above, then it will have all the access levels of the roles beneath it.
 
 * **Junior** - lowest role by rank. A junior worker can only view a limitted amount of info on their department and view the posting activity.
