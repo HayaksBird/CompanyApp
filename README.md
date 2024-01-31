@@ -1,5 +1,6 @@
 # Company Application
 
+
 ## Description
 This is an employee management system app which allows:
 * **to share data management with other workers.** Now the presure of managing the data is not on the database admin alone, since the app users (managers) can update/create/delete other workers as well.
