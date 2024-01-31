@@ -22,4 +22,8 @@ I have implemented a 2 layer security system for this application.
 **Second (Authorization)** is the token system for the further interaction. After the registration/login a JWT is generated as a contract between the end user and the server. This token will have a lifespan of 1 day. Thus, after the authentication a user can freely wonder around the website for a day, before they need to authenticate again.
 
 ## Details
-The biggest portion of this project was spent not on
+The biggest portion of this project was spent not on the realization of concepts, but on code efficiency.
+I tried to make the code as modular as the common sense allows it to.
+Thus, with the help of already existing annotations, enum roles, and java reflection used in combination it is very easy to add new worker types, update the data for the existing, or even create new roles. The annotations in combination with java validation mechanisms allow one to enforce restrictions and rules for any worker type in just couple lines of code.
+Much of the code I have written was about creating unit blocks from which one can build different "shapes" and utilize the already existing tools.
+If this project were to be expanded further and new people were to be invited to work on it, then it would be quite simple for them to orient around due to a tree-like structure of the project, where application internals, secuirity, validation, etc have their corresponding "domes" with further separation of concerns within each one.
