@@ -11,3 +11,5 @@ The app is comprised of 3 roles of workers - manager, senior, junior. The role h
 * **Manager** - goes after senior. A manager has the ability to add/remove/update workers of their own corresponding department. Besides that, they can view the additional statistics info of their department.
 
 I have also decided to add the ability for the database admin to perform their work through the app interface. The admin has the maximum authority level. They can manage anything within any department, and they can fully manage the posting activity. 
+
+## App Security
