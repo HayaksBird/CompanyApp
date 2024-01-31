@@ -1,4 +1,6 @@
 # Company Application
+
+## Description
 This is an employee management system app which allows:
 * **to share data management with other workers.** Now the presure of managing the data is not on the database admin alone, since the app users (managers) can update/create/delete other workers as well.
 * **workers to communicate with each other.** Workers can add & read posts and thus be aware of the latests news.
@@ -13,3 +15,6 @@ The app is comprised of 3 roles of workers - manager, senior, junior. The role h
 I have also decided to add the ability for the database admin to perform their work through the app interface. The admin has the maximum authority level. They can manage anything within any department, and they can fully manage the posting activity. 
 
 ## App Security
+I have implemented a 2 layer security system for this application.
+**First (Authentication)** is the registration/login process, where the program checks whether the user is present in the database (via worker id for the registration or the username for the login). Thus, in order for the worker to use the application, they must already exist in the system.
+**Second (Authorization)** is the token system for the further interaction. After the registration/login a JWT is generated as a contract between the end user and the server. This token will have a lifespan of 1 day. Thus, after the authentication a user can freely wonder around the website for a day, before they need to authenticate again.
